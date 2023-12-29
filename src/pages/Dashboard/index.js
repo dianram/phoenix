@@ -44,6 +44,10 @@ import "chartist/dist/scss/chartist.scss";
 //i18n
 import { withTranslation } from "react-i18next";
 
+// Phoenix components
+import DevicesDashboard from './DeviceDashboard';
+import UiButtons from 'pages/Ui/UiButtons';
+
 const Dashboard = props => {
   const [menu, setMenu] = useState(false);
   const toggle = () => {
@@ -64,7 +68,7 @@ const Dashboard = props => {
               </Col>
 
               <Col md="4">
-                <div className="float-end d-none d-md-block">
+                {/* <div className="float-end d-none d-md-block">
                   <Dropdown isOpen={menu} toggle={toggle}>
                     <DropdownToggle color="primary" className="btn btn-primary dropdown-toggle waves-effect waves-light">
                       <i className="mdi mdi-cog me-2"></i> Settings
@@ -77,11 +81,12 @@ const Dashboard = props => {
                       <DropdownItem tag="a" href="#">Separated link</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
-                </div>
+                </div> */}
               </Col>
             </Row>
           </div>
-          <Row>
+          <DevicesDashboard />
+          {/* <Row>
             <Col xl={3} md={6}>
               <Card className="mini-stat bg-primary text-white">
                 <CardBody>
@@ -200,9 +205,9 @@ const Dashboard = props => {
                 </CardBody>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
 
-          <Row>
+          {/* <Row>
             <Col xl={9}>
               <Card>
                 <CardBody>
@@ -242,9 +247,9 @@ const Dashboard = props => {
                   </Row>
                 </CardBody>
               </Card>
-            </Col>
+            </Col> */}
 
-            <Col xl={3}>
+            {/* <Col xl={3}>
               <Card>
                 <CardBody>
                   <div>
@@ -298,9 +303,9 @@ const Dashboard = props => {
                 </CardBody>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
 
-          <Row>
+          {/* <Row>
             <Col xl={3}>
               <Card>
                 <CardBody>
@@ -788,9 +793,9 @@ const Dashboard = props => {
                     </Row>
                   </div>
                 </CardBody>
-              </Card>
-            </Col>
-          </Row>
+              </Card> */}
+            {/* </Col> */}
+          {/* </Row> */}
         </Container>
       </div>
 

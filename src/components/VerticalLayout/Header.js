@@ -77,19 +77,19 @@ const Header = props => {
             <div className="navbar-brand-box">
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logosmImg} alt="" height="22" />
+                  <img src={logosmImg} alt="" height="80" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logodarkImg} alt="" height="17" />
+                  <img src={logodarkImg} alt="" height="80" />
                 </span>
               </Link>
 
               <Link to="/" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logosmImg} alt="" height="22" />
+                  <img src={logolightImg} alt="" height="80" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logolightImg} alt="" height="18" />
+                  <img src={logolightImg} alt="" height="80" />
                 </span>
               </Link>
             </div>
@@ -111,14 +111,14 @@ const Header = props => {
                 className="pt-3 d-inline-block"
               >
                 <DropdownToggle className="btn btn-secondary" caret>
-                  Create <i className="mdi mdi-chevron-down"></i>
+                  New Device <i className="mdi mdi-chevron-down"></i>
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem>Action</DropdownItem>
-                  <DropdownItem>Another action</DropdownItem>
+                  <DropdownItem>Link a new device</DropdownItem>
+                  {/* <DropdownItem>Another action</DropdownItem>
                   <DropdownItem>Something else here</DropdownItem>
                   <div className="dropdown-divider"></div>
-                  <DropdownItem>Separated link</DropdownItem>
+                  <DropdownItem>Separated link</DropdownItem> */}
                 </DropdownMenu>
               </Dropdown>
 

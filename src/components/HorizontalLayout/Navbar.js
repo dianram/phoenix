@@ -107,7 +107,7 @@ const Navbar = props => {
 
                 </li>
 
-                <li className="nav-item dropdown mega-dropdown">
+                {/* <li className="nav-item dropdown mega-dropdown">
                   <Link
                     to="/#"
                     onClick={e => {
@@ -206,7 +206,7 @@ const Navbar = props => {
                       </Col>
                     </Row>
                   </div>
-                </li>
+                </li> */}
 
                 <li className="nav-item dropdown">
                   <Link
@@ -218,12 +218,12 @@ const Navbar = props => {
                     }}
                   >
                     <i className="ti-harddrives me-2"></i>
-                    {props.t("Components")}
+                    {props.t("Devices Location")}
                   </Link>
                   <div
                     className={classname("dropdown-menu", { show: component })}
                   >
-                    <div className="dropdown">
+                    {/* <div className="dropdown">
                       <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
@@ -245,11 +245,11 @@ const Navbar = props => {
                         </Link>
                         <Link to="/email-compose" className="dropdown-item">{props.t("Email Compose")} </Link>
                       </div>
-                    </div>
-                    <Link to="/calendar" className="dropdown-item">
+                    </div> */}
+                    {/* <Link to="/calendar" className="dropdown-item">
                       {props.t("Calendar")}
-                    </Link>
-                    <div className="dropdown">
+                    </Link> */}
+                    {/* <div className="dropdown">
                       <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
@@ -291,8 +291,8 @@ const Navbar = props => {
                           {props.t("Form Mask")}
                         </Link>
                       </div>
-                    </div>
-                    <div className="dropdown">
+                    </div> */}
+                    {/* <div className="dropdown">
                       <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
@@ -330,9 +330,9 @@ const Navbar = props => {
                           {props.t("Sparkline Chart")}
                         </Link>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="dropdown">
+                    {/* <div className="dropdown">
                       <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
@@ -359,8 +359,8 @@ const Navbar = props => {
                           {props.t("Editable Table")}
                         </Link>
                       </div>
-                    </div>
-                    <div className="dropdown">
+                    </div> */}
+                    {/* <div className="dropdown">
                       <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
@@ -395,9 +395,9 @@ const Navbar = props => {
                         <Link to="/icons-typicons" className="dropdown-item">Typicons Icons</Link>
 
                       </div>
-                    </div>
+                    </div> */}
                     <div className="dropdown">
-                      <Link
+                      {/* <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
                         onClick={e => {
@@ -406,25 +406,25 @@ const Navbar = props => {
                         }}
                       >
                         {props.t("Maps")} <div className="arrow-down"></div>
-                      </Link>
-                      <div
+                      </Link> */}
+                      {/* <div
                         className={classname("dropdown-menu", { show: map })}
-                      >
+                      > */}
                         <Link to="/maps-google" className="dropdown-item">
-                          {props.t("Google Maps")}{" "}
+                          {props.t("Device 001")}{" "}
                         </Link>
                         <Link to="/maps-vector" className="dropdown-item">
-                          {props.t("Vector Maps")}{" "}
+                          {props.t("Device 002")}{" "}
                         </Link>
                         <Link to="/maps-leaflet" className="dropdown-item">
-                          {props.t("Leaflet Maps")}{" "}
+                          {props.t("Device 003")}{" "}
                         </Link>
-                      </div>
+                      {/* </div> */}
                     </div>
                   </div>
                 </li>
 
-                <li className="nav-item dropdown mega-dropdown">
+                {/* <li className="nav-item dropdown mega-dropdown">
                   <Link
                     to="/#"
                     className="nav-link dropdown-toggle arrow-none"
@@ -474,9 +474,9 @@ const Navbar = props => {
                       </div>
                     </div>
                   </div>
-                </li>
+                </li> */}
 
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <Link
                     className="nav-link dropdown-toggle arrow-none"
                     to="/#"
@@ -522,9 +522,9 @@ const Navbar = props => {
 
                   </div>
 
-                </li>
+                </li> */}
 
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <Link className="nav-link dropdown-toggle arrow-none" to="/#"
                     onClick={e => {
                       e.preventDefault();
@@ -556,7 +556,7 @@ const Navbar = props => {
                       {props.t("Billing Email")}
                     </Link>
                   </div>
-                </li>
+                </li> */}
 
               </ul>
             </Collapse>
