@@ -65,7 +65,7 @@ const Register = props => {
     props.apiError("");
   }, []);
 
-  document.title = "Register | Veltrix - React Admin & Dashboard Template";
+  document.title = "Register | Phoenix Immobilizer";
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">

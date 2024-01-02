@@ -70,6 +70,7 @@ class FirebaseAuthBackend {
             resolve(firebase.auth().currentUser)
           },
           error => {
+            console.log(error)
             reject(this._handleError(error))
           }
         )

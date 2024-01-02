@@ -74,13 +74,13 @@ const UserProfile = props => {
     }
   });
 
-  document.title = "Profile | Veltrix - React Admin & Dashboard Template";
+  document.title = "Profile | Phoenix Immobilizer";
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumb title="Veltrix" breadcrumbItem="Profile" />
+          <Breadcrumb title="Phoenix" breadcrumbItem="Profile" />
 
           <Row>
             <Col lg="12">
