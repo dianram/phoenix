@@ -45,7 +45,7 @@ import "chartist/dist/scss/chartist.scss";
 import { withTranslation } from "react-i18next";
 
 // Phoenix components
-import DevicesDashboard from './DeviceDashboard';
+import MasterDashboard from './MasterDashboard';
 import UiButtons from 'pages/Ui/UiButtons';
 
 const Dashboard = props => {
@@ -85,7 +85,7 @@ const Dashboard = props => {
               </Col>
             </Row>
           </div>
-          <DevicesDashboard />
+          <MasterDashboard />
           {/* <Row>
             <Col xl={3} md={6}>
               <Card className="mini-stat bg-primary text-white">

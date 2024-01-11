@@ -12,6 +12,7 @@ export const registerUser = user => {
 }
 
 export const registerUserSuccessful = user => {
+  // TODO: addNweUserToFirestore here
   return {
     type: REGISTER_USER_SUCCESSFUL,
     payload: user,
@@ -23,4 +24,5 @@ export const registerUserFailed = user => {
     type: REGISTER_USER_FAILED,
     payload: user,
   }
+
 }

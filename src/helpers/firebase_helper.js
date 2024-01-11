@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app"
 // Add the Firebase products that you want to use
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
+import { collection, getDocs } from "firebase/firestore"
 
 class FirebaseAuthBackend {
   constructor(firebaseConfig) {
@@ -120,9 +121,9 @@ class FirebaseAuthBackend {
     const details = {
       firstName: profile.given_name ? profile.given_name : profile.first_name,
       lastName: profile.family_name ? profile.family_name : profile.last_name,
-      fullName: profile.name,
-      email: profile.email,
-      picture: profile.picture,
+      fullName: user.name,
+      email: user.email,
+      picture: user.picture,
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
     }
@@ -173,4 +174,23 @@ const getFirebaseBackend = () => {
   return _fireBaseBackend
 }
 
-export { initFirebaseBackend, getFirebaseBackend }
+/**
+ * 
+ * @param {string} collectionName
+ * @returns {Promise<Array>} resolve an Array with collection items
+ */
+const getCollectionFromFirestore = async (collectionName) => {
+  const db = firebase.firestore()
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  let res = []
+  querySnapshot.forEach((doc) => {
+    res.push({
+      uid: doc.id,
+      ...doc.data()
+    })
+  })
+  // doc.data() is never undefined for query doc snapshots
+  return res
+}
+
+export { initFirebaseBackend, getFirebaseBackend, getCollectionFromFirestore }

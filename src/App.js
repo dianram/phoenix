@@ -17,6 +17,12 @@ import "./assets/scss/theme.scss";
 
 // Import Firebase Configuration file
 import { initFirebaseBackend } from "./helpers/firebase_helper"
+import "firebase/compat/firestore"
+
+// Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+// Bootstrap Bundle JS
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // import fakeBackend from "./helpers/AuthType/fakeBackend";
 
@@ -36,6 +42,18 @@ const firebaseConfig = {
 
 // init firebase backend
 initFirebaseBackend(firebaseConfig)
+  // db.collection("users").add({
+  //   first: "Ada",
+  //   last: "Lovelace",
+  //   born: 1815
+  // })
+  // .then((docRef) => {
+  //   console.log("Document written with ID: ", docRef.id);
+  // })
+  // .catch((error) => {
+  //   console.error("Error adding document: ", error);
+  // });
+
 
 const App = () => {
   return (
