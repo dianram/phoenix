@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react';
 import {
   Col,
-  Button,
   Card,
   CardFooter,
   CardHeader,
@@ -11,19 +10,17 @@ import {
   CardText,
   FormGroup,
   Input,
-  Label,
-  Form
 } from 'reactstrap'
 
 
 
-function DeviceCard({
+const DeviceCard = ({
   moduleID,
   modulePIN,
   moduleInstallDate,
   batchNumber,
   isOn
-}) {
+}) => {
   const [isOnToggle, setIsOnToggle] = useState(isOn);
   return (
     <Col xl={3} md={6}>
@@ -49,22 +46,7 @@ function DeviceCard({
                     }}
                   />
               </FormGroup>
-              {/* <button>switch</button> */}
               <p className='ml-2'>Yes</p>
-            {/* <Form>
-              <FormGroup switch>
-                <p>No</p>
-                <Input
-                  className='bg-dark mx-auto'
-                  type="switch"
-                  checked={isOnToggle}
-                  onChange={() => {
-                    setIsOnToggle(!isOnToggle);
-                  }}
-                />
-                <Label check>Yes</Label>
-              </FormGroup>
-            </Form> */}
             </div>
           </CardFooter>       
         </CardBody>
