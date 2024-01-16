@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import UserCard from '../pages/Dashboard/UserCard'
 import {
   Row,
-  Col,
 } from 'reactstrap'
 
 import { getCollectionFromFirestore } from '../helpers/firebase_helper'
@@ -29,7 +28,7 @@ const Devices = () => {
             userID = {user.uid}
             email={user.email}
             firstPurchaseDate={user.firstPurchaseDate}
-            userModules={user.myModules ? [...user.myModules] : ""}
+            userModules={user.modules ? [...user.modules] : ""}
             name={user.name}
             phone={user.phone}
             userLocation={user.state}

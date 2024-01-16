@@ -46,6 +46,7 @@ import { withTranslation } from "react-i18next";
 
 // Phoenix components
 import MasterDashboard from './MasterDashboard';
+import DealerDashboard from './DealerDashboard';
 import UiButtons from 'pages/Ui/UiButtons';
 
 const Dashboard = props => {
@@ -86,6 +87,7 @@ const Dashboard = props => {
             </Row>
           </div>
           <MasterDashboard />
+          {/* <DealerDashboard id="0eY2rU3IHblhXSVimfZS" typeOfUser="dealerships"/> */}
           {/* <Row>
             <Col xl={3} md={6}>
               <Card className="mini-stat bg-primary text-white">
