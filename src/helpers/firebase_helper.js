@@ -34,6 +34,7 @@ class FirebaseAuthBackend {
           },
           error => {
             reject(this._handleError(error))
+            console.log(error)
           }
         )
     })
@@ -117,13 +118,15 @@ class FirebaseAuthBackend {
 
   addNewUserToFirestore = (user) => {
     const collection = firebase.firestore().collection("users")
-    const { profile } = user.additionalUserInfo
+    // const { profile } = user.additionalUserInfo
     const details = {
-      firstName: profile.given_name ? profile.given_name : profile.first_name,
-      lastName: profile.family_name ? profile.family_name : profile.last_name,
-      fullName: user.name,
+      // firstName: profile.given_name ? profile.given_name : profile.first_name,
+      // lastName: profile.family_name ? profile.family_name : profile.last_name,
+      // fullName: user.name,
+      // name: user.username,
       email: user.email,
-      picture: user.picture,
+      name: user.username,
+      // picture: user.picture,
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
     }

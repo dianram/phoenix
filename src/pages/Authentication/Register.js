@@ -6,6 +6,9 @@ import { Row, Col, CardBody, Card, Container, Form, FormFeedback, Label, Input, 
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
+// FireStore
+import { getFirebaseBackend } from "helpers/firebase_helper"
+
 // action
 import { registerUser, apiError, registerUserFailed } from "../../store/actions";
 
@@ -37,6 +40,7 @@ const Register = props => {
   }, [dispatch, user, history]);
 
 
+  console.log({user})
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -55,7 +59,8 @@ const Register = props => {
       dispatch(registerUser(values));
     }
   });
-
+  
+  console.log({validation})
   // handleValidSubmit
   const handleValidSubmit = (event, values) => {
     props.registerUser(values);

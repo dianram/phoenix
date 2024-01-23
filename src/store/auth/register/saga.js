@@ -23,6 +23,7 @@ function* registerUser({ payload: { user } }) {
         user.email,
         user.password
       )
+      yield call(fireBaseBackend.addNewUserToFirestore, user)
       yield put(registerUserSuccessful(response))
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response = yield call(postJwtRegister, "/post-jwt-register", user)

@@ -1,3 +1,5 @@
+import { getFirebaseBackend } from "helpers/firebase_helper"
+
 import {
   REGISTER_USER,
   REGISTER_USER_SUCCESSFUL,
@@ -11,8 +13,9 @@ export const registerUser = user => {
   }
 }
 
-export const registerUserSuccessful = user => {
-  // TODO: addNweUserToFirestore here
+export const registerUserSuccessful = (user ) => {
+  // const firebaseBackend = getFirebaseBackend()
+  // firebaseBackend.addNewUserToFirestore(details)
   return {
     type: REGISTER_USER_SUCCESSFUL,
     payload: user,
