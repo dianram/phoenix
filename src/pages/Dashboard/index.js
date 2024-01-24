@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import firebase from "firebase/compat/app"
+import { doc, getDoc } from "firebase/firestore"
+import "firebase/compat/firestore"
+
+// Add the Firebase products that you want to use
+import "firebase/compat/auth" 
 import {
   Container,
   Row,
@@ -48,13 +54,30 @@ import { withTranslation } from "react-i18next";
 import MasterDashboard from './MasterDashboard';
 import DealerDashboard from './DealerDashboard';
 import UiButtons from 'pages/Ui/UiButtons';
+import { useSelector } from 'react-redux';
+import { getUserInfo } from 'helpers/firebase_helper';
+import { userTypes } from 'constants/userTypes';
 
 const Dashboard = props => {
   const [menu, setMenu] = useState(false);
+  const [user, setUser] = useState({})
+  
+  useEffect(() => {
+    getUserInfo()
+    .then(currentUserInfo => {
+      setUser(currentUserInfo)
+    }).catch(error => {
+      console.log("failed fetch: ", error)
+    })
+  }, [])
+
+
   const toggle = () => {
     setMenu(!menu);
   };
+
   document.title = "Dashboard | Phoenix";
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -86,7 +109,10 @@ const Dashboard = props => {
               </Col>
             </Row>
           </div>
-          <MasterDashboard />
+          {(user.userType === userTypes.COSTUMER || user.userType === userTypes.DEALER
+            ? < DealerDashboard user={user}/>
+            : <MasterDashboard /> 
+          )}
           {/* <DealerDashboard id="0eY2rU3IHblhXSVimfZS" typeOfUser="dealerships"/> */}
           {/* <Row>
             <Col xl={3} md={6}>

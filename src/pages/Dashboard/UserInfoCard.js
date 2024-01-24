@@ -19,7 +19,7 @@ const UserInfoCard = ({ user }) => {
             {user.name}
           </CardHeader>
           {keysToShow.map(infoKey => (
-            <CardText className="border-bottom" key={infoKey}> {infoKey}: {user[infoKey]} </CardText>
+            <CardText className="border-bottom" key={infoKey}> {infoKey}: {user[infoKey].toString() } </CardText>
           ))}
         </CardBody>
         

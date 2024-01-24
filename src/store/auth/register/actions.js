@@ -13,9 +13,7 @@ export const registerUser = user => {
   }
 }
 
-export const registerUserSuccessful = (user ) => {
-  // const firebaseBackend = getFirebaseBackend()
-  // firebaseBackend.addNewUserToFirestore(details)
+export const registerUserSuccessful = user => {
   return {
     type: REGISTER_USER_SUCCESSFUL,
     payload: user,

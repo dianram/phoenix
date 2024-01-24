@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app"
 // Add the Firebase products that you want to use
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc } from "firebase/firestore"
 
 class FirebaseAuthBackend {
   constructor(firebaseConfig) {
@@ -118,15 +118,32 @@ class FirebaseAuthBackend {
 
   addNewUserToFirestore = (user) => {
     const collection = firebase.firestore().collection("users")
-    // const { profile } = user.additionalUserInfo
     const details = {
-      // firstName: profile.given_name ? profile.given_name : profile.first_name,
-      // lastName: profile.family_name ? profile.family_name : profile.last_name,
-      // fullName: user.name,
-      // name: user.username,
       email: user.email,
-      name: user.username,
-      // picture: user.picture,
+      name: user.userFullName,
+      address: user.address,
+      phone: user.phone,
+      state: user.location,
+      userType: user.userType,
+      createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
+      lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
+    }
+    collection.doc(firebase.auth().currentUser.uid).set(details)
+    return { user, details }
+  }
+
+  addNewDealerToFirestore = (user) => {
+    const collection = firebase.firestore().collection("dealerships")
+    const details = {
+      manager: user.manager,
+      managerPhone: user.dealerPhone,
+      email: user.dealerEmail,
+      name: user.dealerlName,
+      address: user.dealerAddress,
+      phone: user.dealerPhone,
+      state: user.dealerLocation,
+      userType: user.userType,
+      modules: [],
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
     }
@@ -196,4 +213,25 @@ const getCollectionFromFirestore = async (collectionName) => {
   return res
 }
 
-export { initFirebaseBackend, getFirebaseBackend, getCollectionFromFirestore }
+const getUserInfo = async () => {
+  const db = await firebase.firestore()
+  const user = JSON.parse(localStorage.getItem("authUser"))
+  console.log("user from getUserInfo: ", user)
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    const docRefDealer = doc(db, "dealerships", user.uid);
+    const docSnapDealer = await getDoc(docRefDealer);
+    if (docSnapDealer.exists()) {
+      return docSnapDealer.data()
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+}
+
+export { initFirebaseBackend, getFirebaseBackend, getCollectionFromFirestore, getUserInfo }

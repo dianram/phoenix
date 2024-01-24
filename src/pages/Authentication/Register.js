@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, CardBody, Card, Container, Form, FormFeedback, Label, Input, Alert } from "reactstrap";
+
 
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
-// FireStore
-import { getFirebaseBackend } from "helpers/firebase_helper"
 
 // action
 import { registerUser, apiError, registerUserFailed } from "../../store/actions";
@@ -18,6 +16,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 // import images
 import logoSm from "../../assets/images/logo-sm.png";
+import UserRegistrationForm from "pages/Forms/customForms/UserRegistrationForm";
+import CustomDropdown from "pages/Ui/CustomDropdown";
+import DealerRegistrationForm from "pages/Forms/customForms/DealerRegistrationForm";
+import { userTypes } from "../../constants/userTypes"
 
 const Register = props => {
   const history = useNavigate();
@@ -28,6 +30,7 @@ const Register = props => {
     user: state.Account.user,
   }));
 
+  const [userType, setUserType] = useState('')
   useEffect(() => {
     if (user) {
       setTimeout(() => history("/login"), 3000);
@@ -40,27 +43,60 @@ const Register = props => {
   }, [dispatch, user, history]);
 
 
-  console.log({user})
-  const validation = useFormik({
+  const userValidation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
       email: '',
-      username: '',
+      userFullName: '',
       password: '',
+      address: '',
+      phone: '',
+      location: '',
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
-      username: Yup.string().required("Please Enter Your User Name"),
+      userFullName: Yup.string().required("Please Enter Your User Full Name"),
       password: Yup.string().required("Please Enter Your Password"),
+      address: Yup.string().required("Please Enter Your Address"),
+      phone: Yup.string().required("Please Enter Your Phone"),
+      location: Yup.string().required("Please Enter Your State"),
     }),
     onSubmit: (values) => {
-      dispatch(registerUser(values));
+      dispatch(registerUser({...values, userType}));
+    }
+  });
+
+  const dealerValidation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      dealerLocation: '',
+      manager: '',
+      managerPhone: '',
+      dealerPhone: '',
+      dealerAddress: '',
+      dealerPassword: '',
+      dealerlName: '',
+      dealerEmail: ''
+    },
+    validationSchema: Yup.object({
+      dealerEmail: Yup.string().required("Please Enter Your Email"),
+      dealerlName: Yup.string().required("Please Enter Your Dealer Name"),
+      dealerLocation: Yup.string().required("Please Enter Your State"),
+      manager: Yup.string().required("Please Enter Manager Name"),
+      managerPhone: Yup.string().required("Please Enter Manager Phone"),
+      dealerPhone: Yup.string().required("Please Enter Phone"),
+      dealerAddress: Yup.string().required("Please Enter Address"),
+      dealerPassword: Yup.string().required("Please Enter Your Password"),
+    }),
+    onSubmit: (values) => {
+      dispatch(registerUser({...values, userType}));
     }
   });
   
-  console.log({validation})
   // handleValidSubmit
   const handleValidSubmit = (event, values) => {
     props.registerUser(values);
@@ -71,6 +107,15 @@ const Register = props => {
   }, []);
 
   document.title = "Register | Phoenix Immobilizer";
+
+  const userFormSelection = (validation) => {
+    if (userType === userTypes.DEALER) {
+      return < DealerRegistrationForm validation={dealerValidation}/>
+    } else if (userType === userTypes.COSTUMER) {
+      return < UserRegistrationForm validation={userValidation}/>     
+    }
+    return ""
+  }
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -99,7 +144,11 @@ const Register = props => {
                         Register User Successful
                       </Alert>
                     ) : null}
-                    <Form className="mt-4" onSubmit={(e) => {
+                      < CustomDropdown direction="down" setUserType={setUserType}/>
+                      {userFormSelection()}
+                      {/* < UserRegistrationForm validation={validation}/> */}
+                      
+                    {/* <Form className="mt-4" onSubmit={(e) => {
                       e.preventDefault();
                       validation.handleSubmit();
                       return false;
@@ -177,7 +226,7 @@ const Register = props => {
                           <p className="mb-0">By registering you agree to the Phoenix <Link to="#" className="text-primary">Terms of Use</Link></p>
                         </div>
                       </div>
-                    </Form>
+                    </Form> */}
                   </div>
                 </CardBody>
               </Card>

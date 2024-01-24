@@ -11,6 +11,9 @@ import {
   postJwtRegister,
 } from "../../../helpers/fakebackend_helper"
 
+// Constants
+import { userTypes } from "constants/userTypes"
+
 // initialize relavant method of both Auth
 const fireBaseBackend = getFirebaseBackend()
 
@@ -18,13 +21,24 @@ const fireBaseBackend = getFirebaseBackend()
 function* registerUser({ payload: { user } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = yield call(
-        fireBaseBackend.registerUser,
-        user.email,
-        user.password
-      )
-      yield call(fireBaseBackend.addNewUserToFirestore, user)
-      yield put(registerUserSuccessful(response))
+      if (user.userType === userTypes.DEALER) {
+        console.log(user.dealerEmail, user.dealerPassword)
+        const response = yield call(
+          fireBaseBackend.registerUser,
+          user.dealerEmail,
+          user.dealerPassword
+        )
+        yield call(fireBaseBackend.addNewDealerToFirestore, user)
+        yield put(registerUserSuccessful(response))
+      } else if (user.userType === userTypes.COSTUMER) {
+        const response = yield call(
+          fireBaseBackend.registerUser,
+          user.email,
+          user.password
+        )
+        yield call(fireBaseBackend.addNewUserToFirestore, user)
+        yield put(registerUserSuccessful(response))
+      }
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response = yield call(postJwtRegister, "/post-jwt-register", user)
       yield put(registerUserSuccessful(response))

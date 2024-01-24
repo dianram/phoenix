@@ -3,18 +3,17 @@ import React, { useEffect, useState } from 'react'
 import UserInfoCard from '../UserInfoCard'
 import UserDevicesDetail from '../../../components/userDevicesDetail'
 
-const DealerDashboard = ({ id, typeOfUser }) => {
-  const [user, setUser] = useState({})
+const DealerDashboard = ({ user }) => {
 
-  useEffect(() => {
-    getCollectionFromFirestore(typeOfUser)
-      .then(res => {
-        const user = res.filter(user => user.uid === id)
-        setUser(user[0])
-      }).catch(error => {
-        console.log("failed fetch: ", error)
-      })
-  }, [typeOfUser, id])
+  // useEffect(() => {
+  //   getCollectionFromFirestore(typeOfUser)
+  //     .then(res => {
+  //       const user = res.filter(user => user.uid === id)
+  //       setUser(user[0])
+  //     }).catch(error => {
+  //       console.log("failed fetch: ", error)
+  //     })
+  // }, [typeOfUser, id])
   console.log(user)
   return (
     <>
