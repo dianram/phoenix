@@ -9,7 +9,7 @@ import {
 
 const UserInfoCard = ({ user }) => {
   const infoKeys = Object.keys(user)
-  const keysToShow = infoKeys.filter(key => key !== "dealerModules")
+  const keysToShow = infoKeys.filter(key => key !== "modules")
   return (
     <>
       <Col xl={12}>

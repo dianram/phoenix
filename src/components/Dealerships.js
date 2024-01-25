@@ -1,5 +1,5 @@
 import { getCollectionFromFirestore } from 'helpers/firebase_helper'
-import DealerCard from 'pages/Dashboard/DealerCard'
+import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 import React, { useEffect, useState } from 'react'
 import {
   Row,
@@ -22,18 +22,19 @@ const Dealerships = () => {
       <Row>
         <h5 className='mt-2'>Dealerships</h5>
         {dealers.map(dealer => (
-          <DealerCard 
-          key={dealer.uid}
-          dealerID={dealer.uid}
-          dealerEmail={dealer.email}
-          firstPurchaseDate={dealer.firstPurchaseDate}
-          dealerModules={dealer.modules ? [...dealer.modules] : ""}
-          dealerName={dealer.name}
-          dealerPhone={dealer.phone}
-          dealerLocation={dealer.state}
-          dealerManager={dealer.manager}
-          dealerManagerPhone={dealer.managerPhone}
-          dealerAddress={dealer.address}
+          <UserInfoCard
+            key={dealer.uid}
+            user={dealer}
+          // dealerID={dealer.uid}
+          // dealerEmail={dealer.email}
+          // firstPurchaseDate={dealer.firstPurchaseDate}
+          // dealerModules={dealer.modules ? [...dealer.modules] : ""}
+          // dealerName={dealer.name}
+          // dealerPhone={dealer.phone}
+          // dealerLocation={dealer.state}
+          // dealerManager={dealer.manager}
+          // dealerManagerPhone={dealer.managerPhone}
+          // dealerAddress={dealer.address}
           />
         ))}
       </Row>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import UserCard from '../pages/Dashboard/UserCard'
 import {
   Row,
 } from 'reactstrap'
 
 import { getCollectionFromFirestore } from '../helpers/firebase_helper'
+import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 
-const Devices = () => {
+const Users = () => {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
@@ -23,15 +23,9 @@ const Devices = () => {
       <Row>
         <h5 className='mt-2'>Users</h5>
         {users.map(user => (
-          <UserCard
+          <UserInfoCard
+            user={user}
             key={user.uid}
-            userID = {user.uid}
-            email={user.email}
-            firstPurchaseDate={user.firstPurchaseDate}
-            userModules={user.modules ? [...user.modules] : ""}
-            name={user.name}
-            phone={user.phone}
-            userLocation={user.state}
           />
         ))}
       </Row>
@@ -39,4 +33,4 @@ const Devices = () => {
   )
 }
 
-export default Devices
+export default Users
