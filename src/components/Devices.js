@@ -6,6 +6,9 @@ import {
 } from 'reactstrap'
 
 import { getCollectionFromFirestore } from '../helpers/firebase_helper'
+import Stock from './Common/Stock'
+import MassiveShutdown from './MassiveShutdown'
+import Voltage from './Voltage'
 
 const Devices = () => {
   const [modules, setModules] = useState([])
@@ -22,7 +25,7 @@ const Devices = () => {
   return (
     <div className='p-3'>
       <Row>
-        <h5 className='mt-2'>Devices</h5>
+        <h4 className='mt-2'>Devices</h4>
         {modules.map(item => (
           <DeviceCard
             key={item.uid}
@@ -34,6 +37,9 @@ const Devices = () => {
           />
         ))}
       </Row>
+      <MassiveShutdown modules={modules}/>
+      <Stock modules={modules}/>
+      <Voltage />
     </div>
   )
 }

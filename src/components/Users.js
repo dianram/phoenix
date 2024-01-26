@@ -21,7 +21,7 @@ const Users = () => {
   return (
     <div className='p-3'>
       <Row>
-        <h5 className='mt-2'>Users</h5>
+        <h4 className='mt-2'>Users</h4>
         {users.map(user => (
           <UserInfoCard
             user={user}

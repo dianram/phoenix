@@ -216,7 +216,6 @@ const getCollectionFromFirestore = async (collectionName) => {
 const getUserInfo = async () => {
   const db = await firebase.firestore()
   const user = JSON.parse(localStorage.getItem("authUser"))
-  console.log("user from getUserInfo: ", user)
   const docRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(docRef);
 

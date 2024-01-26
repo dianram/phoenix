@@ -6,6 +6,7 @@ import {
   CardBody,
   CardText,
 } from 'reactstrap'
+import UserDevices from './UserDevices'
 
 const UserInfoCard = ({ user }) => {
   const infoKeys = Object.keys(user)
@@ -21,6 +22,10 @@ const UserInfoCard = ({ user }) => {
           {keysToShow.map(infoKey => (
             <CardText className="border-bottom" key={infoKey}> {infoKey}: {user[infoKey].toString() } </CardText>
           ))}
+          {user.modules
+            ? < UserDevices userModules={user.modules} />
+            : ""
+          }
         </CardBody>
         
       </Card>
