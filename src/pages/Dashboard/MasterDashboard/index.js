@@ -4,6 +4,7 @@ import Users from '../../../components/Users'
 import Dealerships from '../../../components/Dealerships'
 import QRreader from 'components/QRreader'
 import AddDevice from 'components/AddDevice'
+import Groups from 'components/Groups'
 
 const MasterDashboard = () => {
   return (
@@ -12,6 +13,7 @@ const MasterDashboard = () => {
       <Devices />
       <Users />
       <Dealerships />
+      <Groups />
       <QRreader />
       <AddDevice />
     </>

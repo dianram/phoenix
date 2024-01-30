@@ -108,7 +108,7 @@ const Register = props => {
 
   document.title = "Register | Phoenix Immobilizer";
 
-  const userFormSelection = (validation) => {
+  const userFormSelection = () => {
     if (userType === userTypes.DEALER) {
       return < DealerRegistrationForm validation={dealerValidation}/>
     } else if (userType === userTypes.COSTUMER) {

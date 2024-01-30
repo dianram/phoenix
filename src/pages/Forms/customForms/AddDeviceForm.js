@@ -5,9 +5,10 @@ import { Form, Label, Input, FormFeedback } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from 'react-router-dom';
+import { addNewDeviceToFirestore } from 'helpers/firebase_helper';
 
 
-const AddDeviceForm = ({toggle }) => {
+const AddDeviceForm = ({ toggle }) => {
   const deviceValidation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -25,13 +26,13 @@ const AddDeviceForm = ({toggle }) => {
       usbInputVoltage: '',
       vinNumber: ''
     },
-    deviceValidationSchema: Yup.object({
+    validationSchema: Yup.object().shape({
       assetDescription: Yup.string().required("Please Enter Asset Description"),
       assetName: Yup.string().required("Please Enter Your Asset Name"),
       assetStatus: Yup.string().required("Please Enter Your Asset Status"),
       batchNumber: Yup.string().required("Please Enter Batch Number"),
       batteryVoltage: Yup.string().required("Please Enter Battery Voltage"),
-      moduleInstallDate: Yup.string().required("Please Enter Module Install Date"),
+      moduleInstallDate: Yup.date().required("Please Enter Module Install Date"),
       moduleOwner: Yup.string().required("Please Enter Module Owner ID"),
       modulePIN: Yup.string().required("Please Enter Your Module PIN"),
       moduleState: Yup.string().required("Please Enter Module Location"),
@@ -39,10 +40,11 @@ const AddDeviceForm = ({toggle }) => {
       vinNumber: Yup.string().required("Please Enter Vin Number"),
     }),
     onSubmit: (values) => {
-     console.log({values});
+     addNewDeviceToFirestore(values)
      toggle()
     }
   });
+  console.log({deviceValidation})
   return (
     <>
       <Form className="mt-4" onSubmit={(e) => {

@@ -1,3 +1,4 @@
+import { singleModuleShutDownOnFireStore } from 'helpers/firebase_helper';
 import React from 'react'
 import { useState } from 'react';
 import {
@@ -43,6 +44,7 @@ const DeviceCard = ({
                     checked={isOnToggle}
                     onChange={() => {
                       setIsOnToggle(prev => !prev);
+                      singleModuleShutDownOnFireStore(moduleID, !isOnToggle)
                     }}
                   />
               </FormGroup>

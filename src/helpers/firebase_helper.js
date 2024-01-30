@@ -233,4 +233,65 @@ const getUserInfo = async () => {
   }
 }
 
-export { initFirebaseBackend, getFirebaseBackend, getCollectionFromFirestore, getUserInfo }
+const addNewDeviceToFirestore = async (device) => {
+  const db = await firebase.firestore()
+  // const collection = firebase.firestore().collection("modules")
+  const details = {
+    assetDescription: device.assetDescription,
+    assetName: device.assetName,
+    assetStatus: device.assetStatus,
+    batchNumber: device.batchNumber,
+    batteryVoltage: device.batteryVoltage,
+    moduleInstallDate: device.moduleInstallDate,
+    moduleOwner: device.moduleOwner,
+    modulePIN: device.modulePIN,
+    moduleState: device.moduleState,
+    usbInputVoltage: device.usbInputVoltage,
+    vinNumber: device.vinNumber,
+    action: "",
+    isOn: false,
+    createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
+    lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
+  }
+  const createdDocRef = await db.collection("modules").add(details)
+  if (createdDocRef) {
+    console.log("Document ID created: ", createdDocRef.id)
+  } else {
+    console.log("Error adding document")
+  }
+  return { details }
+}
+
+const modulesShutDownOnFireStore = ( modules ) => {
+  const db = firebase.firestore()
+  modules.map(module => {
+    db.collection("modules").doc(module.uid).update({
+      isOn: false
+    }).then(() => {
+      console.log("All modules were successfully shutdown!")
+    }).catch(error => {
+      console.error("Error updating documents: ", error)
+    })
+  })
+}
+const singleModuleShutDownOnFireStore = ( moduleID, isOn ) => {
+  const db = firebase.firestore()
+  db.collection("modules").doc(moduleID).update({
+    isOn
+  }).then(() => {
+    console.log("Document successfully updated!")
+  }).catch(error => {
+    console.error("Error updating document: ", error)
+  })
+}
+
+
+export { 
+  initFirebaseBackend,
+  getFirebaseBackend,
+  getCollectionFromFirestore,
+  getUserInfo,
+  addNewDeviceToFirestore,
+  modulesShutDownOnFireStore,
+  singleModuleShutDownOnFireStore
+}
