@@ -44,7 +44,7 @@ const AddDeviceForm = ({ toggle }) => {
      toggle()
     }
   });
-  console.log({deviceValidation})
+
   return (
     <>
       <Form className="mt-4" onSubmit={(e) => {

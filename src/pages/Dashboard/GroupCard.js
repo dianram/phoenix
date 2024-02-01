@@ -12,12 +12,35 @@ import {
   CardHeader,
   CardText,
   CardFooter,
+  Label,
+  Input,
+  FormFeedback
 } from 'reactstrap';
+
+// Formik deviceValidation
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 const GroupCard = ({ groupName, groupItems }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
+
+  const idValidation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+  
+    initialValues: {
+      id: '',
+    },
+    validationSchema: Yup.object().shape({
+      id: Yup.string().required("Please Enter ID"),
+    }),
+    onSubmit: (values) => {
+    //  addNewDeviceToFirestore(values)
+     toggle()
+    }
+  });
 
   return (
     <Col xl={3} md={6}>
@@ -34,7 +57,10 @@ const GroupCard = ({ groupName, groupItems }) => {
         }
         <CardFooter>
           <div className='d-inline-flex justify-content-center'>
-            <Form onSubmit={(e) => e.preventDefault()} className='my-2 p-2 d-flex justify-content-center'>
+            <Form 
+              className='my-2 p-2 d-flex justify-content-center'
+              onSubmit={(e) => e.preventDefault()}
+            >
               <Button color="primary" onClick={toggle}>
                 Add Member/Item
               </Button>
@@ -46,6 +72,34 @@ const GroupCard = ({ groupName, groupItems }) => {
               <ModalHeader toggle={toggle}>Add to group</ModalHeader>
               <ModalBody>
                 Add a new member/item to this group.
+                <Form 
+                  className='my-2 p-2 d-flex justify-content-center'
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    idValidation.handleSubmit()
+                    return false;
+                  }}
+                >
+                  <div className="mb-3">
+                    <Label className="form-label" htmlFor="id">ID</Label>
+                    <Input
+                      name="id"
+                      className="form-control"
+                      placeholder="Enter ID"
+                      type="text"
+                      id="id"
+                      onChange={idValidation.handleChange}
+                      onBlur={idValidation.handleBlur}
+                      value={idValidation.values.assetDescription || ""}
+                      invalid={
+                        idValidation.touched.assetDescription && idValidation.errors.assetDescription ? true : false
+                      }
+                    />
+                    {idValidation.touched.assetDescription && idValidation.errors.assetDescription ? (
+                      <FormFeedback type="invalid">{idValidation.errors.assetDescription}</FormFeedback>
+                    ) : null}
+                  </div>
+                </Form>
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={toggle}>

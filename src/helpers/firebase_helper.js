@@ -3,7 +3,8 @@ import firebase from "firebase/compat/app"
 // Add the Firebase products that you want to use
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
-import { collection, getDocs, doc, getDoc } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc, FieldValue } from "firebase/firestore"
+import useTypes, { userTypes } from "../constants/userTypes"
 
 class FirebaseAuthBackend {
   constructor(firebaseConfig) {
@@ -220,12 +221,14 @@ const getUserInfo = async () => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    return docSnap.data();
+    const userInfo = docSnap.data()
+    return {...userInfo, uid: user.uid}
   } else {
     const docRefDealer = doc(db, "dealerships", user.uid);
     const docSnapDealer = await getDoc(docRefDealer);
     if (docSnapDealer.exists()) {
-      return docSnapDealer.data()
+      const userInfo = docSnapDealer.data()
+      return {...userInfo, uid: user.uid}
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -285,6 +288,34 @@ const singleModuleShutDownOnFireStore = ( moduleID, isOn ) => {
   })
 }
 
+const createGroup = ( groupName, itemId, user, groups, setGroups ) => {
+  console.log(user.uid)
+  const newGroup = {
+    name: groupName,
+    items: [itemId]
+  }
+  const db = firebase.firestore()
+  if (user.userType === userTypes.DEALER) {
+    db.collection("dealerships").doc(user.uid).update({
+      groups: FieldValue.arrayUnion(newGroup)
+    }).then(() => {
+      console.log("Document successfully updated!")
+      setGroups([...groups, newGroup])
+    }).catch(error => {
+      console.error("Error updating document: ", error)
+    })
+  } else {
+    db.collection("users").doc(user.uid).update({
+      groups: [...groups, newGroup]
+    }).then(() => {
+      console.log("Document successfully updated!")
+      setGroups([...groups, newGroup])
+    }).catch(error => {
+      console.error("Error updating document: ", error)
+    })
+  }
+}
+
 
 export { 
   initFirebaseBackend,
@@ -293,5 +324,6 @@ export {
   getUserInfo,
   addNewDeviceToFirestore,
   modulesShutDownOnFireStore,
-  singleModuleShutDownOnFireStore
+  singleModuleShutDownOnFireStore,
+  createGroup
 }

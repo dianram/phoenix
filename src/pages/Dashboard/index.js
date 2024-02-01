@@ -60,7 +60,7 @@ import { userTypes } from 'constants/userTypes';
 
 const Dashboard = props => {
   const [menu, setMenu] = useState(false);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState("")
   
   useEffect(() => {
     getUserInfo()
@@ -111,7 +111,7 @@ const Dashboard = props => {
           </div>
           {(user.userType === userTypes.COSTUMER || user.userType === userTypes.DEALER
             ? < DealerDashboard user={user}/>
-            : <MasterDashboard /> 
+            : <MasterDashboard user={user}/> 
           )}
           {/* <DealerDashboard id="0eY2rU3IHblhXSVimfZS" typeOfUser="dealerships"/> */}
           {/* <Row>

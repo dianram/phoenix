@@ -1,31 +1,22 @@
+import { getUserInfo } from 'helpers/firebase_helper'
 import GroupCard from 'pages/Dashboard/GroupCard'
-import React from 'react'
-import { Row } from 'reactstrap'
+import React, { useEffect, useState } from 'react'
+import { Row, Col } from 'reactstrap'
+import CreateGroup from './CreateGroup'
 
+const Groups = ({ user }) => {
+  const [ groups, setGroups ] = useState([])
 
-const DUMMY_GROUPS = [
-  {
-    name: "Cars",
-    items: ["162637474", "567678898"]
-  },
-  {
-    name: "Demo Cars",
-    items: ["0098765487", "567678898"]
-  },
-  {
-    name: "Users",
-    items: ["0098785868", "567678898"]
-  },
-]
+  useEffect(() => {
+    setGroups(user.groups)
+  }, [user])
 
-const Groups = () => {
-  const groups = DUMMY_GROUPS
-  console.log(groups)
+  console.log("user from Grupos: ", user, groups)
   return (
     <div className='p-3'>
       <Row>
         <h4 className='mt-2'>Groups</h4>
-        {groups 
+        {(user && groups && (groups.length > 0)) 
           ? groups.map(group => (
             <GroupCard
               key={group.name}
@@ -33,7 +24,15 @@ const Groups = () => {
               groupItems={group.items}
             />
           ))
-          : "There are not any group"
+          : (<Col xl={12} md={12}>
+              <h4>There are not any group</h4>
+            </Col>)
+        }
+        {(user && groups && (groups.length === 3))
+          ? (<Col xl={12} md={12}>
+            <h4>You cannot create more groups</h4>
+            </Col>)
+          : (<CreateGroup user={user} groups={groups} setGroups={setGroups}/>)
         }
       </Row>
     </div>
