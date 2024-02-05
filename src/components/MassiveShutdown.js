@@ -16,7 +16,7 @@ const MassiveShutdown = ({ modules }) => {
 
   const handleSubmit = () => {
     modulesShutDownOnFireStore(modules)
-    toogle()
+    toggle()
   }
   return (
     <>

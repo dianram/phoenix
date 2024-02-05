@@ -9,7 +9,6 @@ import { createGroup } from 'helpers/firebase_helper';
 
 
 const CreateGroupForm = ({ toggle, user, groups, setGroups }) => {
-  console.log("user from creategroup form: ", user)
   const groupValidation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -27,6 +26,8 @@ const CreateGroupForm = ({ toggle, user, groups, setGroups }) => {
      toggle()
     }
   });
+
+  console.log({groupValidation})
 
   return (
     <>

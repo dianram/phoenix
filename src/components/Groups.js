@@ -11,7 +11,6 @@ const Groups = ({ user }) => {
     setGroups(user.groups)
   }, [user])
 
-  console.log("user from Grupos: ", user, groups)
   return (
     <div className='p-3'>
       <Row>
@@ -22,6 +21,9 @@ const Groups = ({ user }) => {
               key={group.name}
               groupName = {group.name}
               groupItems={group.items}
+              user={user}
+              setGroups={setGroups}
+              groups={groups}
             />
           ))
           : (<Col xl={12} md={12}>

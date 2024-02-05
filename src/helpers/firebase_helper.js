@@ -266,6 +266,7 @@ const addNewDeviceToFirestore = async (device) => {
 }
 
 const modulesShutDownOnFireStore = ( modules ) => {
+  console.log({modules})
   const db = firebase.firestore()
   modules.map(module => {
     db.collection("modules").doc(module.uid).update({
@@ -289,7 +290,6 @@ const singleModuleShutDownOnFireStore = ( moduleID, isOn ) => {
 }
 
 const createGroup = ( groupName, itemId, user, groups, setGroups ) => {
-  console.log(user.uid)
   const newGroup = {
     name: groupName,
     items: [itemId]
@@ -297,7 +297,7 @@ const createGroup = ( groupName, itemId, user, groups, setGroups ) => {
   const db = firebase.firestore()
   if (user.userType === userTypes.DEALER) {
     db.collection("dealerships").doc(user.uid).update({
-      groups: FieldValue.arrayUnion(newGroup)
+      groups: [...groups, newGroup]
     }).then(() => {
       console.log("Document successfully updated!")
       setGroups([...groups, newGroup])
@@ -316,6 +316,65 @@ const createGroup = ( groupName, itemId, user, groups, setGroups ) => {
   }
 }
 
+const addItemToGroup = ( groupName, newItem, user, groups, setGroups, groupItems ) => {
+  const itemRemovedFromGroups = groups.filter(group => group.name !== groupName)
+  const newGroup = {
+    name: groupName,
+    items: [...groupItems, newItem]
+  }
+  const db = firebase.firestore()
+  if (user.userType === userTypes.DEALER) {
+    db.collection("dealerships").doc(user.uid).update({
+      groups: [...itemRemovedFromGroups, newGroup]
+    }).then(() => {
+      console.log("Document successfully updated!")
+      setGroups([...itemRemovedFromGroups, newGroup])
+    }).catch(error => {
+      console.error("Error updating document: ", error)
+    })
+  } else {
+    db.collection("users").doc(user.uid).update({
+      groups: [...itemRemovedFromGroups, newGroup]
+    }).then(() => {
+      console.log("Document successfully updated!")
+      setGroups([...itemRemovedFromGroups, newGroup])
+    }).catch(error => {
+      console.error("Error updating document: ", error)
+    })
+  }
+}
+
+const updatedGroups = (item, groupName, groups, groupItems) => {
+  const newItems = groupItems.filter(groupItem => groupItem !== item)
+  const groupUpdated = {name: groupName, items: newItems}
+  const itemRemovedFromGroups = groups.filter(group => group.name !== groupName)
+  const newGroups = [...itemRemovedFromGroups, groupUpdated]
+  return newGroups
+}
+const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItems) => {
+  const newGroups = updatedGroups(item, groupName, groups, groupItems)
+  const db = firebase.firestore()
+  if (user.userType === userTypes.DEALER) {
+    db.collection("dealerships").doc(user.uid).update({
+      groups: newGroups
+    }).then(() => {
+      console.log("Document successfully updated!")
+      setGroups(newGroups)
+    }).catch(error => {
+      console.error("Error updating document: ", error)
+    })
+  } else {
+    db.collection("users").doc(user.uid).update({
+      groups: newGroups
+    }).then(() => {
+      console.log("Document successfully updated!")
+      setGroups(newGroups)
+    }).catch(error => {
+      console.error("Error updating document: ", error)
+    })
+  }
+}
+
 
 export { 
   initFirebaseBackend,
@@ -325,5 +384,7 @@ export {
   addNewDeviceToFirestore,
   modulesShutDownOnFireStore,
   singleModuleShutDownOnFireStore,
-  createGroup
+  createGroup,
+  removeItemFromGroup,
+  addItemToGroup
 }

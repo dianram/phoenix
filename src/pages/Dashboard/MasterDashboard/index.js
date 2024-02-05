@@ -7,7 +7,6 @@ import AddDevice from 'components/AddDevice'
 import Groups from 'components/Groups'
 
 const MasterDashboard = ({ user }) => {
-  console.log("user from masterdas: ", user)
   return (
     <>
     <h2>Hello Megauser</h2>

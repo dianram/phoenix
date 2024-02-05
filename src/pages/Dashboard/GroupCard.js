@@ -20,8 +20,12 @@ import {
 // Formik deviceValidation
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import GroupItem from 'components/GroupItem';
+import { addItemToGroup } from 'helpers/firebase_helper';
+import MassiveShutdown from 'components/MassiveShutdown';
+import { getModules } from "../../helpers/modulesHelper"
 
-const GroupCard = ({ groupName, groupItems }) => {
+const GroupCard = ({ groupName, groupItems, user, setGroups, groups }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -37,8 +41,8 @@ const GroupCard = ({ groupName, groupItems }) => {
       id: Yup.string().required("Please Enter ID"),
     }),
     onSubmit: (values) => {
-    //  addNewDeviceToFirestore(values)
-     toggle()
+    addItemToGroup(groupName, values.id, user, groups, setGroups, groupItems)
+    toggle()
     }
   });
 
@@ -47,11 +51,19 @@ const GroupCard = ({ groupName, groupItems }) => {
     <Card className='mt-4 shadow' color="light">
       <CardBody>
         <CardHeader className='mb-4 border-bottom'>
-          {groupName}
+          {groupName.toUpperCase()}
         </CardHeader>
         {groupItems 
           ? groupItems.map(groupItem => (
-          <CardText className="border-bottom" key={groupItem}>{groupItem}</CardText>
+          <GroupItem
+            key={groupItem}
+            item={groupItem}
+            groupName={groupName}
+            user={user}
+            setGroups={setGroups}
+            groups={groups}
+            groupItems={groupItems}
+          />
           ))
           : <CardText className="border-bottom">No members or items in this group</CardText>
         }
@@ -76,7 +88,6 @@ const GroupCard = ({ groupName, groupItems }) => {
                   className='my-2 p-2 d-flex justify-content-center'
                   onSubmit={(e) => {
                     e.preventDefault()
-                    idValidation.handleSubmit()
                     return false;
                   }}
                 >
@@ -90,19 +101,19 @@ const GroupCard = ({ groupName, groupItems }) => {
                       id="id"
                       onChange={idValidation.handleChange}
                       onBlur={idValidation.handleBlur}
-                      value={idValidation.values.assetDescription || ""}
+                      value={idValidation.values.id || ""}
                       invalid={
-                        idValidation.touched.assetDescription && idValidation.errors.assetDescription ? true : false
+                        idValidation.touched.id && idValidation.errors.id ? true : false
                       }
                     />
-                    {idValidation.touched.assetDescription && idValidation.errors.assetDescription ? (
-                      <FormFeedback type="invalid">{idValidation.errors.assetDescription}</FormFeedback>
+                    {idValidation.touched.id && idValidation.errors.id ? (
+                      <FormFeedback type="invalid">{idValidation.errors.id}</FormFeedback>
                     ) : null}
                   </div>
                 </Form>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" onClick={toggle}>
+                <Button color="primary" onClick={e => idValidation.handleSubmit()}>
                   Add
                 </Button>{' '}
                 <Button color="secondary" onClick={toggle}>
@@ -111,6 +122,7 @@ const GroupCard = ({ groupName, groupItems }) => {
               </ModalFooter>
             </Modal>
           </div>
+          <MassiveShutdown modules={getModules(groupItems)}/>
         </CardFooter>       
       </CardBody>
       
