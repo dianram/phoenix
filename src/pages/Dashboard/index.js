@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import firebase from "firebase/compat/app"
 import { doc, getDoc } from "firebase/firestore"
 import "firebase/compat/firestore"
@@ -61,10 +61,12 @@ import { userTypes } from 'constants/userTypes';
 const Dashboard = props => {
   const [menu, setMenu] = useState(false);
   const [user, setUser] = useState("")
+
   
   useEffect(() => {
     getUserInfo()
     .then(currentUserInfo => {
+      console.log({currentUserInfo})
       setUser(currentUserInfo)
     }).catch(error => {
       console.log("failed fetch: ", error)
@@ -77,7 +79,7 @@ const Dashboard = props => {
   };
 
   document.title = "Dashboard | Phoenix";
-
+  console.log(user)
   return (
     <React.Fragment>
       <div className="page-content">

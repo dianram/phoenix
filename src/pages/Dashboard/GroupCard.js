@@ -47,7 +47,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups }) => {
   });
 
   return (
-    <Col xl={3} md={6}>
+    <Col xl={4} md={6}>
     <Card className='mt-4 shadow' color="light">
       <CardBody>
         <CardHeader className='mb-4 border-bottom'>

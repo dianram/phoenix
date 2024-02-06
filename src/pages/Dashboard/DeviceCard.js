@@ -1,5 +1,6 @@
 import { singleModuleShutDownOnFireStore } from 'helpers/firebase_helper';
-import React from 'react'
+import { updateModules } from 'helpers/modulesHelper';
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import {
   Col,
@@ -20,9 +21,23 @@ const DeviceCard = ({
   modulePIN,
   moduleInstallDate,
   batchNumber,
-  isOn
+  isOn,
+  modules,
+  setModules,
+  module
 }) => {
-  const [isOnToggle, setIsOnToggle] = useState(isOn);
+  const [isOnToggle, setIsOnToggle] = useState("");
+
+  useEffect(() => {
+    setIsOnToggle(isOn)
+  }, [isOn])
+
+  const onChangeHandle = () => {
+    setIsOnToggle(prev => !prev);
+    singleModuleShutDownOnFireStore(moduleID, !isOnToggle)
+    updateModules(module, moduleID, !isOnToggle, modules, setModules)
+  }
+
   return (
     <Col xl={3} md={6}>
       <Card className='mt-4 shadow' color="light">
@@ -42,10 +57,7 @@ const DeviceCard = ({
                     className='h-50'
                     type="switch"
                     checked={isOnToggle}
-                    onChange={() => {
-                      setIsOnToggle(prev => !prev);
-                      singleModuleShutDownOnFireStore(moduleID, !isOnToggle)
-                    }}
+                    onChange={onChangeHandle}
                   />
               </FormGroup>
               <p className='ml-2'>Yes</p>

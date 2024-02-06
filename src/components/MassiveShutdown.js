@@ -1,4 +1,3 @@
-import { modulesShutDownOnFireStore } from 'helpers/firebase_helper';
 import React, { useState } from 'react';
 import {
   Button,
@@ -9,13 +8,16 @@ import {
   Form,
 } from 'reactstrap';
 
-const MassiveShutdown = ({ modules }) => {
+import { modulesShutDownOnFireStore } from 'helpers/firebase_helper'
+import { modulesStateUpdate } from 'helpers/modulesHelper';
+const MassiveShutdown = ({ modules, setModules }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     modulesShutDownOnFireStore(modules)
+    modulesStateUpdate(modules, setModules)
     toggle()
   }
   return (

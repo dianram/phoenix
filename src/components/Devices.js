@@ -10,18 +10,7 @@ import Stock from './Common/Stock'
 import MassiveShutdown from './MassiveShutdown'
 import Voltage from './Voltage'
 
-const Devices = () => {
-  const [modules, setModules] = useState([])
-
-  useEffect(() => {
-    getCollectionFromFirestore("modules")
-      .then(res => {
-        setModules(res)
-      }).catch(error => {
-        console.log("failed fetch: ", error)
-      })
-  }, [])
-  
+const Devices = ({ modules, setModules }) => {
   return (
     <div className='p-3'>
       <Row>
@@ -29,15 +18,18 @@ const Devices = () => {
         {modules.map(item => (
           <DeviceCard
             key={item.uid}
+            module={item}
             moduleID = {item.uid}
             modulePIN={item.modulePIN}
             moduleInstallDate={item.moduleInstallDate}
             batchNumber={item.batchNumber}
             isOn={item.isOn}
+            modules={modules}
+            setModules={setModules}
           />
         ))}
       </Row>
-      <MassiveShutdown modules={modules}/>
+      <MassiveShutdown modules={modules} setModules={setModules}/>
       <Stock modules={modules}/>
       <Voltage />
     </div>
