@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Devices from '../../../components/Devices'
 import Users from '../../../components/Users'
 import Dealerships from '../../../components/Dealerships'
-import QRreader from 'components/QRreader'
 import AddDevice from 'components/AddDevice'
 import Groups from 'components/Groups'
 import { getCollectionFromFirestore } from 'helpers/firebase_helper'
+import QRCodeReader from 'components/QRCodeReader'
+
 
 const MasterDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
-  const [groups, setGroups] = useState([])
 
   useEffect(() => {
     getCollectionFromFirestore("modules")
@@ -25,8 +25,8 @@ const MasterDashboard = ({ user }) => {
       <Devices modules={modules} setModules={setModules}/>
       <Users />
       <Dealerships />
-      <Groups user={user}/>
-      <QRreader />
+      <Groups user={user} modules={modules} setModules={setModules}/>
+      <QRCodeReader />
       <AddDevice />
     </>
   )

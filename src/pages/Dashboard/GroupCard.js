@@ -23,9 +23,9 @@ import { useFormik } from "formik";
 import GroupItem from 'components/GroupItem';
 import { addItemToGroup } from 'helpers/firebase_helper';
 import MassiveShutdown from 'components/MassiveShutdown';
-import { getModules } from "../../helpers/modulesHelper"
+import { getFullModules, getModules } from "../../helpers/modulesHelper"
 
-const GroupCard = ({ groupName, groupItems, user, setGroups, groups }) => {
+const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, setModules }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -122,7 +122,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups }) => {
               </ModalFooter>
             </Modal>
           </div>
-          <MassiveShutdown modules={getModules(groupItems)}/>
+          <MassiveShutdown allModules={modules} modulesToUpdate={getFullModules(groupItems, modules)} setModules={setModules} areAllModules={false}/>
         </CardFooter>       
       </CardBody>
       

@@ -29,7 +29,12 @@ const Devices = ({ modules, setModules }) => {
           />
         ))}
       </Row>
-      <MassiveShutdown modules={modules} setModules={setModules}/>
+      <MassiveShutdown
+        allModules={modules}
+        modulesToUpdate={modules}
+        setModules={setModules}
+        areAllModules
+      />
       <Stock modules={modules}/>
       <Voltage />
     </div>

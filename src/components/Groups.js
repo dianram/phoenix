@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'reactstrap'
 import CreateGroup from './CreateGroup'
 
-const Groups = ({ user }) => {
+const Groups = ({ user, modules, setModules }) => {
   const [ groups, setGroups ] = useState([])
 
   useEffect(() => {
@@ -24,6 +24,8 @@ const Groups = ({ user }) => {
               user={user}
               setGroups={setGroups}
               groups={groups}
+              modules={modules}
+              setModules={setModules}
             />
           ))
           : (<Col xl={12} md={12}>
