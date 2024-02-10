@@ -23,11 +23,11 @@ const MasterDashboard = ({ user }) => {
     <>
     <h2>Hello Megauser</h2>
       <Devices modules={modules} setModules={setModules}/>
+      <AddDevice />
+      <QRCodeReader />
       <Users />
       <Dealerships />
       <Groups user={user} modules={modules} setModules={setModules}/>
-      <QRCodeReader />
-      <AddDevice />
     </>
   )
 }

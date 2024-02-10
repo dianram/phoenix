@@ -21,10 +21,10 @@ const GroupItem = ({ item, groupName, user, setGroups, groups, groupItems }) => 
   }
 
   return (
-    <div className='d-flex justify-content-between align-items-baseline border-bottom'>
+    <div className='d-flex flex-column justify-content-between align-items-baseline border-bottom'>
       <CardText key={item}>{item}</CardText>
       <Form 
-        className='my-1 p-1 d-flex justify-content-center'
+        className='mb-2 p-1 d-flex justify-content-center'
         onSubmit={(e) => {
           e.preventDefault()
         }}

@@ -1,4 +1,5 @@
 export const userTypes = {
   COSTUMER: "users",
-  DEALER: "dealerships"
+  DEALER: "dealerships",
+  MASTER: "master"
 }

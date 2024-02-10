@@ -26,6 +26,7 @@ const Users = () => {
           <UserInfoCard
             user={user}
             key={user.uid}
+            showModules
           />
         ))}
       </Row>

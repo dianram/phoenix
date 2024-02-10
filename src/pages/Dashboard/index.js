@@ -52,7 +52,7 @@ import { withTranslation } from "react-i18next";
 
 // Phoenix components
 import MasterDashboard from './MasterDashboard';
-import DealerDashboard from './DealerDashboard';
+import UserDashboard from './UserDashboard';
 import UiButtons from 'pages/Ui/UiButtons';
 import { useSelector } from 'react-redux';
 import { getUserInfo } from 'helpers/firebase_helper';
@@ -66,7 +66,6 @@ const Dashboard = props => {
   useEffect(() => {
     getUserInfo()
     .then(currentUserInfo => {
-      console.log({currentUserInfo})
       setUser(currentUserInfo)
     }).catch(error => {
       console.log("failed fetch: ", error)
@@ -79,7 +78,7 @@ const Dashboard = props => {
   };
 
   document.title = "Dashboard | Phoenix";
-  console.log(user)
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -112,8 +111,8 @@ const Dashboard = props => {
             </Row>
           </div>
           {(user.userType === userTypes.COSTUMER || user.userType === userTypes.DEALER
-            ? < DealerDashboard user={user}/>
-            : <MasterDashboard user={user}/> 
+            ? < UserDashboard user={user} />
+            : <MasterDashboard user={user} /> 
           )}
           {/* <DealerDashboard id="0eY2rU3IHblhXSVimfZS" typeOfUser="dealerships"/> */}
           {/* <Row>

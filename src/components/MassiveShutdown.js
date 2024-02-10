@@ -10,7 +10,7 @@ import {
 
 import { modulesShutDownOnFireStore } from 'helpers/firebase_helper'
 import { fewModulesStateUpdate, modulesStateUpdate } from 'helpers/modulesHelper';
-const MassiveShutdown = ({ allModules, modulesToUpdate, setModules, areAllModules }) => {
+const MassiveShutdown = ({ allModules, modulesToUpdate, setModules, areAllModules, setUserModules = "" }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -20,7 +20,7 @@ const MassiveShutdown = ({ allModules, modulesToUpdate, setModules, areAllModule
     if (areAllModules) {
       modulesStateUpdate(allModules, setModules)
     } else {
-      fewModulesStateUpdate(allModules, modulesToUpdate, setModules)
+      fewModulesStateUpdate(allModules, modulesToUpdate, setModules, setUserModules)
     }
     toggle()
   }

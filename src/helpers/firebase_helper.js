@@ -126,6 +126,7 @@ class FirebaseAuthBackend {
       phone: user.phone,
       state: user.location,
       userType: user.userType,
+      modules: [],
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
     }
@@ -145,6 +146,7 @@ class FirebaseAuthBackend {
       state: user.dealerLocation,
       userType: user.userType,
       modules: [],
+      groups: [],
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
     }
@@ -375,6 +377,18 @@ const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItem
   }
 }
 
+const addModuleToUserOnFireBase = async (userID, IDToSubscribe, userModules) => {
+  console.log({userID}, {IDToSubscribe}, {userModules})
+  const db = firebase.firestore()
+  db.collection("dealerships").doc(userID).update({
+    modules: [...userModules, IDToSubscribe]
+  }).then(() => {
+    console.log("Document successfully updated!")
+  }).catch(error => {
+    console.error("Error updating document: ", error)
+  })
+}
+
 
 export { 
   initFirebaseBackend,
@@ -386,5 +400,6 @@ export {
   singleModuleShutDownOnFireStore,
   createGroup,
   removeItemFromGroup,
-  addItemToGroup
+  addItemToGroup,
+  addModuleToUserOnFireBase
 }

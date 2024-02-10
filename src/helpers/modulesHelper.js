@@ -31,16 +31,31 @@ const removeObjects = (objectsToRemove, originalArray) => {
   return filteredArray;
 };
 
-const fewModulesStateUpdate = (allModules, modulesToUpdate, setModules) => {
+const fewModulesStateUpdate = (allModules, modulesToUpdate, setModules, setUserModules) => {
+  console.log({allModules, modulesToUpdate})
   const removedModules = removeObjects(modulesToUpdate, allModules)
   const updatedModules = modulesToUpdate.map(module => ({...module, isOn: false}))
+  if (setUserModules) {
+    setUserModules(updatedModules)
+  }
   setModules([...removedModules, ...updatedModules])
 }
+
+const addModuleToUserState = (userModules, setUserModules, moduleIDToSubscribe, allModules) => {
+  const fullModuleToAdd = allModules.filter(module => module.uid === moduleIDToSubscribe)
+  setUserModules([...userModules, ...fullModuleToAdd])
+}
+const moduleIsInBD = (moduleID, modules) => modules.filter(module => module.uid === moduleID).length > 0 ? true : false
+const moduleBelongToUser = (moduleID, user) => user?.modules.includes(moduleID)
+
+const isValidIDToSubscribe = (moduleID, modules, user) => moduleIsInBD(moduleID, modules) && !moduleBelongToUser(moduleID, user)
 
 export {
   getModules,
   updateModules,
   modulesStateUpdate,
   getFullModules,
-  fewModulesStateUpdate
+  fewModulesStateUpdate,
+  addModuleToUserState,
+  isValidIDToSubscribe
 }

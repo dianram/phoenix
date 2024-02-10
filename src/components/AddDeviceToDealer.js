@@ -1,14 +1,8 @@
-import AddDeviceForm from 'pages/Forms/customForms/AddDeviceForm';
+import SubscribeDeviceForm from 'pages/Forms/customForms/SubscribeDeviceForm';
 import React, { useState } from 'react'
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-} from 'reactstrap';
-const AddDevice = () => {
+import { Button, Form, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+
+const AddDeviceToDealer = ({ allModules, userModules, user, setUserModules }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -17,16 +11,16 @@ const AddDevice = () => {
     <>
       <Form onSubmit={(e) => e.preventDefault()} className='my-4 p-4 border d-flex justify-content-center'>
         <Button color="secondary" onClick={toggle}>
-          Add a new device
+          Subscribe a device
         </Button>
       </Form>
       <Modal
         isOpen={modal}
         toggle={toggle}
       >
-        <ModalHeader toggle={toggle}>New Device</ModalHeader>
+        <ModalHeader toggle={toggle}>Subcribe Device</ModalHeader>
         <ModalBody>
-          <AddDeviceForm toggle={toggle}/>
+          <SubscribeDeviceForm toggle={toggle} user={user}  userModules={userModules} setUserModules={setUserModules} allModules={allModules}/>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>
@@ -38,4 +32,4 @@ const AddDevice = () => {
   )
 }
 
-export default AddDevice
+export default AddDeviceToDealer

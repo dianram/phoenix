@@ -25,6 +25,7 @@ const Dealerships = () => {
           <UserInfoCard
             key={dealer.uid}
             user={dealer}
+            showModules
           />
         ))}
       </Row>

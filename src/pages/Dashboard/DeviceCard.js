@@ -12,6 +12,7 @@ import {
   CardText,
   FormGroup,
   Input,
+  Button,
 } from 'reactstrap'
 
 
@@ -24,7 +25,9 @@ const DeviceCard = ({
   isOn,
   modules,
   setModules,
-  module
+  module,
+  userModules,
+  setUserModules
 }) => {
   const [isOnToggle, setIsOnToggle] = useState("");
 
@@ -62,6 +65,7 @@ const DeviceCard = ({
               </FormGroup>
               <p className='ml-2'>Yes</p>
             </div>
+            <Button>Lost Control</Button>
           </CardFooter>       
         </CardBody>
         
