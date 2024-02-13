@@ -10,7 +10,7 @@ import Stock from './Common/Stock'
 import MassiveShutdown from './MassiveShutdown'
 import Voltage from './Voltage'
 
-const Devices = ({ modules, setModules, userModules=undefined, setUserModules=undefined }) => {
+const Devices = ({ user, modules, setModules, userModules=undefined, setUserModules=undefined }) => {
   return (
     <div className='p-3'>
       <Row>
@@ -21,7 +21,7 @@ const Devices = ({ modules, setModules, userModules=undefined, setUserModules=un
                 key={item.uid}
                 module={item}
                 moduleID = {item.uid}
-                modulePIN={item.modulePIN}
+                modulePIN={item.modulePIN}   
                 moduleInstallDate={item.moduleInstallDate}
                 batchNumber={item.batchNumber}
                 isOn={item.isOn}
@@ -29,6 +29,7 @@ const Devices = ({ modules, setModules, userModules=undefined, setUserModules=un
                 setModules={setModules}
                 userModules={userModules}
                 setUserModules={setUserModules}
+                user={user}
               />
             ))
           : "No devices"

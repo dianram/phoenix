@@ -22,7 +22,7 @@ const MasterDashboard = ({ user }) => {
   return (
     <>
     <h2>Hello Megauser</h2>
-      <Devices modules={modules} setModules={setModules}/>
+      <Devices user={user} modules={modules} setModules={setModules}/>
       <AddDevice />
       <QRCodeReader />
       <Users />

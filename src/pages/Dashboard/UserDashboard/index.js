@@ -29,7 +29,7 @@ const UserDashboard = ({ user }) => {
     <>
       <h2>Hello {user.name}</h2>
       <UserInfoCard user={user} showModules={false} />
-      <UserDevicesDetail userModules={userModules} setUserModules={setUserModules} />
+      <UserDevicesDetail userModules={userModules} setUserModules={setUserModules} user={user} />
       <Voltage />
       {/* // TODO {user.userType === userTypes.COSTUMER && <AddUser />} */}
       {user.userType === userTypes.DEALER && <MassiveShutdown

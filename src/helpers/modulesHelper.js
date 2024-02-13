@@ -50,6 +50,11 @@ const moduleBelongToUser = (moduleID, user) => user?.modules.includes(moduleID)
 
 const isValidIDToSubscribe = (moduleID, modules, user) => moduleIsInBD(moduleID, modules) && !moduleBelongToUser(moduleID, user)
 
+const removeModuleFromUserState = (userModules, setUserModules, module) => {
+  const userModulesUpdated = userModules.filter(userModule => userModule.uid !== module.uid)
+  setUserModules([...userModulesUpdated])
+}
+
 export {
   getModules,
   updateModules,
@@ -57,5 +62,6 @@ export {
   getFullModules,
   fewModulesStateUpdate,
   addModuleToUserState,
-  isValidIDToSubscribe
+  isValidIDToSubscribe,
+  removeModuleFromUserState
 }

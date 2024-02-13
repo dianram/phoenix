@@ -378,10 +378,29 @@ const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItem
 }
 
 const addModuleToUserOnFireBase = async (userID, IDToSubscribe, userModules) => {
-  console.log({userID}, {IDToSubscribe}, {userModules})
   const db = firebase.firestore()
   db.collection("dealerships").doc(userID).update({
     modules: [...userModules, IDToSubscribe]
+  }).then(() => {
+    console.log("Document successfully updated!")
+  }).catch(error => {
+    console.error("Error updating document: ", error)
+  })
+}
+
+const removeModuleFromUserOnFirestore = async (user, module) => {
+  const userModulesUpdated = user.modules.filter(userModule => userModule !== module.uid)
+  const moduleOwnersUpdated = module.moduleOwner.filter(owner => owner !== user.uid)
+  const db = firebase.firestore()
+  db.collection("users").doc(user.uid).update({
+    modules: [...userModulesUpdated]
+  }).then(() => {
+    console.log("Document successfully updated!")
+  }).catch(error => {
+    console.error("Error updating document: ", error)
+  })
+  db.collection("modules").doc(module.uid).update({
+    moduleOwner: [...moduleOwnersUpdated]
   }).then(() => {
     console.log("Document successfully updated!")
   }).catch(error => {
@@ -401,5 +420,6 @@ export {
   createGroup,
   removeItemFromGroup,
   addItemToGroup,
-  addModuleToUserOnFireBase
+  addModuleToUserOnFireBase,
+  removeModuleFromUserOnFirestore
 }

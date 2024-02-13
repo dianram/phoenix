@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DeviceCard from 'pages/Dashboard/DeviceCard'
 import { getCollectionFromFirestore } from 'helpers/firebase_helper'
 
-const userDevicesDetail = ({ userModules, setUserModules }) => {
+const userDevicesDetail = ({ userModules, setUserModules, user }) => {
   return (
     <>
       <h2>Devices</h2>
@@ -18,6 +18,7 @@ const userDevicesDetail = ({ userModules, setUserModules }) => {
               modules={userModules}
               setModules={setUserModules}
               module={item}
+              user={user}
             />
         ))
         : "No Devices"

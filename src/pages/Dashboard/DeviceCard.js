@@ -1,3 +1,5 @@
+import LostDeviceControl from 'components/LostDeviceControl';
+import { userTypes } from 'constants/userTypes';
 import { singleModuleShutDownOnFireStore } from 'helpers/firebase_helper';
 import { updateModules } from 'helpers/modulesHelper';
 import React, { useEffect } from 'react'
@@ -27,7 +29,8 @@ const DeviceCard = ({
   setModules,
   module,
   userModules,
-  setUserModules
+  setUserModules,
+  user
 }) => {
   const [isOnToggle, setIsOnToggle] = useState("");
 
@@ -65,7 +68,7 @@ const DeviceCard = ({
               </FormGroup>
               <p className='ml-2'>Yes</p>
             </div>
-            <Button>Lost Control</Button>
+            {user.userType === userTypes.COSTUMER && <LostDeviceControl  user={user} module={module} setUserModules={setModules} userModules={modules}/>}
           </CardFooter>       
         </CardBody>
         
