@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table } from 'reactstrap'
 
 const Stock = ({ modules }) => {
+  const [ showStock, setShowStock ] = useState(false)
+
   return (
     <>
-      <h4 className='mb-4'>Stock</h4>
-      <Table striped>
+      <div className='d-flex justify-content-between border-bottom my-2'>
+        <h4 className='mb-4'>Stock</h4>
+        <i 
+          className={showStock ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
+          onClick={e => {setShowStock(prev => !prev)}}
+        ></i>
+      </div>
+      
+      {showStock && (<Table striped>
         <thead>
           <tr>
             <th>
@@ -40,7 +49,8 @@ const Stock = ({ modules }) => {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table>)
+      }
     </>
   )
 }

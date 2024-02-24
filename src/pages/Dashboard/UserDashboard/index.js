@@ -9,6 +9,8 @@ import AddDeviceToDealer from 'components/AddDeviceToDealer'
 import { userTypes } from 'constants/userTypes'
 import Groups from 'components/Groups'
 import Voltage from 'components/Voltage'
+import Welcome from 'components/Welcome'
+import Actions from 'components/Actions'
 
 const UserDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
@@ -27,11 +29,9 @@ const UserDashboard = ({ user }) => {
 
   return (
     <>
-      <h2>Hello {user.name}</h2>
+      <Welcome user={user}/>
       <UserInfoCard user={user} showModules={false} />
       <UserDevicesDetail userModules={userModules} setUserModules={setUserModules} user={user} />
-      <Voltage />
-      {/* // TODO {user.userType === userTypes.COSTUMER && <AddUser />} */}
       {user.userType === userTypes.DEALER && <MassiveShutdown
         allModules={modules}
         modulesToUpdate={userModules}
@@ -39,13 +39,15 @@ const UserDashboard = ({ user }) => {
         setUserModules={setUserModules}
         areAllModules={false}
       />}
-      {user.userType === userTypes.DEALER && <AddDevice />}
-      {user.userType === userTypes.DEALER && <AddDeviceToDealer
-        allModules={modules}
+      <Voltage />
+      {(user.userType === userTypes.DEALER) && <Actions
+        modules={modules}
         user={user}
         userModules={userModules}
         setUserModules={setUserModules}
-        />}
+        />
+      }
+      {/* // TODO {user.userType === userTypes.COSTUMER && <AddUser />} */}
       {user.userType === userTypes.DEALER && < Groups user={user} modules={modules} setModules={setModules}/>}
     </>
   )

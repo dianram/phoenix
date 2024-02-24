@@ -6,6 +6,7 @@ import AddDevice from 'components/AddDevice'
 import Groups from 'components/Groups'
 import { getCollectionFromFirestore } from 'helpers/firebase_helper'
 import QRCodeReader from 'components/QRCodeReader'
+import Welcome from 'components/Welcome'
 
 
 const MasterDashboard = ({ user }) => {
@@ -21,10 +22,13 @@ const MasterDashboard = ({ user }) => {
   }, [])
   return (
     <>
-    <h2>Hello Megauser</h2>
+      <Welcome user={user}/>
       <Devices user={user} modules={modules} setModules={setModules}/>
-      <AddDevice />
-      <QRCodeReader />
+      <h4 className='mb-4'>Actions</h4>
+      <div className='d-flex flex-column border-bottom justify-content-around align-items-center'>
+        <AddDevice />
+        <QRCodeReader />
+      </div>
       <Users />
       <Dealerships />
       <Groups user={user} modules={modules} setModules={setModules}/>

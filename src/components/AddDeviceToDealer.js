@@ -9,7 +9,7 @@ const AddDeviceToDealer = ({ allModules, userModules, user, setUserModules }) =>
 
   return (
     <>
-      <Form onSubmit={(e) => e.preventDefault()} className='my-4 p-4 border d-flex justify-content-center'>
+      <Form onSubmit={(e) => e.preventDefault()} className='my-4 p-4 d-flex justify-content-center'>
         <Button color="secondary" onClick={toggle}>
           Subscribe a device
         </Button>

@@ -21,7 +21,7 @@ const GroupItem = ({ item, groupName, user, setGroups, groups, groupItems }) => 
   }
 
   return (
-    <div className='d-flex flex-column justify-content-between align-items-baseline border-bottom'>
+    <div className='d-flex justify-content-between align-items-baseline border-bottom'>
       <CardText key={item}>{item}</CardText>
       <Form 
         className='mb-2 p-1 d-flex justify-content-center'
@@ -29,8 +29,8 @@ const GroupItem = ({ item, groupName, user, setGroups, groups, groupItems }) => 
           e.preventDefault()
         }}
       >
-        <Button color="danger" onClick={toggle}>
-        Remove
+        <Button color="secondary" onClick={toggle}>
+        -
         </Button>
       </Form>
       <Modal

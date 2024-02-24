@@ -8,6 +8,7 @@ import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 
 const Users = () => {
   const [users, setUsers] = useState([])
+  const [showUsers, setShowUsers] = useState(false)
 
   useEffect(() => {
     getCollectionFromFirestore("users")
@@ -19,10 +20,15 @@ const Users = () => {
   }, [])
   
   return (
-    <div className='p-3'>
       <Row>
-        <h4 className='mt-2'>Users</h4>
-        {users.map(user => (
+        <div className='d-flex justify-content-between border-bottom my-2'>
+          <h4 className='mb-4 mt-2'>Users</h4>
+          <i 
+            className={showUsers ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
+            onClick={e => {setShowUsers(prev => !prev)}}
+          ></i>
+        </div>
+        {showUsers && users.map(user => (
           <UserInfoCard
             user={user}
             key={user.uid}
@@ -30,7 +36,6 @@ const Users = () => {
           />
         ))}
       </Row>
-    </div>
   )
 }
 

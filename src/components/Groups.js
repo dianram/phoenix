@@ -6,16 +6,22 @@ import CreateGroup from './CreateGroup'
 
 const Groups = ({ user, modules, setModules }) => {
   const [ groups, setGroups ] = useState([])
+  const [ showGroups, setShowGroups ] = useState(false)
 
   useEffect(() => {
     setGroups(user.groups)
   }, [user])
 
   return (
-    <div className='p-3'>
       <Row>
-        <h4 className='mt-2'>Groups</h4>
-        {(user && groups && (groups.length > 0)) 
+        <div className='d-flex justify-content-between border-bottom my-2'>
+          <h4 className='mt-2 mb-4'>Groups</h4>
+          <i 
+            className={showGroups ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
+            onClick={e => {setShowGroups(prev => !prev)}}
+          ></i>
+        </div>
+        {showGroups && ((user && groups && (groups.length > 0)) 
           ? groups.map(group => (
             <GroupCard
               key={group.name}
@@ -30,16 +36,15 @@ const Groups = ({ user, modules, setModules }) => {
           ))
           : (<Col xl={12} md={12}>
               <h4>There are not any group</h4>
-            </Col>)
+            </Col>))
         }
-        {(user && groups && (groups.length === 3))
+        {showGroups && ((user && groups && (groups.length === 3))
           ? (<Col xl={12} md={12}>
             <h4>You cannot create more groups</h4>
             </Col>)
-          : (<CreateGroup user={user} groups={groups} setGroups={setGroups}/>)
+          : (<CreateGroup user={user} groups={groups} setGroups={setGroups}/>))
         }
       </Row>
-    </div>
   )
 }
 

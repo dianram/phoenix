@@ -25,7 +25,6 @@ const UserDevices = ({ userModules }) => {
                   </CardBody>
                 </Card>
               </Col>
-              // <li key={item}>{item}</li>
             )))
           : <Row>
               <p>No devices</p>

@@ -51,8 +51,9 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
     <Card className='mt-4 shadow' color="light">
       <CardBody>
         <CardHeader className='mb-4 border-bottom'>
-          {groupName.toUpperCase()}
+          <b>{groupName.toUpperCase()}</b>
         </CardHeader>
+        <p>GROUP ITEMS:</p>
         {groupItems 
           ? groupItems.map(groupItem => (
           <GroupItem
@@ -70,11 +71,11 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
         <CardFooter>
           <div className='d-inline-flex justify-content-center'>
             <Form 
-              className='my-2 p-2 d-flex justify-content-center'
+              className='my-2 d-flex justify-content-center'
               onSubmit={(e) => e.preventDefault()}
             >
               <Button color="primary" onClick={toggle}>
-                Add Member/Item
+                Add Item
               </Button>
             </Form>
             <Modal
@@ -122,10 +123,9 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
               </ModalFooter>
             </Modal>
           </div>
-          <MassiveShutdown allModules={modules} modulesToUpdate={getFullModules(groupItems, modules)} setModules={setModules} areAllModules={false}/>
         </CardFooter>       
-      </CardBody>
-      
+        <MassiveShutdown allModules={modules} modulesToUpdate={getFullModules(groupItems, modules)} setModules={setModules} areAllModules={false}/>
+      </CardBody>      
     </Card>
   </Col>
   )

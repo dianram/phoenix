@@ -103,7 +103,7 @@ const Header = props => {
               <i className="mdi mdi-menu"></i>
             </button>
 
-            <div className="d-none d-sm-block">
+            {/* <div className="d-none d-sm-block">
 
               <Dropdown
                 isOpen={singlebtn}
@@ -115,14 +115,14 @@ const Header = props => {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem>Link a new device</DropdownItem>
-                  {/* <DropdownItem>Another action</DropdownItem>
+                  <DropdownItem>Another action</DropdownItem>
                   <DropdownItem>Something else here</DropdownItem>
                   <div className="dropdown-divider"></div>
-                  <DropdownItem>Separated link</DropdownItem> */}
+                  <DropdownItem>Separated link</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
 
-            </div>
+            </div> */}
           </div>
 
           <div className="d-flex">

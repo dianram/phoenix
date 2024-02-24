@@ -7,6 +7,7 @@ import {
 
 const Dealerships = () => {
   const [dealers, setDealers] = useState([])
+  const [showDealers, setShowDealers] = useState(false)
 
   useEffect(() => {
     getCollectionFromFirestore("dealerships")
@@ -18,10 +19,15 @@ const Dealerships = () => {
   }, [])
   
   return (
-    <div className='p-3'>
       <Row>
-        <h4 className='mt-2'>Dealerships</h4>
-        {dealers.map(dealer => (
+        <div className='d-flex justify-content-between border-bottom my-2'>
+          <h4 className='mb-4 mt-2'>Dealerships</h4>
+          <i 
+            className={showDealers ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
+            onClick={e => {setShowDealers(prev => !prev)}}
+          ></i>
+        </div>
+        {showDealers && dealers.map(dealer => (
           <UserInfoCard
             key={dealer.uid}
             user={dealer}
@@ -29,7 +35,6 @@ const Dealerships = () => {
           />
         ))}
       </Row>
-    </div>
   )
 }
 

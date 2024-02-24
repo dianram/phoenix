@@ -3,6 +3,7 @@ import DeviceCard from '../pages/Dashboard/DeviceCard'
 import {
   Row,
   Col,
+  Button,
 } from 'reactstrap'
 
 import { getCollectionFromFirestore } from '../helpers/firebase_helper'
@@ -11,11 +12,15 @@ import MassiveShutdown from './MassiveShutdown'
 import Voltage from './Voltage'
 
 const Devices = ({ user, modules, setModules, userModules=undefined, setUserModules=undefined }) => {
+  const [ showDevices, setShowDevices ] = useState(false)
   return (
-    <div className='p-3'>
+    <div>
       <Row>
-        <h4 className='mt-2'>Devices</h4>
-        {modules.length > 0
+        <div className='d-flex justify-content-between border-bottom my-2'>
+          <h4 className='mb-4'>Devices</h4>
+          <i className={showDevices ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"} onClick={e => {setShowDevices(prev => !prev)}}></i>
+        </div>
+        {showDevices && ((modules.length > 0)
           ? modules.map(item => (
               <DeviceCard
                 key={item.uid}
@@ -32,15 +37,16 @@ const Devices = ({ user, modules, setModules, userModules=undefined, setUserModu
                 user={user}
               />
             ))
-          : "No devices"
+          : "No devices")
         }
       </Row>
-      <MassiveShutdown
+      {showDevices && (<MassiveShutdown
         allModules={modules}
         modulesToUpdate={modules}
         setModules={setModules}
         areAllModules
-      />
+        />)
+      }
       <Stock modules={modules}/>
       <Voltage />
     </div>

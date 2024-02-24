@@ -364,7 +364,7 @@ const SidebarContent = props => {
               </ul>
             </li> */}
 
-            <li>
+            {/* <li>
               <Link to="/#">
                 <i className="ti-location-pin"></i>
                 <span className="badge rounded-pill bg-danger float-end">2</span>
@@ -380,14 +380,14 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/maps-google">{props.t("Device 003")}</Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/maps-vector">{props.t("Vector Maps")}</Link>
                 </li>
                 <li>
                   <Link to="/maps-leaflet">{props.t("Leaflet Maps")}</Link>
-                </li> */}
+                </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* <li className="menu-title">Extras</li> */}
 
