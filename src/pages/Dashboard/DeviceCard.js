@@ -2,6 +2,7 @@ import LostDeviceControl from 'components/LostDeviceControl';
 import { userTypes } from 'constants/userTypes';
 import { singleModuleShutDownOnFireStore } from 'helpers/firebase_helper';
 import { updateModules } from 'helpers/modulesHelper';
+// import { mqttAction } from 'helpers/mqtt_helpers';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import {
@@ -17,6 +18,9 @@ import {
   Button,
 } from 'reactstrap'
 
+// import mqtt from 'mqtt'
+import { mqttActions } from 'helpers/mqtt_helper';
+// import { Client } from 'paho-mqtt'
 
 
 const DeviceCard = ({
@@ -36,8 +40,18 @@ const DeviceCard = ({
 
   useEffect(() => {
     setIsOnToggle(isOn)
-  }, [isOn])
 
+    // Limpieza al desmontar el componente
+    // return () => {
+    //   if (client.isConnected()) {
+    //     client.disconnect();
+    //   }
+    // };
+  }, [isOn])
+  
+  const client = mqttActions(moduleID)
+  console.log(client)
+  
   const onChangeHandle = () => {
     setIsOnToggle(prev => !prev);
     singleModuleShutDownOnFireStore(moduleID, !isOnToggle)
