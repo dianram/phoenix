@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Col,
   Card,
@@ -9,20 +9,30 @@ import {
 import UserDevices from './UserDevices'
 import { userTypes } from '../../constants/userTypes'
 
-const UserInfoCard = ({ user, showModules }) => {
+const UserInfoCard = ({ user, showModules, currentUserType }) => {
   const [ showUserInfo, setShowUserInfo ] = useState(false)
 
   const infoKeys = Object.keys(user)
   const keysToShow = infoKeys.filter(key => key !== "modules")
+
+  useEffect(() => {
+    if (currentUserType === userTypes.MASTER) {
+      setShowUserInfo(true)
+    }
+  }, [])
+
   return (
     <>
-      <div className='d-flex justify-content-between border-bottom my-2'>
-        <h4 className='mb-4'>Your Info</h4>
-        <i 
-          className={showUserInfo ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
-          onClick={e => {setShowUserInfo(prev => !prev)}}
-        ></i>
-      </div>
+      {(currentUserType !== userTypes.MASTER) && (
+        <div className='d-flex justify-content-between border-bottom my-2'>
+          <h4 className='mb-4'>Your Info</h4>
+          <i 
+            className={showUserInfo ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
+            onClick={e => {setShowUserInfo(prev => !prev)}}
+          ></i>
+        </div>
+        )
+      }
       {showUserInfo && (<Col xl={12}>
         <Card className='mt-4 shadow' color="light">
           <CardBody>

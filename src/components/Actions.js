@@ -6,7 +6,7 @@ const Actions = ({modules, user, userModules, setUserModules}) => {
   return (
     <>
       <h4 className='mb-4'>Actions</h4>
-      <div className='d-flex flex-column border-bottom justify-content-around align-items-center'>
+      <div className='d-flex border-bottom justify-content-around align-items-center'>
         <AddDevice />
         <AddDeviceToDealer
           allModules={modules}

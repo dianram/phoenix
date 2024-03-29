@@ -14,9 +14,9 @@ function CustomDropdown({ direction, setUserType }) {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   return (
-    <div className="d-flex p-5">
+    <div className="d-flex p-5 justify-content-center">
       <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction}>
-        <DropdownToggle caret>Type of User</DropdownToggle>
+        <DropdownToggle caret style={{backgroundColor: '#9AC1D8', color: 'white', border: 'none'}}>Type of User</DropdownToggle>
         <DropdownMenu>
           <DropdownItem header>Type of user</DropdownItem>
           <DropdownItem onClick={(e) => setUserType(userTypes.DEALER)}>Dealer</DropdownItem>

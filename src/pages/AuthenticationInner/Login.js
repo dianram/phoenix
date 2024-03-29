@@ -26,7 +26,7 @@ const Login = () => {
                       Welcome Back !
                     </h5>
                     <p className="text-white-50">
-                      Sign in to continue to Veltrix.
+                      Sign in to continue to Phoenix.
                     </p>
                     <Link to="/" className="logo logo-admin">
                       <img src={logoSm} height="24" alt="logo" />

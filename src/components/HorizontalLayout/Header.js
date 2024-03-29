@@ -19,9 +19,9 @@ import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu"
 import { withTranslation } from "react-i18next"
 
 // import images
-import logodarkImg from "../../assets/images/logo-dark.png";
-import logosmImg from "../../assets/images/logo-sm.png";
-import logolightImg from "../../assets/images/logo-light.png";
+import logoDarkImg from "../../assets/images/logo-dark.png";
+import logoSmImg from "../../assets/images/logo-sm.png";
+import logoLightImg from "../../assets/images/logo-light.png";
 
 const Header = props => {
 
@@ -61,19 +61,19 @@ const Header = props => {
             <div className="navbar-brand-box">
               <Link to="/dashboard" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logosmImg} alt="" height="50" />
+                  <img src={logoSmImg} alt="" height="50" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logodarkImg} alt="" height="17" />
+                  <img src={logoDarkImg} alt="" height="17" />
                 </span>
               </Link>
 
               <Link to="/dashboard" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logosmImg} alt="" height="50" />
+                  <img src={logoSmImg} alt="" height="50" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logolightImg} alt="" height="50" />
+                  <img src={logoLightImg} alt="" height="50" />
                 </span>
               </Link>
               </div>

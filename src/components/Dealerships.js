@@ -5,7 +5,7 @@ import {
   Row,
 } from 'reactstrap'
 
-const Dealerships = () => {
+const Dealerships = ({ currentUserType }) => {
   const [dealers, setDealers] = useState([])
   const [showDealers, setShowDealers] = useState(false)
 
@@ -17,7 +17,7 @@ const Dealerships = () => {
         console.log("failed fetch: ", error)
       })
   }, [])
-  
+
   return (
       <Row>
         <div className='d-flex justify-content-between border-bottom my-2'>
@@ -32,6 +32,7 @@ const Dealerships = () => {
             key={dealer.uid}
             user={dealer}
             showModules
+            currentUserType={currentUserType}
           />
         ))}
       </Row>

@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 const QRCodeReader = () => {
   const [cameraPermission, setCameraPermission] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(true);
-  const [data, setData] = useState('No result');
+  const [data, setData] = useState('');
 
   const requestCameraPermission = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -34,7 +34,7 @@ const QRCodeReader = () => {
     if (cameraPermission === null) {
       // No se ha solicitado permisos aún
       return (
-        <Button onClick={requestCameraPermission}>Scan QR</Button>
+        <Button onClick={requestCameraPermission} style={{ backgroundColor: '#9AC1D8', color: 'white', border: 'none' }}>Scan QR</Button>
       );
     } else if (cameraPermission === true && isCameraActive) {
       // Permiso concedido y cámara activa, mostrar el lector QR
@@ -57,7 +57,7 @@ const QRCodeReader = () => {
   return (
     <div>
       {renderScanner()}
-      <p>Resultado: {data}</p>
+      <p>{data}</p>
     </div>
   );
 };

@@ -15,8 +15,8 @@ const AddDevice = () => {
 
   return (
     <>
-      <Form onSubmit={(e) => e.preventDefault()} className='p-4 d-flex justify-content-center'>
-        <Button color="secondary" onClick={toggle}>
+      <Form onSubmit={(e) => e.preventDefault()} className='p-4 pt-1 d-flex justify-content-center'>
+        <Button style={{backgroundColor: '#9AC1D8', color: 'white', border: 'none' }} onClick={toggle}>
           Add a new device
         </Button>
       </Form>

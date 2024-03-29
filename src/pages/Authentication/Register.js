@@ -15,7 +15,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 // import images
-import logoSm from "../../assets/images/logo-sm.png";
+import logoSm from '../../assets/images/logo-sm.png'
 import UserRegistrationForm from "pages/Forms/customForms/UserRegistrationForm";
 import CustomDropdown from "pages/Ui/CustomDropdown";
 import DealerRegistrationForm from "pages/Forms/customForms/DealerRegistrationForm";
@@ -128,7 +128,7 @@ const Register = props => {
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={4}>
               <Card className="overflow-hidden">
-                <div className="bg-primary">
+                <div className="" style={{backgroundColor: '#605C59'}}>
                   <div className="text-primary text-center p-4">
                     <h5 className="text-white font-size-20">Free Register</h5>
                     <p className="text-white-50">Get your free Phoenix Immobilizer account now.</p>

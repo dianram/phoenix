@@ -6,7 +6,7 @@ import {
 import { getCollectionFromFirestore } from '../helpers/firebase_helper'
 import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 
-const Users = () => {
+const Users = ({ currentUserType }) => {
   const [users, setUsers] = useState([])
   const [showUsers, setShowUsers] = useState(false)
 
@@ -18,7 +18,7 @@ const Users = () => {
         console.log("failed fetch: ", error)
       })
   }, [])
-  
+
   return (
       <Row>
         <div className='d-flex justify-content-between border-bottom my-2'>
@@ -33,6 +33,7 @@ const Users = () => {
             user={user}
             key={user.uid}
             showModules
+            currentUserType={currentUserType}
           />
         ))}
       </Row>

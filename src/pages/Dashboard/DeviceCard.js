@@ -18,10 +18,6 @@ import {
   Button,
 } from 'reactstrap'
 
-// import mqtt from 'mqtt'
-import { mqttActions } from 'helpers/mqtt_helper';
-// import { Client } from 'paho-mqtt'
-
 
 const DeviceCard = ({
   moduleID,
@@ -40,17 +36,7 @@ const DeviceCard = ({
 
   useEffect(() => {
     setIsOnToggle(isOn)
-
-    // Limpieza al desmontar el componente
-    // return () => {
-    //   if (client.isConnected()) {
-    //     client.disconnect();
-    //   }
-    // };
   }, [isOn])
-  
-  const client = mqttActions(moduleID)
-  console.log(client)
   
   const onChangeHandle = () => {
     setIsOnToggle(prev => !prev);
@@ -69,7 +55,7 @@ const DeviceCard = ({
           <CardText className="border-bottom">Install Date: {moduleInstallDate}</CardText>
           <CardText className="border-bottom">batchNumber: {batchNumber}</CardText>
           <CardTitle>Active Device</CardTitle>
-          <CardFooter>
+          <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
             <div className='d-inline-flex justify-content-center'>
               <p style={{marginRight : "12px"}}>No</p>
               <FormGroup switch>

@@ -20,7 +20,7 @@ const RemoveDeviceFromUserForm = ({ toggle, user, setUserModules, module }) => {
 
         <div className="mb-3 row">
           <div className="col-12 text-end">
-            <button className="btn btn-danger w-md waves-effect waves-light" type="submit">Lost Device Control</button>
+            <button className="btn btn-danger w-md waves-effect waves-light" style={{ backgroundColor:'#ED1C24' }} type="submit">Lost Device Control</button>
           </div>
         </div>
       </Form>

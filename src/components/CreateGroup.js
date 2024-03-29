@@ -17,7 +17,7 @@ const CreateGroup = ({ user, groups, setGroups }) => {
   return (
     <>
       <Form onSubmit={(e) => e.preventDefault()} className='my-4 p-4 d-flex justify-content-center'>
-        <Button color="danger" onClick={toggle}>
+        <Button style={{ backgroundColor: '#9AC1D8', color: 'white', border: 'none' }} onClick={toggle}>
           Add a new group
         </Button>
       </Form>

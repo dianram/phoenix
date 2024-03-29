@@ -11,9 +11,9 @@ import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown";
 import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDropdown";
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 
-import logodarkImg from "../../assets/images/logo-dark.png";
-import logosmImg from "../../assets/images/logo-sm.png";
-import logolightImg from "../../assets/images/logo-light.png";
+import logoDarkImg from "../../assets/images/logo-dark.png";
+import logoSmImg from "../../assets/images/logo-sm.png";
+import logoLightImg from "../../assets/images/logo-light.png";
 
 
 //i18n
@@ -71,25 +71,25 @@ const Header = props => {
 
   return (
     <React.Fragment>
-      <header id="page-topbar">
+      <header id="page-topbar" style={{ backgroundColor: '#9AC1D8' }}>
         <div className="navbar-header">
           <div className="d-flex">
-            <div className="navbar-brand-box">
+            <div className="navbar-brand-box" style={{ backgroundColor: '#605C59' }}>
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logosmImg} alt="" height="80" />
+                  <img src={logoSmImg} alt="" height="80" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logodarkImg} alt="" height="80" />
+                  <img src={logoDarkImg} alt="" height="80" />
                 </span>
               </Link>
 
               <Link to="/" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logolightImg} alt="" height="80" />
+                  <img src={logoLightImg} alt="" height="80" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logolightImg} alt="" height="80" />
+                  <img src={logoLightImg} alt="" height="80" />
                 </span>
               </Link>
             </div>

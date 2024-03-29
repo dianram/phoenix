@@ -33,7 +33,7 @@ const Login2 = () => {
                     </div>
 
                     <h4 className="font-size-18 mt-5 text-center">
-                      Welcome Back !
+                      Welcome Back!
                     </h4>
                     <p className="text-muted text-center">
                       Sign in to continue to Veltrix.
@@ -79,8 +79,9 @@ const Login2 = () => {
 
                         <Col sm="6" className="text-end">
                           <button
-                            className="btn btn-primary w-md waves-effect waves-light"
+                            className="btn w-md waves-effect waves-light"
                             type="submit"
+                            style={{ backgroundColor: '#9AC1D8', color: 'white'}}
                           >
                             Log In
                           </button>

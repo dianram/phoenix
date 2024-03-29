@@ -27,7 +27,7 @@ const MassiveShutdown = ({ allModules, modulesToUpdate, setModules, areAllModule
   return (
     <>
       <Form onSubmit={(e) => e.preventDefault()} className='my-4 p-4 d-flex justify-content-center'>
-        <Button color="danger" onClick={toggle}>
+        <Button onClick={toggle} style={{ backgroundColor: '#ED1C24', border: 'none' }}>
           Massive ShutDown
         </Button>
       </Form>

@@ -74,7 +74,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
               className='my-2 d-flex justify-content-center'
               onSubmit={(e) => e.preventDefault()}
             >
-              <Button color="primary" onClick={toggle}>
+              <Button style={{ backgroundColor: '#9AC1D8', color: 'white', border: 'none' }} onClick={toggle}>
                 Add Item
               </Button>
             </Form>
@@ -114,7 +114,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
                 </Form>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" onClick={e => idValidation.handleSubmit()}>
+                <Button style={{ backgroundColor: '#9AC1D8', color: 'white', border: 'none' }} onClick={e => idValidation.handleSubmit()}>
                   Add
                 </Button>{' '}
                 <Button color="secondary" onClick={toggle}>

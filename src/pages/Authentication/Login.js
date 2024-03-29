@@ -53,7 +53,7 @@ const Login = props => {
     }
   });
 
-  document.title = "Login | Veltrix - React Admin & Dashboard Template";
+  document.title = "Login | Phoenix Immobiliser";
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -66,7 +66,7 @@ const Login = props => {
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={4}>
               <Card className="overflow-hidden">
-                <div className="bg-primary">
+                <div className="" style={{ backgroundColor: '#605C59' }}>
                   <div className="text-primary text-center p-4">
                     <h5 className="text-white font-size-20">
                       Welcome Back !
@@ -137,7 +137,7 @@ const Login = props => {
                           </div>
                         </div>
                         <div className="col-sm-6 text-end">
-                          <button className="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+                          <button className="btn w-md waves-effect waves-light" style={{backgroundColor: '#9AC1D8', color: 'white'}} type="submit">Log In</button>
                         </div>
                       </div>
 

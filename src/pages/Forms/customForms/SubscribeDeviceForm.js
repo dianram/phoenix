@@ -64,7 +64,7 @@ const SubscribeDeviceForm = ({allModules, userModules, setUserModules, user, tog
 
         <div className="mb-3 row">
           <div className="col-12 text-end">
-            <button className="btn btn-primary w-md waves-effect waves-light" type="submit">Submit</button>
+            <button className="btn w-md waves-effect waves-light" style={{backgroundColor: '#9AC1D8', color: 'white'}} type="submit">Submit</button>
           </div>
         </div>
 

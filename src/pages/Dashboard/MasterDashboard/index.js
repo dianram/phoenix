@@ -25,12 +25,12 @@ const MasterDashboard = ({ user }) => {
       <Welcome user={user}/>
       <Devices user={user} modules={modules} setModules={setModules}/>
       <h4 className='mb-4'>Actions</h4>
-      <div className='d-flex flex-column border-bottom justify-content-around align-items-center'>
+      <div className='d-flex border-bottom justify-content-around align-items-center'>
         <AddDevice />
         <QRCodeReader />
       </div>
-      <Users />
-      <Dealerships />
+      <Users currentUserType={user.userType}/>
+      <Dealerships currentUserType={user.userType}/>
       <Groups user={user} modules={modules} setModules={setModules}/>
     </>
   )

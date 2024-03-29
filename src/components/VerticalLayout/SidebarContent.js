@@ -147,9 +147,9 @@ const SidebarContent = props => {
           <ul className="metismenu list-unstyled" id="side-menu">
             <li className="menu-title">{props.t("Main")} </li>
             <li>
-              <Link to="/dashboard" className="waves-effect">
+              <Link to="/dashboard" className="waves-effect" style={{ backgroundColor:'#605C59' }}>
                 <i className="ti-home"></i>
-                <span className="badge rounded-pill bg-primary float-end">1</span>
+                <span className="badge rounded-pill float-end" style={{ backgroundColor: '#9AC1D8' }}>1</span>
                 <span>{props.t("Dashboard")}</span>
               </Link>
             </li>

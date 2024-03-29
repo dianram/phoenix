@@ -50,7 +50,7 @@ const ForgetPasswordPage = props => {
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={4}>
               <Card className="overflow-hidden">
-                <div className="bg-primary">
+                <div className="" style={{backgroundColor: '#605C59'}}>
                   <div className="text-primary text-center p-4">
                     <h5 className="text-white font-size-20 p-2">Forget Password</h5>
                     <Link to="/index" className="logo logo-admin">
@@ -100,7 +100,7 @@ const ForgetPasswordPage = props => {
 
                     <div className="row  mb-0">
                       <div className="col-12 text-end">
-                        <button className="btn btn-primary w-md waves-effect waves-light" type="submit">Reset</button>
+                        <button className="btn w-md waves-effect waves-light" style={{ backgroundColor:'#9AC1D8', color: 'white'}} type="submit">Reset</button>
                       </div>
                     </div>
 
