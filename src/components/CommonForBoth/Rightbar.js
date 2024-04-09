@@ -72,43 +72,9 @@ const RightSidebar = props => {
                     }
                   }}
                 />
-                <label htmlFor="radioHorizontal">Horizontal</label>
+                <label htmlFor="radioHorizontal" >Horizontal</label>
               </div>
 
-              <hr className="mt-1" />
-
-              <div className="radio-toolbar">
-                <span className="mb-2 d-block" id="radio-title">
-                  Layout Width
-                </span>
-                <input
-                  type="radio"
-                  id="radioFluid"
-                  name="radioWidth"
-                  value="fluid"
-                  checked={props.layoutWidth === "fluid"}
-                  onChange={e => {
-                    if (e.target.checked) {
-                      props.changeLayoutWidth(e.target.value);
-                    }
-                  }}
-                />{" "}
-                <label htmlFor="radioFluid">Fluid</label>
-                {"   "}
-                <input
-                  type="radio"
-                  id="radioBoxed"
-                  name="radioWidth"
-                  value="boxed"
-                  checked={props.layoutWidth === "boxed"}
-                  onChange={e => {
-                    if (e.target.checked) {
-                      props.changeLayoutWidth(e.target.value);
-                    }
-                  }}
-                />{" "}
-                <label htmlFor="radioBoxed">Boxed</label>
-              </div>
               <hr className="mt-1" />
 
               <div className="radio-toolbar">
@@ -146,7 +112,7 @@ const RightSidebar = props => {
                 {"   "}
               </div>
 
-              {props.layoutType === "vertical" ? (
+              {/* {props.layoutType === "vertical" ? (
                 <React.Fragment>
                   <hr className="mt-1" />
                   <div className="radio-toolbar">
@@ -249,11 +215,11 @@ const RightSidebar = props => {
                   </div>
                   <hr className="mt-1" />
                 </React.Fragment>
-              ) : null}
+              ) : null} */}
 
-              <h6 className="text-center">Choose Layouts</h6>
+              {/* <h6 className="text-center">Choose Layouts</h6> */}
 
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <Link
                   to="//veltrix-v.react.themesbrand.com"
                   target="_blank"
@@ -264,9 +230,9 @@ const RightSidebar = props => {
                     alt=""
                   />
                 </Link>
-              </div>
+              </div> */}
 
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <Link to="//veltrix-v-dark.react.themesbrand.com"
                   target="_blank">
                   <img
@@ -286,15 +252,15 @@ const RightSidebar = props => {
                     alt=""
                   />
                 </Link>
-              </div>
+              </div> */}
 
-              <Link
+              {/* <Link
                 to="#"
                 className="btn btn-primary btn-block mt-3"
                 target="_blank"
               >
                 <i className="mdi mdi-cart ms-1" /> Purchase Now
-              </Link>
+              </Link> */}
             </div>
           </div>
         </SimpleBar>

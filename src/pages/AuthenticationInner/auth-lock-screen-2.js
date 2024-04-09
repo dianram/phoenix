@@ -5,7 +5,7 @@ import bg from "../../assets/images/bg.jpg";
 import { Link } from "react-router-dom"
 
 const LockScreen2 = () => {
-  document.title = "Lock Screen 2 | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div
@@ -77,9 +77,7 @@ const LockScreen2 = () => {
                       </Link>{" "}
                     </p>
                     <p>
-                      © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                      <i className="mdi mdi-heart text-danger"></i> by
-                      Themesbrand
+                      © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                     </p>
                   </div>
                 </div>

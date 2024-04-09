@@ -5,7 +5,7 @@ import bg from "../../assets/images/bg.jpg";
 import logoDark from "../../assets/images/logo-dark.png";
 
 const Recoverpw2 = () => {
-  document.title = "Recover Password 2 | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div
@@ -82,9 +82,7 @@ const Recoverpw2 = () => {
                     </p>
                     <p>
                       © {new Date().getFullYear()}{" "}
-                      Veltrix. Crafted with{" "}
-                      <i className="mdi mdi-heart text-danger"></i> by
-                      Themesbrand
+                      Phoenix - Immobilizer{" "}
                     </p>
                   </div>
                 </div>

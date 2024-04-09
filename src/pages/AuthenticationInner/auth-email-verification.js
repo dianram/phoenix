@@ -7,7 +7,7 @@ import logodark from "../../assets/images/logo-dark.png"
 import logolight from "../../assets/images/logo-light.png"
 
 const EmailVerification = () => {
-  document.title = "Email Verification | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div className="account-pages my-5 pt-sm-5">
@@ -75,8 +75,7 @@ const EmailVerification = () => {
                   </a>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+                  © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                 </p>
               </div>
             </Col>

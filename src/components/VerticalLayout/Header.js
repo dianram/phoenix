@@ -72,9 +72,9 @@ const Header = props => {
   return (
     <React.Fragment>
       <header id="page-topbar" style={{ backgroundColor: '#9AC1D8' }}>
-        <div className="navbar-header">
-          <div className="d-flex">
-            <div className="navbar-brand-box" style={{ backgroundColor: '#605C59' }}>
+        <div className="navbar-header" style={{ height: '80px' }}>
+          <div className="d-flex" style={{ height: '100%' }}>
+            <div className="navbar-brand-box" style={{ backgroundColor: '#605C59', height: '100%' }}>
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
                   <img src={logoSmImg} alt="" height="80" />
@@ -86,47 +86,17 @@ const Header = props => {
 
               <Link to="/" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logoLightImg} alt="" height="80" />
+                  <img src={logoLightImg} alt="" height="75" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoLightImg} alt="" height="80" />
+                  <img src={logoLightImg} alt="" height="75" />
                 </span>
               </Link>
             </div>
-            <button type="button" className="btn btn-sm px-3 font-size-24 header-item waves-effect"
-              id="vertical-menu-btn"
-              onClick={() => {
-                tToggle();
-              }}
-              data-target="#topnav-menu-content"
-            >
-              <i className="mdi mdi-menu"></i>
-            </button>
-
-            {/* <div className="d-none d-sm-block">
-
-              <Dropdown
-                isOpen={singlebtn}
-                toggle={() => setSinglebtn(!singlebtn)}
-                className="pt-3 d-inline-block"
-              >
-                <DropdownToggle className="btn btn-secondary" caret>
-                  New Device <i className="mdi mdi-chevron-down"></i>
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>Link a new device</DropdownItem>
-                  <DropdownItem>Another action</DropdownItem>
-                  <DropdownItem>Something else here</DropdownItem>
-                  <div className="dropdown-divider"></div>
-                  <DropdownItem>Separated link</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-
-            </div> */}
           </div>
 
           <div className="d-flex">
-            <form className="app-search d-none d-lg-block">
+            {/* <form className="app-search d-none d-lg-block">
               <div className="position-relative">
                 <input
                   type="text"
@@ -162,9 +132,9 @@ const Header = props => {
                   </div>
                 </Form>
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
 
-            <LanguageDropdown />
+            {/* <LanguageDropdown /> */}
 
             <div className="dropdown d-none d-lg-inline-block">
               <button
@@ -179,7 +149,7 @@ const Header = props => {
               </button>
             </div>
 
-            <NotificationDropdown />
+            {/* <NotificationDropdown /> */}
             <ProfileMenu />
 
             <div

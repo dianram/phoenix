@@ -7,7 +7,7 @@ import logodark from "../../assets/images/logo-dark.png";
 import logolight from "../../assets/images/logo-light.png";
 
 const ConfirmMail = () => {
-  document.title = "Confirm Mail | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div className="account-pages my-5 pt-sm-5">
@@ -63,8 +63,7 @@ const ConfirmMail = () => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+                  © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                 </p>
               </div>
             </Col>

@@ -7,7 +7,7 @@ import { Row, Col, CardBody, Card, Container } from "reactstrap";
 import logoSm from "../../assets/images/logo-sm.png";
 
 const Register = () => {
-  document.title = "Register | Veltrix - React Admin & Dashboard Template";
+  document.title = "Register | Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -76,8 +76,7 @@ const Register = () => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                 </p>
               </div>
             </Col>

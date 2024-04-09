@@ -74,8 +74,8 @@ const Login = props => {
                     <p className="text-white-50">
                       Sign in to continue to Phoenix.
                     </p>
-                    <Link to="/" className="logo logo-admin">
-                      <img src={logoSm} height="60" alt="logo" />
+                    <Link to="/" className="logo logo-admin" >
+                        <img src={logoSm} height="50" alt="logo" />
                     </Link>
                   </div>
                 </div>
@@ -163,9 +163,7 @@ const Login = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Websco.{" "}
-                  {/* <i className="mdi mdi-heart text-danger" />  */}
-                  Diego Ramon
+                  © {new Date().getFullYear()} Phoenix | Immobilizer{" "}
                 </p>
               </div>
             </Col>

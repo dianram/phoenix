@@ -28,7 +28,7 @@ const PagesProfile = () => {
         }
     };
 
-    document.title = "Profile | Veltrix - React Admin & Dashboard Template";
+    document.title = "Profile | Phoenix - Immobilizer";
     return (
         <React.Fragment>
             <div className="page-content">

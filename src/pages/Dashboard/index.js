@@ -77,7 +77,7 @@ const Dashboard = props => {
     setMenu(!menu);
   };
 
-  document.title = "Dashboard | Phoenix";
+  document.title = "Dashboard | Phoenix - Immobilizer";
 
   return (
     <React.Fragment>

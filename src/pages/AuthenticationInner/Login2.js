@@ -7,7 +7,7 @@ import bg from "../../assets/images/bg.jpg";
 import logoDark from "../../assets/images/logo-dark.png";
 
 const Login2 = () => {
-  document.title = "Login2 | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div className="account-pages">
@@ -110,9 +110,7 @@ const Login2 = () => {
                         </Link>{" "}
                       </p>
                       <p>
-                        © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                        <i className="mdi mdi-heart text-danger"></i> by
-                        Themesbrand
+                        © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                       </p>
                     </div>
                   </div>

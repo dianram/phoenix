@@ -70,7 +70,7 @@ $display-block: block;
 $navbar-brand-box-width: 240px;
 
 // Secondary font
-$font-family-secondary: 'Sarabun', sans-serif;
+$font-family-secondary: 'Montserrat', sans-serif;
 
 // Boxed layout width
 $boxed-layout-width:    1300px;
@@ -134,7 +134,7 @@ $cyan:       #38a4f8;
 $brown:      #8d6e63;
 $blue-grey:  #90a4ae;
 $lime:       #afb42b;
-$red-main:   #66020A;
+$red-main:   rgb(237, 28, 36);
 $red-secondary: #ed1c24;
 $black:      #000000;
 $gray-main:  #333333;
@@ -689,7 +689,7 @@ $aspect-ratios: (
 
 // scss-docs-start font-variables
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      'Roboto', sans-serif;
+$font-family-sans-serif:      "Raleway", sans-serif;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 
@@ -739,7 +739,7 @@ $font-sizes: (
 
 // scss-docs-start headings-variables
 $headings-margin-bottom:      $spacer * 0.5;
-$headings-font-family:        null;
+$headings-font-family:        'Playfair Display', serif;
 $headings-font-style:         null;
 $headings-font-weight:        600;
 $headings-line-height:        1.2;

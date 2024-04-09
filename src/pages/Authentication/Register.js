@@ -146,87 +146,6 @@ const Register = props => {
                     ) : null}
                       < CustomDropdown direction="down" setUserType={setUserType}/>
                       {userFormSelection()}
-                      {/* < UserRegistrationForm validation={validation}/> */}
-                      
-                    {/* <Form className="mt-4" onSubmit={(e) => {
-                      e.preventDefault();
-                      validation.handleSubmit();
-                      return false;
-                    }}
-                      action="#">
-
-                      <div className="mb-3">
-                        <Label className="form-label" htmlFor="useremail">Email</Label>
-                        <Input
-                          name="email"
-                          className="form-control"
-                          placeholder="Enter Email"
-                          type="email"
-                          id="useremail"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.email || ""}
-                          invalid={
-                            validation.touched.email && validation.errors.email ? true : false
-                          }
-                        />
-                        {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
-                        ) : null}
-                      </div>
-
-                      <div className="mb-3">
-                        <Label className="form-label" htmlFor="username">Username</Label>
-                        <Input
-                          name="username"
-                          className="form-control"
-                          placeholder="Enter Username"
-                          type="text"
-                          id="username"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.username || ""}
-                          invalid={
-                            validation.touched.username && validation.errors.username ? true : false
-                          }
-                        />
-                        {validation.touched.username && validation.errors.username ? (
-                          <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                        ) : null}
-                      </div>
-
-                      <div className="mb-3">
-                        <Label className="form-label" htmlFor="userpassword">Password</Label>
-                        <Input
-                          name="password"
-                          value={validation.values.password || ""}
-                          type="password"
-                          id="userpassword"
-                          className="form-control"
-                          placeholder="Enter Password"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          invalid={
-                            validation.touched.password && validation.errors.password ? true : false
-                          }
-                        />
-                        {validation.touched.password && validation.errors.password ? (
-                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                        ) : null}
-                      </div>
-
-                      <div className="mb-3 row">
-                        <div className="col-12 text-end">
-                          <button className="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button>
-                        </div>
-                      </div>
-
-                      <div className="mt-2 mb-0 row">
-                        <div className="col-12 mt-4">
-                          <p className="mb-0">By registering you agree to the Phoenix <Link to="#" className="text-primary">Terms of Use</Link></p>
-                        </div>
-                      </div>
-                    </Form> */}
                   </div>
                 </CardBody>
               </Card>
@@ -239,9 +158,7 @@ const Register = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Websco.{" "}
-                  {/* <i className="mdi mdi-heart text-danger" />  */}
-                  Diego Ramon
+                  © {new Date().getFullYear()} Phoenix | Immobilizer{" "}
                 </p>
               </div>
             </Col>

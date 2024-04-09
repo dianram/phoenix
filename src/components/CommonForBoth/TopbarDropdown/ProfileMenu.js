@@ -15,25 +15,35 @@ import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
 
 // users
-import user1 from "../../../assets/images/users/user-4.jpg";
+import nonImgAvatar from "../../../assets/images/users/nonUser.png";
+import { getUserInfo } from "helpers/firebase_helper";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
+  const [userName, setUserName] = useState('Admin')
+  const [user, setUser] = useState("")
 
-  const [username, setusername] = useState("Admin");
-
+  
+  useEffect(() => {
+    getUserInfo()
+    .then(currentUserInfo => {
+      setUser(currentUserInfo)
+    }).catch(error => {
+      console.log("failed fetch: ", error)
+    })
+  }, [])
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
       if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
         const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.displayName);
+        setUserName(obj.displayName);
       } else if (
         process.env.REACT_APP_DEFAULTAUTH === "fake" ||
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
         const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.username);
+        setUserName(obj.username);
       }
     }
   }, [props.success]);
@@ -52,7 +62,7 @@ const ProfileMenu = props => {
         >
           <img
             className="rounded-circle header-profile-user"
-            src={user1}
+            src={user.image ? user.image : nonImgAvatar}
             alt="Header Avatar"
           />
         </DropdownToggle>
@@ -61,10 +71,6 @@ const ProfileMenu = props => {
             {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
             {props.t("Profile")}{" "}
-          </DropdownItem>
-          <DropdownItem tag="a" href="auth-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            {props.t("Lock screen")}
           </DropdownItem>
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">

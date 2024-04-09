@@ -55,29 +55,29 @@ const Header = props => {
 
   return (
     <React.Fragment>
-      <header id="page-topbar">
-        <div className="navbar-header">
+      <header id="page-topbar" style={{ backgroundColor: '#605C59' }}>
+        <div className="navbar-header" style={{ height: '80px' }}>
           <div className="d-flex">
             <div className="navbar-brand-box">
               <Link to="/dashboard" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logoSmImg} alt="" height="50" />
+                  <img src={logoSmImg} alt="" height="80" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoDarkImg} alt="" height="17" />
+                  <img src={logoDarkImg} alt="" height="80" />
                 </span>
               </Link>
 
               <Link to="/dashboard" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logoSmImg} alt="" height="50" />
+                  <img src={logoSmImg} alt="" height="80" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoLightImg} alt="" height="50" />
+                  <img src={logoLightImg} alt="" height="80" />
                 </span>
               </Link>
-              </div>
-              <button
+            </div>
+              {/* <button
                 type="button"
                 onClick={() => {
                   props.toggleLeftmenu(!props.leftMenu)
@@ -86,16 +86,16 @@ const Header = props => {
                 id="vertical-menu-btn"
               >
                 <i className="mdi mdi-menu"></i>
-              </button>
-              </div>
+              </button> */}
+          </div>
             <div className="d-flex">
-            <form className="app-search d-none d-lg-block">
+            {/* <form className="app-search d-none d-lg-block">
                 <div className="position-relative">
                     <input type="text" className="form-control" placeholder="Search..." />
                     <span className="fa fa-search"></span>
                 </div>
-            </form>
-            <LanguageDropdown />
+            </form> */}
+            {/* <LanguageDropdown /> */}
             <div className="dropdown d-none d-lg-inline-block">
                 <button type="button" className="btn header-item noti-icon waves-effect" onClick={() => {
                     toggleFullscreen()
@@ -103,7 +103,7 @@ const Header = props => {
                     <i className="mdi mdi-fullscreen"></i>
                 </button>
             </div>
-            <NotificationDropdown />      
+            {/* <NotificationDropdown />       */}
             <ProfileMenu />        
             <div className="dropdown d-inline-block">
                 <button

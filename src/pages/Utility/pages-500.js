@@ -6,7 +6,7 @@ import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import errorImg from "../../assets/images/error.png";
 
 const Pages500 = () => {
-  document.title = "500 Error Page | Veltrix - React Admin & Dashboard Template";
+  document.title = "5Phoenix - Immobilizer";
 
   return (
     <React.Fragment>

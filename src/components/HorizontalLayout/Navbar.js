@@ -84,7 +84,7 @@ const Navbar = props => {
 
   return (
     <React.Fragment>
-      <div className="topnav">
+      <div className="topnav" style={{ backgroundColor:'#605C59' }}>
         <div className="container-fluid">
           <nav
             className="navbar navbar-light navbar-expand-lg topnav-menu"
@@ -208,7 +208,7 @@ const Navbar = props => {
                   </div>
                 </li> */}
 
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <Link
                     to="/#"
                     className="nav-link dropdown-toggle arrow-none"
@@ -222,7 +222,7 @@ const Navbar = props => {
                   </Link>
                   <div
                     className={classname("dropdown-menu", { show: component })}
-                  >
+                  > */}
                     {/* <div className="dropdown">
                       <Link
                         to="/#"
@@ -396,7 +396,7 @@ const Navbar = props => {
 
                       </div>
                     </div> */}
-                    <div className="dropdown">
+                    {/* <div className="dropdown"> */}
                       {/* <Link
                         to="/#"
                         className="dropdown-item dropdown-toggle arrow-none"
@@ -410,7 +410,7 @@ const Navbar = props => {
                       {/* <div
                         className={classname("dropdown-menu", { show: map })}
                       > */}
-                        <Link to="/maps-google" className="dropdown-item">
+                        {/* <Link to="/maps-google" className="dropdown-item">
                           {props.t("Device 001")}{" "}
                         </Link>
                         <Link to="/maps-vector" className="dropdown-item">
@@ -418,11 +418,11 @@ const Navbar = props => {
                         </Link>
                         <Link to="/maps-leaflet" className="dropdown-item">
                           {props.t("Device 003")}{" "}
-                        </Link>
+                        </Link> */}
                       {/* </div> */}
-                    </div>
-                  </div>
-                </li>
+                    {/* </div> */}
+                  {/* </div> */}
+                {/* </li> */}
 
                 {/* <li className="nav-item dropdown mega-dropdown">
                   <Link

@@ -37,7 +37,7 @@ const ForgetPasswordPage = props => {
     }
   });
 
-  document.title = "Forget Password | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -110,9 +110,7 @@ const ForgetPasswordPage = props => {
               <div className="mt-5 text-center">
                 <p>Remember It ? <Link to="/login" className="fw-medium text-primary"> Sign In here </Link> </p>
                 <p>
-                  © {new Date().getFullYear()} Websco.{" "}
-                  {/* <i className="mdi mdi-heart text-danger" /> */}
-                  Diego Ramon
+                  © {new Date().getFullYear()} Phoenix | Immobilizer{" "}
                 </p>
               </div>
             </Col>

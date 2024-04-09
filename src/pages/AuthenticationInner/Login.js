@@ -83,8 +83,7 @@ const Login = () => {
                   </Link>{" "}
                 </p>
                 <p className="mb-0">
-                  © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+                  © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                 </p>
               </div>
             </Col>

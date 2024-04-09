@@ -8,7 +8,7 @@ import { Col, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const ConfirmMail2 = () => {
-  document.title = "Confirm Mail 2 | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div>
@@ -61,9 +61,7 @@ const ConfirmMail2 = () => {
 
                     <div className="mt-4 mt-md-5 text-center">
                       <p className="mb-0">
-                        © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                        <i className="mdi mdi-heart text-danger"></i> by
-                        Themesbrand
+                        © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                       </p>
                     </div>
                   </div>

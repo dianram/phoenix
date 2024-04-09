@@ -26,7 +26,7 @@ const LockScreen = () => {
       console.log(values);
     }
   });
-  document.title = "Lock Screen | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -108,8 +108,7 @@ const LockScreen = () => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © 2021 Veltrix. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © 2021 Phoenix - Immobilizer{" "}
                 </p>
               </div>
             </Col>

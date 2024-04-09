@@ -8,7 +8,7 @@ import { Editor } from "react-draft-wysiwyg";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const EmailCompose = () => {
-    document.title = "Email Compose | Veltrix - React Admin & Dashboard Template";
+    document.title = "Phoenix - Immobilizer";
     return (
         <React.Fragment>
             <div className="page-content">

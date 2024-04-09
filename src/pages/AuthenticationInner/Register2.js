@@ -7,7 +7,7 @@ import bg from "../../assets/images/bg.jpg";
 import logoDark from "../../assets/images/logo-dark.png";
 
 const Register2 = () => {
-  document.title = "Register 2 | Veltrix - React Admin & Dashboard Template";
+  document.title = "Phoenix - Immobilizer";
   return (
     <React.Fragment>
       <div
@@ -103,9 +103,7 @@ const Register2 = () => {
                       </Link>{" "}
                     </p>
                     <p>
-                      © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                      <i className="mdi mdi-heart text-danger"></i> by
-                      Themesbrand
+                      © {new Date().getFullYear()} Phoenix - Immobilizer{" "}
                     </p>
                   </div>
                 </div>
