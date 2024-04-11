@@ -19,7 +19,9 @@ const SearchDevice = ({ allDevices, setFilterResult, setShow, setCurrentPage }) 
     setFilterResult(filtered)
     setSearchTerm('')
     setShow(true)
-    setCurrentPage(1)
+    if (setCurrentPage) {
+      setCurrentPage(1)
+    }
   };
 
   return (
@@ -27,7 +29,7 @@ const SearchDevice = ({ allDevices, setFilterResult, setShow, setCurrentPage }) 
       <InputGroup>
         <Input
           type="text"
-          placeholder="Search..."
+          placeholder="Enter PIN number"
           value={searchTerm}
           onChange={handleChange}
         />

@@ -4,21 +4,28 @@ import { getCollectionFromFirestore } from 'helpers/firebase_helper'
 import { Row } from 'reactstrap'
 
 import nonCarImg from '../assets/images/nonCarImg.png'
+import SearchDevice from './SearchDevice'
 
 const userDevicesDetail = ({ userModules, setUserModules, user }) => {
   const [ showUserDevices, setShowUserDevices ] = useState(false)
+  const [ filterResult, setFilterResult ] = useState([])
+
+  useEffect(() => {
+    setFilterResult(userModules)
+  }, [userModules])
   return (
     <>
       <Row>
         <div className='d-flex justify-content-between border-bottom my-2'>
           <h4 className='mb-4'>Devices</h4>
+          <SearchDevice allDevices={userModules} setFilterResult={setFilterResult} setShow={setShowUserDevices} />
           <i 
             className={showUserDevices ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
             onClick={e => {setShowUserDevices(prev => !prev)}}
           ></i>
         </div>
         {showUserDevices && (userModules.length > 0
-          ? userModules.map(item => (
+          ? filterResult.map(item => (
               <DeviceCard
                 key={item.uid}
                 moduleID = {item.uid}

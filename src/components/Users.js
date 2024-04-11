@@ -25,7 +25,7 @@ const Users = ({ currentUserType }) => {
   return (
       <Row>
         <div className='d-flex justify-content-between border-bottom my-2'>
-          <h4 className='mb-4 mt-2'>Users</h4>
+          <h4 className='mb-4 mt-2' style={{ marginRight: '1rem' }}>Users</h4>
           <SearchBar allUsers={users} setFilterResult={setFilterResult} setShow={setShowUsers}/>
           <i 
             className={showUsers ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}

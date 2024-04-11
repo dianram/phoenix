@@ -24,7 +24,7 @@ const Dealerships = ({ currentUserType }) => {
   return (
       <Row>
         <div className='d-flex justify-content-between border-bottom my-2'>
-          <h4 className='mb-4 mt-2'>Dealerships</h4>
+          <h4 className='mb-4 mt-2' style={{ marginRight: 'calc(-30px - 2vw)'}}>Dealerships</h4>
           <SearchBar allUsers={dealers} setFilterResult={setFilterResult} setShow={setShowDealers}/>
           <i 
             className={showDealers ? "mdi mdi-chevron-up" : "mdi mdi-chevron-down"}
