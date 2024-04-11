@@ -3,6 +3,8 @@ import DeviceCard from 'pages/Dashboard/DeviceCard'
 import { getCollectionFromFirestore } from 'helpers/firebase_helper'
 import { Row } from 'reactstrap'
 
+import nonCarImg from '../assets/images/nonCarImg.png'
+
 const userDevicesDetail = ({ userModules, setUserModules, user }) => {
   const [ showUserDevices, setShowUserDevices ] = useState(false)
   return (
@@ -24,6 +26,7 @@ const userDevicesDetail = ({ userModules, setUserModules, user }) => {
                 moduleInstallDate={item.moduleInstallDate}
                 batchNumber={item.batchNumber}
                 isOn={item.isOn}
+                carModulePict={item.carModulePict ? item.carModulePict : nonCarImg}
                 modules={userModules}
                 setModules={setUserModules}
                 module={item}

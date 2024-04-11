@@ -18,6 +18,7 @@ import {
   Button,
 } from 'reactstrap'
 
+import nonCarImg from '../../assets/images/nonCarImg.png'
 
 const DeviceCard = ({
   moduleID,
@@ -25,6 +26,7 @@ const DeviceCard = ({
   moduleInstallDate,
   batchNumber,
   isOn,
+  carModulePict,
   modules,
   setModules,
   module,
@@ -49,7 +51,9 @@ const DeviceCard = ({
       <Card className='mt-4 shadow' color="light">
         <CardBody>
           <CardHeader className='mb-4 border-bottom'>
-            MODULE ID: {moduleID}
+            <img src={carModulePict ? carModulePict : nonCarImg} alt='car' style={{ width: '100%' }}/>
+            <b>MODULE ID: </b>
+            <CardText style={{ fontSize: '0.7rem' }}>{moduleID}</CardText>
           </CardHeader>
           <CardText className="border-bottom">PIN: {modulePIN}</CardText>
           <CardText className="border-bottom">Install Date: {moduleInstallDate}</CardText>
