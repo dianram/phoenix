@@ -28,49 +28,55 @@ import Breadcrumb from "../../components/Common/Breadcrumb";
 import avatar from "../../assets/images/users/user-4.jpg";
 // actions
 import { editProfile, resetProfileFlag } from "../../store/actions";
+import nonImgAvatar from '../../assets/images/users/nonUser.png'
+import { getUserInfo, updateUserProfile } from 'helpers/firebase_helper';
+import { userTypes } from 'constants/userTypes';
+import { set } from 'lodash';
+import CustomAlert from 'components/CustomAlert';
 
 const UserProfile = props => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [email, setemail] = useState("");
   const [name, setname] = useState("");
   const [idx, setidx] = useState(1);
+  const [ user, setUser ] = useState("")
+  const [ editFeedBack, setEditFeedBack ] = useState("")
+  const [editFeedBackVisible, setEditFeedBackVisible] = useState(true);
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      const obj = JSON.parse(localStorage.getItem("authUser"));
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        setname(obj.displayName);
-        setemail(obj.email);
-        setidx(obj.uid || 1);
-      } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-        process.env.REACT_APP_DEFAULTAUTH === "jwt"
-      ) {
-        setname(obj.username);
-        setemail(obj.email);
-        setidx(obj.uid || 1);
-      }
-      setTimeout(() => {
-        props.resetProfileFlag();
-      }, 3000);
-    }
-  }, [props.success]);
-
+    getUserInfo()
+    .then(currentUserInfo => {
+      setUser(currentUserInfo)
+    }).catch(error => {
+      console.log("failed fetch: ", error)
+    })
+  }, [])
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      username: name || '',
-      idx: idx || '',
+      name: user.name || '',
+      address: user.address || '',
+      phone: user.phone || '',
+      state: user.state || ''
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Please Enter Your User Name"),
+      name: Yup.string().required("Please Enter Your User Name"),
+      address: Yup.string().required("Please Enter Your Address"),
+      phone: Yup.string().required("Please Enter Your Phone"),
+      state: Yup.string().required("Please Enter Your Location"),
     }),
     onSubmit: (values) => {
-      dispatch(editProfile(values));
+      if (user.userType === userTypes.DEALER) {
+        updateUserProfile(values, 'dealerships', user.uid, setEditFeedBack, setUser, user)
+      } else {
+        updateUserProfile(values, 'users', user.uid, setEditFeedBack, setUser, user)
+      }
+      setEditFeedBackVisible(true)
+      // dispatch(editProfile(values));
     }
   });
 
@@ -96,16 +102,19 @@ const UserProfile = props => {
                   <div className="d-flex">
                     <div className="mx-3">
                       <img
-                        src={avatar}
+                        src={user.image ? user.image : nonImgAvatar}
                         alt=""
                         className="avatar-md rounded-circle img-thumbnail"
                       />
                     </div>
                     <div className="align-self-center flex-1">
                       <div className="text-muted">
-                        <h5>{name}</h5>
-                        <p className="mb-1">{email}</p>
-                        <p className="mb-0">Id no: #{idx}</p>
+                        <h5>{user.name}</h5>
+                        <p className="mb-1">Email: {user.email}</p>
+                        <p className="mb-0">ID: {user.uid}</p>
+                        <p className="mb-0">Address: {user.address}</p>
+                        <p className="mb-0">State: {user.state}</p>
+                        <p className="mb-0">Phone: {user.phone}</p>
                       </div>
                     </div>
                   </div>
@@ -114,7 +123,7 @@ const UserProfile = props => {
             </Col>
           </Row>
 
-          <h4 className="card-title mb-4">Change User Name</h4>
+          <h4 className="card-title mb-4">Edit Profile</h4>
 
           <Card>
             <CardBody>
@@ -130,26 +139,87 @@ const UserProfile = props => {
                 <div className="form-group">
                   <Label className="form-label">User Name</Label>
                   <Input
-                    name="username"
+                    name="name"
                     className="form-control"
                     placeholder="Enter User Name"
                     type="text"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.username || ""}
+                    value={validation.values.name || ""}
                     invalid={
-                      validation.touched.username && validation.errors.username ? true : false
+                      validation.touched.name && validation.errors.name ? true : false
                     }
                   />
-                  {validation.touched.username && validation.errors.username ? (
-                    <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">{validation.errors.name}</FormFeedback>
                   ) : null}
-                  <Input name="idx" value={idx} type="hidden" />
+                </div>
+                <div className="form-group">
+                  <Label className="form-label">Address</Label>
+                  <Input
+                    name="address"
+                    className="form-control"
+                    placeholder="Enter User Address"
+                    type="text"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.address || ""}
+                    invalid={
+                      validation.touched.address && validation.errors.address ? true : false
+                    }
+                  />
+                  {validation.touched.address && validation.errors.address ? (
+                    <FormFeedback type="invalid">{validation.errors.address}</FormFeedback>
+                  ) : null}
+                </div>
+                <div className="form-group">
+                  <Label className="form-label">User State</Label>
+                  <Input
+                    name="state"
+                    className="form-control"
+                    placeholder="Enter User State"
+                    type="text"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.state || ""}
+                    invalid={
+                      validation.touched.state && validation.errors.state ? true : false
+                    }
+                  />
+                  {validation.touched.state && validation.errors.state ? (
+                    <FormFeedback type="invalid">{validation.errors.state}</FormFeedback>
+                  ) : null}
+                </div>
+                <div className="form-group">
+                  <Label className="form-label">User Phone</Label>
+                  <Input
+                    name="phone"
+                    className="form-control"
+                    placeholder="Enter User Phone"
+                    type="text"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.phone || ""}
+                    invalid={
+                      validation.touched.phone && validation.errors.phone ? true : false
+                    }
+                  />
+                  {validation.touched.phone && validation.errors.phone ? (
+                    <FormFeedback type="invalid">{validation.errors.phone}</FormFeedback>
+                  ) : null}
                 </div>
                 <div className="text-center mt-4">
-                  <Button type="submit" color="danger">
-                    Edit User Name
+                  <Button type="submit" style={{ backgroundColor: '#ed1c24', border: 'none' }}>
+                    Edit User 
                   </Button>
+                  {editFeedBack && (
+                    <CustomAlert
+                      message={editFeedBack.message}
+                      typeOfAlert={editFeedBack.typeOfAlert}
+                      editFeedBackVisible={editFeedBackVisible}
+                      setEditFeedBackVisible={setEditFeedBackVisible}
+                    />
+                  )}
                 </div>
               </Form>
             </CardBody>

@@ -353,6 +353,27 @@ const updatedGroups = (item, groupName, groups, groupItems) => {
   const newGroups = [...itemRemovedFromGroups, groupUpdated]
   return newGroups
 }
+
+const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setUser, user ) => {
+  const db = firebase.firestore()
+
+  db.collection(collection).doc(uid).update({
+    ...dataToUpdate
+  }).then(() => {
+    setEditFeedBack({
+      message: 'The user was successfully updated!',
+      typeOfAlert: 'success'
+    })
+    setUser({...user, ...dataToUpdate})
+    console.log("The user was successfully updated!")
+  }).catch(error => {
+    setEditFeedBack({
+      message: `Update fail!, ${error}`,
+      typeOfAlert: 'danger'
+    })
+    console.error("Error updating document: ", error)
+  })
+}
 const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItems) => {
   const newGroups = updatedGroups(item, groupName, groups, groupItems)
   const db = firebase.firestore()
@@ -421,5 +442,6 @@ export {
   removeItemFromGroup,
   addItemToGroup,
   addModuleToUserOnFireBase,
-  removeModuleFromUserOnFirestore
+  removeModuleFromUserOnFirestore,
+  updateUserProfile
 }
