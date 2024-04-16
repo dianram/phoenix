@@ -62,7 +62,7 @@ const ProfileMenu = props => {
         >
           <img
             className="rounded-circle header-profile-user"
-            src={user.image ? user.image : nonImgAvatar}
+            src={user.picture ? user.picture : nonImgAvatar}
             alt="Header Avatar"
           />
         </DropdownToggle>

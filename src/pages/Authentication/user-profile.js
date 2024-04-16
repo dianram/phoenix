@@ -33,6 +33,7 @@ import { getUserInfo, updateUserProfile } from 'helpers/firebase_helper';
 import { userTypes } from 'constants/userTypes';
 import { set } from 'lodash';
 import CustomAlert from 'components/CustomAlert';
+import UploadModal from 'components/UploadModal';
 
 const UserProfile = props => {
   // const dispatch = useDispatch();
@@ -42,7 +43,10 @@ const UserProfile = props => {
   const [idx, setidx] = useState(1);
   const [ user, setUser ] = useState("")
   const [ editFeedBack, setEditFeedBack ] = useState("")
-  const [editFeedBackVisible, setEditFeedBackVisible] = useState(true);
+  const [editFeedBackVisible, setEditFeedBackVisible] = useState(true)
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => setModal(!modal);
 
   useEffect(() => {
     getUserInfo()
@@ -80,6 +84,14 @@ const UserProfile = props => {
     }
   });
 
+  const saveUploadImgOnDB = (pictureObj) => {
+    if (user.userType === userTypes.DEALER) {
+      updateUserProfile(pictureObj, 'dealerships', user.uid, setEditFeedBack, setUser, user)
+    } else {
+      updateUserProfile(pictureObj, 'users', user.uid, setEditFeedBack, setUser, user)
+    }
+    setEditFeedBackVisible(true)
+  }
   document.title = "Profile | Phoenix Immobilizer";
   return (
     <React.Fragment>
@@ -102,10 +114,13 @@ const UserProfile = props => {
                   <div className="d-flex">
                     <div className="mx-3">
                       <img
-                        src={user.image ? user.image : nonImgAvatar}
+                        src={user.picture ? user.picture : nonImgAvatar}
                         alt=""
                         className="avatar-md rounded-circle img-thumbnail"
+                        onClick={toggleModal}
+                        style={{ cursor: 'pointer' }}
                       />
+                      <p style={{ fontSize: '0.7rem', width: '80px', textAlign: 'center' }}>Upload Image</p>
                     </div>
                     <div className="align-self-center flex-1">
                       <div className="text-muted">
@@ -226,6 +241,7 @@ const UserProfile = props => {
           </Card>
         </Container>
       </div>
+      <UploadModal modal={modal} toggleModal={toggleModal} saveUploadImgOnDB={saveUploadImgOnDB} setEditFeedBack={setEditFeedBack}/>
     </React.Fragment>
   );
 };

@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app"
 // Add the Firebase products that you want to use
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
+import "firebase/compat/storage"
 import { collection, getDocs, doc, getDoc, FieldValue } from "firebase/firestore"
 import useTypes, { userTypes } from "../constants/userTypes"
 
@@ -374,6 +375,16 @@ const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setU
     console.error("Error updating document: ", error)
   })
 }
+
+const handleImageUpload = async (file) => {
+  const storage = firebase.storage()
+  const storageRef = storage.ref();
+  const fileRef = storageRef.child(file.name);
+  const snapshot = await fileRef.put(file);
+  // Obtener la URL pública de la imagen recién subida
+  const imageUrl = await snapshot.ref.getDownloadURL();
+  return imageUrl
+};
 const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItems) => {
   const newGroups = updatedGroups(item, groupName, groups, groupItems)
   const db = firebase.firestore()
@@ -443,5 +454,6 @@ export {
   addItemToGroup,
   addModuleToUserOnFireBase,
   removeModuleFromUserOnFirestore,
-  updateUserProfile
+  updateUserProfile,
+  handleImageUpload
 }
