@@ -1,6 +1,6 @@
 import LostDeviceControl from 'components/LostDeviceControl';
 import { userTypes } from 'constants/userTypes';
-import { singleModuleShutDownOnFireStore } from 'helpers/firebase_helper';
+import { singleModuleShutDownOnFireStore, updateDevice } from 'helpers/firebase_helper';
 import { updateModules } from 'helpers/modulesHelper';
 // import { mqttAction } from 'helpers/mqtt_helpers';
 import React, { useEffect } from 'react'
@@ -19,6 +19,8 @@ import {
 } from 'reactstrap'
 
 import nonCarImg from '../../assets/images/nonCarImg.png'
+import UploadModal from 'components/UploadModal';
+import CustomAlert from 'components/CustomAlert';
 
 const DeviceCard = ({
   moduleID,
@@ -35,9 +37,20 @@ const DeviceCard = ({
   user
 }) => {
   const [isOnToggle, setIsOnToggle] = useState("");
+  const [ editFeedBack, setEditFeedBack ] = useState("")
+  const [editFeedBackVisible, setEditFeedBackVisible] = useState(true)
+  const [modal, setModal] = useState(false);
+  const [ isMaster, setIsMaster ] = useState(false)
+  const [ currentModule, setCurrentModule ] = useState('')
+
+  const toggleModal = () => setModal(!modal);
 
   useEffect(() => {
     setIsOnToggle(isOn)
+    setCurrentModule(module)
+    if (user.userType === userTypes.MASTER) {
+      setIsMaster(true)
+    }
   }, [isOn])
   
   const onChangeHandle = () => {
@@ -46,12 +59,23 @@ const DeviceCard = ({
     updateModules(module, moduleID, !isOnToggle, modules, setModules)
   }
 
+  const saveUploadImgOnDB = (pictureObj) => {
+    updateDevice(pictureObj, moduleID, setEditFeedBack, setCurrentModule, currentModule)
+    setEditFeedBackVisible(true)
+  }
+
   return (
     <Col xl={3} md={6}>
       <Card className='mt-4 shadow' color="light">
         <CardBody>
           <CardHeader className='mb-4 border-bottom'>
-            <img src={carModulePict ? carModulePict : nonCarImg} alt='car' style={{ width: '100%' }}/>
+            <img
+              src={currentModule.picture ? currentModule.picture : nonCarImg}
+              alt='car'
+              style={{ width: '100%', cursor: 'pointer' }}
+              onClick={!isMaster ? toggleModal : () => {}}
+            />
+            {!isMaster && <p style={{ fontSize: '0.6rem', width: '100%', textAlign: 'center', marginTop: '10px' }}>Click to Upload Image</p>}
             <b>MODULE ID: </b>
             <CardText style={{ fontSize: '0.7rem' }}>{moduleID}</CardText>
           </CardHeader>
@@ -77,6 +101,15 @@ const DeviceCard = ({
         </CardBody>
         
       </Card>
+      <UploadModal modal={modal} toggleModal={toggleModal} saveUploadImgOnDB={saveUploadImgOnDB} setEditFeedBack={setEditFeedBack}/>
+      {editFeedBack && (
+        <CustomAlert
+          message={editFeedBack.message}
+          typeOfAlert={editFeedBack.typeOfAlert}
+          editFeedBackVisible={editFeedBackVisible}
+          setEditFeedBackVisible={setEditFeedBackVisible}
+        />
+      )}
     </Col>
   )
 }

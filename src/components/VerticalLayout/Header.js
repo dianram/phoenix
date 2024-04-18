@@ -25,12 +25,19 @@ import {
   toggleLeftmenu,
   changeSidebarType,
 } from "../../store/actions";
+import PQRFormModal from 'pages/Forms/customForms/PQRForm';
+import CustomAlert from 'components/CustomAlert';
 
 const Header = props => {
   const [search, setsearch] = useState(false);
   const [singlebtn, setSinglebtn] = useState(false);
+  const [ PQRModalOpen, setPQRModalOpen ] = useState(false)
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  const togglePQRModal = (e) => {
+    setPQRModalOpen(prev => !prev)
+  }
 
   function toggleFullscreen() {
     if (
@@ -136,6 +143,8 @@ const Header = props => {
 
             {/* <LanguageDropdown /> */}
 
+            <Button onClick={togglePQRModal} style={{ width: '100px', height: '40px', marginTop: '1rem' }}>PQR</Button>
+            <PQRFormModal isOpen={PQRModalOpen} toggle={togglePQRModal} />
             <div className="dropdown d-none d-lg-inline-block">
               <button
                 type="button"

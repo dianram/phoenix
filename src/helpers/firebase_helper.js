@@ -375,6 +375,26 @@ const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setU
     console.error("Error updating document: ", error)
   })
 }
+const updateDevice = ( dataToUpdate, uid, setEditFeedBack, setCurrentModule, currentModule ) => {
+  const db = firebase.firestore()
+
+  db.collection('modules').doc(uid).update({
+    ...currentModule, ...dataToUpdate
+  }).then(() => {
+    setEditFeedBack({
+      message: 'The device was successfully updated!',
+      typeOfAlert: 'success'
+    })
+    setCurrentModule({...currentModule, ...dataToUpdate})
+    console.log("The module was successfully updated!")
+  }).catch(error => {
+    setEditFeedBack({
+      message: `Update fail!, ${error}`,
+      typeOfAlert: 'danger'
+    })
+    console.error("Error updating document: ", error)
+  })
+}
 
 const handleImageUpload = async (file) => {
   const storage = firebase.storage()
@@ -455,5 +475,6 @@ export {
   addModuleToUserOnFireBase,
   removeModuleFromUserOnFirestore,
   updateUserProfile,
-  handleImageUpload
+  handleImageUpload,
+  updateDevice
 }

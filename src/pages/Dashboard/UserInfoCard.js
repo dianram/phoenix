@@ -30,7 +30,6 @@ const UserInfoCard = ({ user, showModules, currentUserType }) => {
     : <h3 className='my-3' style={{ paddingLeft: '3rem' }}>{user.name} </h3>
   )
 
-  console.log(user.userType, userTypes.MASTER)
   return (
     <>
       {(currentUserType !== userTypes.MASTER) && (
