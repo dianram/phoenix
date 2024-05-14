@@ -143,7 +143,7 @@ const Header = props => {
 
             {/* <LanguageDropdown /> */}
 
-            <Button onClick={togglePQRModal} style={{ width: '100px', height: '40px', marginTop: '1rem' }}>PQR</Button>
+            <Button onClick={togglePQRModal} style={{ width: '100px', height: '40px', marginTop: '1rem' }}>CLAIMS</Button>
             <PQRFormModal isOpen={PQRModalOpen} toggle={togglePQRModal} />
             <div className="dropdown d-none d-lg-inline-block">
               <button
