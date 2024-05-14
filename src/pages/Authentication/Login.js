@@ -41,8 +41,8 @@ const Login = props => {
     enableReinitialize: true,
 
     initialValues: {
-      email: userLogin.email || "Your Mail" || '',
-      password: userLogin.password || "123456" || '',
+      email: userLogin.email || "" || '',
+      password: userLogin.password || "" || '',
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your User Name"),
@@ -69,7 +69,7 @@ const Login = props => {
                 <div className="" style={{ backgroundColor: '#605C59' }}>
                   <div className="text-primary text-center p-4">
                     <h5 className="text-white font-size-20">
-                      Welcome Back !
+                      Welcome!
                     </h5>
                     <p className="text-white-50">
                       Sign in to continue to Phoenix.
