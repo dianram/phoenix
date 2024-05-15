@@ -14,7 +14,7 @@ import {
 
 const fireBaseBackend = getFirebaseBackend();
 
-function* loginUser({ payload: { user, history } }) {
+function* loginUser({ payload: { user, history, setIsFail } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(
@@ -40,6 +40,7 @@ function* loginUser({ payload: { user, history } }) {
     }
     history("/dashboard");
   } catch (error) {
+    setIsFail(true)
     yield put(apiError(error));
   }
 }

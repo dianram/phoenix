@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from "react";
 
-import { Row, Col, CardBody, Card, Container, Label, Form, FormFeedback, Input } from "reactstrap";
+import { Row, Col, CardBody, Card, Container, Label, Form, FormFeedback, Input, Alert } from "reactstrap";
 
 // Redux
 import { connect, useSelector, useDispatch } from "react-redux";
@@ -19,6 +19,7 @@ import { loginUser, apiError } from "../../store/actions";
 import logoSm from "../../assets/images/logo-sm.png";
 
 const Login = props => {
+  const [ isFail, setIsFail ] = useState(false)
   const dispatch = useDispatch();
 
   const [userLogin, setUserLogin] = useState([]);
@@ -27,6 +28,7 @@ const Login = props => {
     user: state.Account.user,
   }));
 
+  const onDismiss =  () => setIsFail(false)
   useEffect(() => {
     if (user && user) {
       setUserLogin({
@@ -49,7 +51,7 @@ const Login = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      dispatch(loginUser(values, props.router.navigate));
+      dispatch(loginUser(values, props.router.navigate, setIsFail));
     }
   });
 
@@ -139,6 +141,7 @@ const Login = props => {
                         <div className="col-sm-6 text-end">
                           <button className="btn w-md waves-effect waves-light" style={{backgroundColor: '#9AC1D8', color: 'white'}} type="submit">Log In</button>
                         </div>
+                        {isFail && (<Alert color="danger" toggle={onDismiss}> Wrong username or password </Alert>)}
                       </div>
 
                       <div className="mt-2 mb-0 row">

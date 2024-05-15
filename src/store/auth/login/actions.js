@@ -6,10 +6,10 @@ import {
   API_ERROR,
 } from "./actionTypes"
 
-export const loginUser = (user, history) => {
+export const loginUser = (user, history, setIsFail) => {
   return {
     type: LOGIN_USER,
-    payload: { user, history },
+    payload: { user, history, setIsFail },
   }
 }
 
@@ -37,6 +37,9 @@ export const logoutUserSuccess = () => {
 export const apiError = error => {
   return {
     type: API_ERROR,
-    payload: error,
+    payload: {
+      error,
+      isFail: 'test'
+    }
   }
 }
