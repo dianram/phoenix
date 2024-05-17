@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Label, Input, FormFeedback } from "reactstrap";
+import { useNavigate } from 'react-router-dom';
 
 // Formik deviceValidation
 import * as Yup from "yup";
@@ -9,6 +10,7 @@ import { addNewDeviceToFirestore } from 'helpers/firebase_helper';
 
 
 const AddDeviceForm = ({ toggle }) => {
+  const navigate = useNavigate()
   const deviceValidation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -39,9 +41,10 @@ const AddDeviceForm = ({ toggle }) => {
       usbInputVoltage: Yup.string().required("Please Enter Your USB Input Voltage"),
       vinNumber: Yup.string().required("Please Enter Vin Number"),
     }),
-    onSubmit: (values) => {
-     addNewDeviceToFirestore(values)
-     toggle()
+    onSubmit: async (values) => {
+      await addNewDeviceToFirestore(values)
+      toggle()
+      navigate(0)
     }
   });
 

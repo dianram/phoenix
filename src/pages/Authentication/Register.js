@@ -26,13 +26,15 @@ const Register = props => {
 
   const dispatch = useDispatch();
 
-  const { user } = useSelector(state => ({
-    user: state.Account.user,
-  }));
+  // const { user } = useSelector(state => ({
+  //   user: state.Account.user,
+  // }));
+  const [ isUserCreated, setIsUserCreated ] = useState(false)
 
   const [userType, setUserType] = useState('')
+  const [ showForm, setShowForm ] = useState(false)
   useEffect(() => {
-    if (user) {
+    if (isUserCreated) {
       setTimeout(() => history("/login"), 3000);
     }
 
@@ -40,7 +42,7 @@ const Register = props => {
     //     dispatch(resetRegisterFlag());
     // }, 3000);
 
-  }, [dispatch, user, history]);
+  }, [dispatch, isUserCreated, history]);
 
 
   const userValidation = useFormik({
@@ -65,6 +67,8 @@ const Register = props => {
     }),
     onSubmit: (values) => {
       dispatch(registerUser({...values, userType}));
+      setShowForm(false)
+      setIsUserCreated(true)
     }
   });
 
@@ -94,6 +98,8 @@ const Register = props => {
     }),
     onSubmit: (values) => {
       dispatch(registerUser({...values, userType}));
+      setShowForm(false)
+      setIsUserCreated(true)
     }
   });
   
@@ -139,13 +145,13 @@ const Register = props => {
                 </div>
                 <CardBody className="p-4">
                   <div className="p-3">
-                    {user ? (
+                    {isUserCreated ? (
                       <Alert color="success" style={{ marginTop: "13px" }} className="mt-5">
                         Register User Successful
                       </Alert>
                     ) : null}
-                      < CustomDropdown direction="down" setUserType={setUserType}/>
-                      {userFormSelection()}
+                      < CustomDropdown direction="down" setUserType={setUserType} setShowFrom={setShowForm}/>
+                      {showForm &&  userFormSelection()}
                   </div>
                 </CardBody>
               </Card>
