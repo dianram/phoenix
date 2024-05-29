@@ -12,6 +12,14 @@ import UserDevices from './UserDevices'
 import { formatInfoKey, formatKey } from 'helpers/formatHelpers'
 import { userTypes } from 'constants/userTypes'
 
+/**
+ * The UserInfoCard component in JavaScript displays user information with the ability to toggle
+ * additional details based on the current user type.
+ * @returns The `UserInfoCard` component is being returned. It displays user information based on the
+ * props passed to it, such as the user object, whether to show modules, and the current user type. The
+ * component includes a toggle functionality to show/hide additional user information when clicking on
+ * the chevron icon. The user's name is displayed with different styles based on the user type.
+ */
 const UserInfoCard = ({ user, showModules, currentUserType }) => {
   const [ showUserInfo, setShowUserInfo ] = useState(false)
 

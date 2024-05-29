@@ -8,6 +8,14 @@ import {
 import { userTypes } from "../../constants/userTypes"
 import PropTypes from 'prop-types';
 
+/**
+ * The CustomDropdown function is a React component that displays a dropdown menu to select the type of
+ * user (dealer or customer) and triggers corresponding actions when an option is selected.
+ * @returns The CustomDropdown component is being returned. It is a functional component that renders a
+ * Dropdown component from a UI library with options for selecting the type of user (Dealer or
+ * Customer). The component also takes in props for direction, setUserType function, and setShowFrom
+ * function.
+ */
 function CustomDropdown({ direction, setUserType, setShowFrom }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 

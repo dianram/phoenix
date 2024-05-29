@@ -7,6 +7,14 @@ import { getCollectionFromFirestore } from '../helpers/firebase_helper'
 import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 import SearchBar from './SearchBar'
 
+/**
+ * The Users component in JavaScript fetches user data from Firestore, allows filtering and displaying
+ * user information based on search criteria.
+ * @returns The Users component is being returned. It consists of a list of users displayed in
+ * UserInfoCard components based on the filterResult state. The component also includes a search bar
+ * for filtering users, a toggle button to show/hide the users list, and fetches user data from
+ * Firestore using the getCollectionFromFirestore function.
+ */
 const Users = ({ currentUserType }) => {
   const [ users, setUsers ] = useState([])
   const [ showUsers, setShowUsers ] = useState(false)

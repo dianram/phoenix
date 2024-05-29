@@ -13,6 +13,15 @@ import Voltage from './Voltage'
 import PaginatedResults from './PaginatedResults'
 import SearchDevice from './SearchDevice'
 
+/**
+ * The function `Devices` in JavaScript manages devices, including filtering, pagination, and
+ * performing actions on the devices.
+ * @returns The `Devices` component is being returned. It includes various elements such as a header
+ * for "Devices", a search functionality, paginated results, a massive shutdown component, stock
+ * information, and voltage information. The component also utilizes state variables like
+ * `showDevices`, `filterResult`, and `currentPage` to manage the display and functionality of the
+ * component.
+ */
 const Devices = ({ user, modules, setModules, userModules=undefined, setUserModules=undefined }) => {
   const [ showDevices, setShowDevices ] = useState(false)
   const [ filterResult, setFilterResult ] = useState([])
@@ -41,22 +50,6 @@ const Devices = ({ user, modules, setModules, userModules=undefined, setUserModu
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
-          // ? modules.map(item => (
-          //     <DeviceCard
-          //       key={item.uid}
-          //       module={item}
-          //       moduleID = {item.uid}
-          //       modulePIN={item.modulePIN}   
-          //       moduleInstallDate={item.moduleInstallDate}
-          //       batchNumber={item.batchNumber}
-          //       isOn={item.isOn}
-          //       modules={modules}
-          //       setModules={setModules}
-          //       userModules={userModules}
-          //       setUserModules={setUserModules}
-          //       user={user}
-          //     />
-          //   ))
           : "No devices")
         }
       </Row>

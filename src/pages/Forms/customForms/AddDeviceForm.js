@@ -9,6 +9,14 @@ import { Link } from 'react-router-dom';
 import { addNewDeviceToFirestore } from 'helpers/firebase_helper';
 
 
+/**
+ * The AddDeviceForm component in JavaScript handles form validation and submission for adding a new
+ * device to Firestore.
+ * @returns The `AddDeviceForm` component is being returned. It is a form component that allows users
+ * to input information about a new device. The form includes fields for asset description, asset name,
+ * asset status, batch number, battery voltage, module install date, module owner, module PIN, module
+ * state, USB input voltage, and VIN number.
+ */
 const AddDeviceForm = ({ toggle }) => {
   const navigate = useNavigate()
   const deviceValidation = useFormik({

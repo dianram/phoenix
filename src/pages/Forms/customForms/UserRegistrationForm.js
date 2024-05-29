@@ -3,6 +3,13 @@ import { Form, FormFeedback, Label, Input } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 
+/**
+ * The UserRegistrationForm component is a form that allows users to register by providing their email,
+ * full name, password, address, phone, and location, with validation for each input field.
+ * @returns The UserRegistrationForm component is being returned. It is a form component that includes
+ * input fields for user registration details such as email, full name, password, address, phone, and
+ * location. The form also has a submit button for user registration and a link to the Terms of Use.
+ */
 const UserRegistrationForm = ({ validation }) => {
   return (
     <>

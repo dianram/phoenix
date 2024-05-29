@@ -2,6 +2,13 @@ import React from 'react'
 import { Col, Container, Row } from 'reactstrap'
 import { userDefinition } from 'helpers/formatHelpers'
 
+/**
+ * The `Welcome` component in JavaScript renders a welcome message to a user on a Vehicle Control
+ * Platform, displaying their name and user type.
+ * @returns The `Welcome` component is being returned, which displays a welcome message to the user
+ * along with information about the Vehicle Control Platform. The component includes the user's name,
+ * user type, and a brief description of the platform's features.
+ */
 const Welcome = ({user}) => {
 
   return (

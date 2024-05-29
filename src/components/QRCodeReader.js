@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { Button } from 'reactstrap';
 
+/**
+ * The QRCodeReader function in JavaScript allows users to scan QR codes using the camera, displaying
+ * the scanned data and handling permissions accordingly.
+ * @returns The `QRCodeReader` component is being returned, which contains the logic for scanning QR
+ * codes using the camera. The component renders different UI elements based on the camera permission
+ * status and whether a QR code has been scanned.
+ */
 const QRCodeReader = () => {
   const [cameraPermission, setCameraPermission] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(true);

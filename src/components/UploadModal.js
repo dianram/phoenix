@@ -2,6 +2,14 @@ import { handleImageUpload } from 'helpers/firebase_helper';
 import React, { useState } from 'react'
 import { Button, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
+/**
+ * The UploadModal component in JavaScript allows users to upload an image, display the selected image,
+ * and submit the upload to a database.
+ * @returns The `UploadModal` component is being returned. It is a modal component that allows users to
+ * upload an image file, display the selected file, and submit the upload to save the image URL in the
+ * database. The modal includes options to submit the upload, cancel the operation, and displays
+ * feedback messages upon successful image upload.
+ */
 const UploadModal = ({ modal, toggleModal, saveUploadImgOnDB, setEditFeedBack }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [ imgURL, setImgURL ] = useState('')

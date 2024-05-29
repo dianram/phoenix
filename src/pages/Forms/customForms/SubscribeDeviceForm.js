@@ -8,6 +8,14 @@ import { Link } from 'react-router-dom';
 import { addModuleToUserState, isValidIDToSubscribe } from 'helpers/modulesHelper';
 import { addModuleToUserOnFireBase } from 'helpers/firebase_helper';
 
+/**
+ * The SubscribeDeviceForm component in JavaScript handles subscription validation and form submission
+ * for adding modules to a user's account.
+ * @returns The `SubscribeDeviceForm` component is being returned. It is a form component that allows a
+ * user to subscribe to a module by entering its ID. The form includes input fields for the module ID,
+ * validation messages for the input field, and a submit button. The form also displays a message if
+ * the module ID is not valid for subscription.
+ */
 const SubscribeDeviceForm = ({allModules, userModules, setUserModules, user, toggle}) => {
   const [isValidID, setIsValidID] = useState("")
   const subscribeValidation = useFormik({

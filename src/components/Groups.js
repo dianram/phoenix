@@ -4,6 +4,14 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'reactstrap'
 import CreateGroup from './CreateGroup'
 
+/**
+ * The function `Groups` in JavaScript renders a list of user groups with the ability to create new
+ * groups.
+ * @returns The `Groups` component is returning JSX elements that display a list of groups for a user.
+ * The component conditionally renders group cards for each group the user is a part of, along with an
+ * option to create a new group if the user has less than 3 groups. If there are no groups or the user
+ * has reached the maximum limit of 3 groups, appropriate messages are displayed.
+ */
 const Groups = ({ user, modules, setModules }) => {
   const [ groups, setGroups ] = useState([])
   const [ showGroups, setShowGroups ] = useState(false)

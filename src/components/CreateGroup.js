@@ -9,6 +9,13 @@ import {
   Form,
 } from 'reactstrap';
 
+/**
+ * The CreateGroup component renders a form to add a new group with a modal popup in a React
+ * application.
+ * @returns The CreateGroup component is being returned. It consists of a Form with a Button to add a
+ * new group. When the button is clicked, a Modal is displayed with a form to create a new group. The
+ * Modal includes a header, body with CreateGroupForm component, and a footer with a cancel button.
+ */
 const CreateGroup = ({ user, groups, setGroups }) => {
   const [modal, setModal] = useState(false);
 

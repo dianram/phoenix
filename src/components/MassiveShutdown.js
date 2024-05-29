@@ -10,6 +10,13 @@ import {
 
 import { modulesShutDownOnFireStore } from 'helpers/firebase_helper'
 import { fewModulesStateUpdate, modulesStateUpdate } from 'helpers/modulesHelper';
+/**
+ * The MassiveShutdown function in JavaScript handles a modal for initiating a massive shutdown process
+ * for devices.
+ * @returns The `MassiveShutdown` component is being returned. It consists of a button labeled "Massive
+ * ShutDown" that triggers a modal when clicked. The modal displays a warning message about shutting
+ * down all devices and provides options to either proceed with the shutdown or cancel.
+ */
 const MassiveShutdown = ({ allModules, modulesToUpdate, setModules, areAllModules, setUserModules = "" }) => {
   const [modal, setModal] = useState(false);
 

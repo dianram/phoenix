@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+/**
+ * The PQRFormModal component is a form modal in JavaScript that allows users to send PQR (queries or
+ * requests) with fields for name, email, and message.
+ * @returns The code snippet is a functional component named `PQRFormModal` that renders a modal dialog
+ * for sending a PQR (Possible Quality Report). The modal contains a form with input fields for name,
+ * email, and message, along with a submit button and a cancel button. The form is set to submit to a
+ * specific email address using the `formsubmit.co` service.
+ */
 const PQRFormModal = ({ isOpen, toggle }) => {
   const [formData, setFormData] = useState({
     name: '',

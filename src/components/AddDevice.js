@@ -8,6 +8,12 @@ import {
   ModalFooter,
   Form,
 } from 'reactstrap';
+/**
+ * The AddDevice function creates a modal for adding a new device with a form inside.
+ * @returns The `AddDevice` component is being returned. It consists of a button labeled "Add a new
+ * device" that, when clicked, opens a modal with a form to add a new device. The modal includes a
+ * header "New Device", the form itself, and a "Cancel" button to close the modal.
+ */
 const AddDevice = () => {
   const [modal, setModal] = useState(false);
 

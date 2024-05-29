@@ -118,6 +118,11 @@ class FirebaseAuthBackend {
     })
   }
 
+  /**
+   * 
+   * @param {Object} user 
+   * @returns An object that contains user object and details object
+   */
   addNewUserToFirestore = (user) => {
     const collection = firebase.firestore().collection("users")
     const details = {
@@ -135,6 +140,11 @@ class FirebaseAuthBackend {
     return { user, details }
   }
 
+  /**
+   * 
+   * @param {Object} user 
+   * @returns An object that contains user object and details object
+   */
   addNewDealerToFirestore = (user) => {
     const collection = firebase.firestore().collection("dealerships")
     const details = {
@@ -217,6 +227,10 @@ const getCollectionFromFirestore = async (collectionName) => {
   return res
 }
 
+/**
+ * 
+ * @returns Object with user info
+ */
 const getUserInfo = async () => {
   const db = await firebase.firestore()
   const user = JSON.parse(localStorage.getItem("authUser"))
@@ -239,6 +253,11 @@ const getUserInfo = async () => {
   }
 }
 
+/**
+ * 
+ * @param {Object} device 
+ * @returns details Object
+ */
 const addNewDeviceToFirestore = async (device) => {
   const db = await firebase.firestore()
   // const collection = firebase.firestore().collection("modules")
@@ -268,6 +287,10 @@ const addNewDeviceToFirestore = async (device) => {
   return { details }
 }
 
+/**
+ * 
+ * @param {Array} modules 
+ */
 const modulesShutDownOnFireStore = ( modules ) => {
   console.log({modules})
   const db = firebase.firestore()
@@ -281,6 +304,12 @@ const modulesShutDownOnFireStore = ( modules ) => {
     })
   })
 }
+
+/**
+ * 
+ * @param {String} moduleID 
+ * @param {Boolean} isOn 
+ */
 const singleModuleShutDownOnFireStore = ( moduleID, isOn ) => {
   const db = firebase.firestore()
   db.collection("modules").doc(moduleID).update({
@@ -292,6 +321,14 @@ const singleModuleShutDownOnFireStore = ( moduleID, isOn ) => {
   })
 }
 
+/**
+ * 
+ * @param {String} groupName 
+ * @param {String} itemId 
+ * @param {Object} user 
+ * @param {Array} groups 
+ * @param {Function} setGroups 
+ */
 const createGroup = ( groupName, itemId, user, groups, setGroups ) => {
   const newGroup = {
     name: groupName,
@@ -319,6 +356,15 @@ const createGroup = ( groupName, itemId, user, groups, setGroups ) => {
   }
 }
 
+/**
+ * 
+ * @param {String} groupName 
+ * @param {String} newItem 
+ * @param {Object} user 
+ * @param {Array} groups 
+ * @param {Function} setGroups 
+ * @param {Array} groupItems 
+ */
 const addItemToGroup = ( groupName, newItem, user, groups, setGroups, groupItems ) => {
   const itemRemovedFromGroups = groups.filter(group => group.name !== groupName)
   const newGroup = {
@@ -347,6 +393,14 @@ const addItemToGroup = ( groupName, newItem, user, groups, setGroups, groupItems
   }
 }
 
+/**
+ * 
+ * @param {Object} item 
+ * @param {String} groupName 
+ * @param {Array} groups 
+ * @param {Array} groupItems 
+ * @returns updated groups Array
+ */
 const updatedGroups = (item, groupName, groups, groupItems) => {
   const newItems = groupItems.filter(groupItem => groupItem !== item)
   const groupUpdated = {name: groupName, items: newItems}
@@ -355,6 +409,15 @@ const updatedGroups = (item, groupName, groups, groupItems) => {
   return newGroups
 }
 
+/**
+ * 
+ * @param {Object} dataToUpdate 
+ * @param {String} collection 
+ * @param {String} uid 
+ * @param {Function} setEditFeedBack 
+ * @param {Function} setUser 
+ * @param {Object} user 
+ */
 const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setUser, user ) => {
   const db = firebase.firestore()
 
@@ -375,6 +438,15 @@ const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setU
     console.error("Error updating document: ", error)
   })
 }
+
+/**
+ * 
+ * @param {Object} dataToUpdate 
+ * @param {String} uid 
+ * @param {Function} setEditFeedBack 
+ * @param {Function} setCurrentModule 
+ * @param {Object} currentModule 
+ */
 const updateDevice = ( dataToUpdate, uid, setEditFeedBack, setCurrentModule, currentModule ) => {
   const db = firebase.firestore()
 
@@ -396,6 +468,11 @@ const updateDevice = ( dataToUpdate, uid, setEditFeedBack, setCurrentModule, cur
   })
 }
 
+/**
+ * 
+ * @param {Object} file 
+ * @returns {String} image URL
+ */
 const handleImageUpload = async (file) => {
   const storage = firebase.storage()
   const storageRef = storage.ref();
@@ -405,6 +482,16 @@ const handleImageUpload = async (file) => {
   const imageUrl = await snapshot.ref.getDownloadURL();
   return imageUrl
 };
+
+/**
+ * 
+ * @param {Object} user 
+ * @param {Object} item 
+ * @param {String} groupName 
+ * @param {Array} groups 
+ * @param {Function} setGroups 
+ * @param {Array} groupItems 
+ */
 const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItems) => {
   const newGroups = updatedGroups(item, groupName, groups, groupItems)
   const db = firebase.firestore()
@@ -429,6 +516,12 @@ const removeItemFromGroup = (user, item, groupName, groups, setGroups, groupItem
   }
 }
 
+/**
+ * 
+ * @param {String} userID 
+ * @param {String} IDToSubscribe 
+ * @param {Array} userModules 
+ */
 const addModuleToUserOnFireBase = async (userID, IDToSubscribe, userModules) => {
   const db = firebase.firestore()
   db.collection("dealerships").doc(userID).update({
@@ -440,6 +533,11 @@ const addModuleToUserOnFireBase = async (userID, IDToSubscribe, userModules) => 
   })
 }
 
+/**
+ * 
+ * @param {Object} user 
+ * @param {Object} module 
+ */
 const removeModuleFromUserOnFirestore = async (user, module) => {
   const userModulesUpdated = user.modules.filter(userModule => userModule !== module.uid)
   const moduleOwnersUpdated = module.moduleOwner.filter(owner => owner !== user.uid)

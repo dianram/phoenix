@@ -2,6 +2,16 @@ import React from 'react'
 import { Form, FormFeedback, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
+/**
+ * The DealerRegistrationForm component is a form for registering dealers with input fields for email,
+ * full name, password, address, phone, location, manager, and manager phone, along with validation
+ * handling.
+ * @returns The `DealerRegistrationForm` component is being returned. It is a form component that
+ * includes input fields for dealer registration information such as email, full name, password,
+ * address, phone, location, manager, and manager phone. The form also includes validation logic using
+ * the `validation` prop which handles form submission and error display. Finally, there is a submit
+ * button for registering the dealer and a link to login.
+ */
 const DealerRegistrationForm = ({ validation }) => {
   return (
     <>

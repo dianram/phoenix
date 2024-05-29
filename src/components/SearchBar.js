@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { Input, InputGroup, Button } from 'reactstrap';
 
+/**
+ * The SearchBar component in JavaScript allows users to search for specific names within a list of
+ * allUsers and filter the results accordingly.
+ * @returns The `SearchBar` component is being returned. It is a functional component that contains a
+ * form with an input field for searching users. The user can input a search term, which triggers a
+ * filtering process on the `allUsers` data based on the user's name. The filtered results are then
+ * passed to the `setFilterResult` function, and the form is reset. The form includes an input
+ */
 const SearchBar = ({ allUsers, setFilterResult, setShow }) => {
   const [searchTerm, setSearchTerm] = useState('');
 

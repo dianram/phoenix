@@ -8,6 +8,14 @@ import { Link } from 'react-router-dom';
 import { createGroup } from 'helpers/firebase_helper';
 
 
+/**
+ * The CreateGroupForm component is a form that allows users to input a group name and ID, with
+ * validation using Formik and Yup, and onSubmit function to create a group and toggle the form.
+ * @returns The `CreateGroupForm` component is being returned. It is a form component that allows users
+ * to input a group name and an ID/user ID. The form includes validation for both fields using Yup
+ * validation schema. When the form is submitted, the `onSubmit` function is called, which in turn
+ * calls the `createGroup` function with the provided values and then toggles the form.
+ */
 const CreateGroupForm = ({ toggle, user, groups, setGroups }) => {
   const groupValidation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

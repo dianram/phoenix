@@ -6,6 +6,16 @@ import { Row } from 'reactstrap'
 import nonCarImg from '../assets/images/nonCarImg.png'
 import SearchDevice from './SearchDevice'
 
+
+/**
+ * The function `userDevicesDetail` displays a list of devices for a user with the ability to search
+ * and filter the devices.
+ * @returns The `userDevicesDetail` component is being returned. It displays a list of devices for a
+ * user, with the ability to search and filter the devices. The component includes a header with a
+ * search input field and a toggle button to show/hide the device list. The list of devices is
+ * displayed as `DeviceCard` components for each device in the `filterResult`. If there are no devices
+ * the It shows 'No Devices'.
+ */
 const userDevicesDetail = ({ userModules, setUserModules, user }) => {
   const [ showUserDevices, setShowUserDevices ] = useState(false)
   const [ filterResult, setFilterResult ] = useState([])

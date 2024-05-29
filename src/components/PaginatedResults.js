@@ -4,6 +4,14 @@ import { Pagination, PaginationItem, PaginationLink, Row } from 'reactstrap';
 
 import nonCarImg from '../assets/images/nonCarImg.png'
 
+/**
+ * The PaginatedResults component in JavaScript handles pagination of items based on the specified
+ * items per page and current page number.
+ * @returns The `PaginatedResults` component is being returned. It renders a paginated list of items
+ * based on the current page and items per page. It includes a list of items for the current page, a
+ * pagination component to navigate between pages, and a `DeviceCard` component for each item on the
+ * current page.
+ */
 const PaginatedResults = ({
   itemsPerPage,
   modules,

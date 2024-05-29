@@ -8,6 +8,13 @@ import {
   Row,
 } from 'reactstrap'
 
+/**
+ * The function `UserDevices` renders a list of user devices based on the provided `userModules` array.
+ * @returns The `UserDevices` component is being returned. It displays a list of user devices based on
+ * the `userModules` prop passed to it. If there are user modules present, it will display each module
+ * in a Card component within a Row. If there are no user modules, it will display a message saying "No
+ * devices".
+ */
 const UserDevices = ({ userModules }) => {
   return (
     <div className="border-bottom">

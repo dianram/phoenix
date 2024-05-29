@@ -10,6 +10,13 @@ import {
   CardText,
 } from 'reactstrap';
 
+/**
+ * The GroupItem component in JavaScript renders a card text item with a remove button that triggers a
+ * modal to confirm removal from a group.
+ * @returns The `GroupItem` component is being returned. It renders a div containing the item name, a
+ * button to trigger a modal, and a modal that prompts the user to confirm the removal of the item from
+ * the group.
+ */
 const GroupItem = ({ item, groupName, user, setGroups, groups, groupItems }) => {
   const [modal, setModal] = useState(false);
 

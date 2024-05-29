@@ -25,6 +25,14 @@ import { addItemToGroup } from 'helpers/firebase_helper';
 import MassiveShutdown from 'components/MassiveShutdown';
 import { getFullModules, getModules } from "../../helpers/modulesHelper"
 
+/**
+ * The GroupCard component renders a card displaying group information and allows users to add new
+ * items to the group.
+ * @returns The `GroupCard` component is being returned. It consists of a Card component that displays
+ * group information, group items, and a button to add a new item to the group. The component also
+ * includes a Modal component that allows users to input an ID for the new item to be added to the
+ * group. The Modal has input validation for the ID field. Additionally, MassiveShutdown component.
+ */
 const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, setModules }) => {
   const [modal, setModal] = useState(false);
 

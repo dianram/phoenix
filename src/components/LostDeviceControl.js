@@ -10,6 +10,15 @@ import {
   Form,
 } from 'reactstrap';
 
+/**
+ * The `LostDeviceControl` component in JavaScript handles the functionality for a user to remove a
+ * module from their profile and lose control of it.
+ * @returns The `LostDeviceControl` component is being returned. It consists of a button labeled "Lost
+ * Control" that triggers a modal when clicked. The modal displays a warning message about losing
+ * control of a device/module and provides options to either proceed with "Lost Device Control" or
+ * cancel. The component handles the state of the modal and the actions to be taken when the buttons
+ * are clicked.
+ */
 const LostDeviceControl = ({ user, module, setUserModules, userModules }) => {
 
   const [modal, setModal] = useState(false);

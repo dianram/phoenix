@@ -6,6 +6,15 @@ import {
 } from 'reactstrap'
 import SearchBar from './SearchBar'
 
+/**
+ * The Dealerships component in JavaScript fetches and displays a list of dealerships with search
+ * functionality.
+ * @returns The `Dealerships` component is being returned. It displays a list of dealerships with a
+ * search bar to filter the results. The component fetches the list of dealerships from Firestore and
+ * then displays them using the `UserInfoCard` component for each dealership in the `filterResult`
+ * state array. The component also allows toggling the visibility of the dealerships list with a
+ * chevron icon.
+ */
 const Dealerships = ({ currentUserType }) => {
   const [dealers, setDealers] = useState([])
   const [showDealers, setShowDealers] = useState(false)

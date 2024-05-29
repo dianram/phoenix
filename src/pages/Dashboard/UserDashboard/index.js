@@ -12,6 +12,13 @@ import Voltage from 'components/Voltage'
 import Welcome from 'components/Welcome'
 import Actions from 'components/Actions'
 
+/**
+ * The UserDashboard component in JavaScript fetches modules data from Firestore, displays user
+ * information and devices, and includes features based on user type.
+ * @returns The `UserDashboard` component is being returned. It consists of various components such as
+ * `Welcome`, `UserInfoCard`, `UserDevicesDetail`, `MassiveShutdown`, `Voltage`, `Actions`, and
+ * `Groups` based on the user's userType.
+ */
 const UserDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
   const [userModules, setUserModules] = useState([])

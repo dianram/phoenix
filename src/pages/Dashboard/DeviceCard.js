@@ -22,6 +22,14 @@ import nonCarImg from '../../assets/images/nonCarImg.png'
 import UploadModal from 'components/UploadModal';
 import CustomAlert from 'components/CustomAlert';
 
+/**
+ * The DeviceCard component in JavaScript manages the display and functionality of a device card with
+ * options for toggling device status and uploading images.
+ * @returns The `DeviceCard` component is being returned. It is a functional component that displays
+ * information about a device module, such as module ID, PIN, installation date, batch number, and
+ * whether the device is active. The component also includes a switch to toggle the device's active
+ * status, an option to upload an image, and a modal for uploading images.
+ */
 const DeviceCard = ({
   moduleID,
   modulePIN,

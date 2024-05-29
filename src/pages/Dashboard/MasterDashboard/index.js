@@ -9,6 +9,14 @@ import QRCodeReader from 'components/QRCodeReader'
 import Welcome from 'components/Welcome'
 
 
+/**
+ * The MasterDashboard component in JavaScript fetches modules data from Firestore and displays various
+ * components based on the user's userType.
+ * @returns The `MasterDashboard` component is being returned. It includes several child components
+ * such as `Welcome`, `Devices`, `Users`, `Dealerships`, and `Groups`. Additionally, it fetches data
+ * from Firestore using the `getCollectionFromFirestore` function and sets the retrieved data in the
+ * `modules` state using `useState` and `useEffect` hooks. The component also renders `AddDevice`and `QRCodeReader` components.
+ */
 const MasterDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
 
