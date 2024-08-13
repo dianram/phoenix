@@ -61,7 +61,6 @@ const Devices = ({ user, modules, setModules, userModules=undefined, setUserModu
         />)
       }
       <Stock modules={modules}/>
-      <Voltage />
     </div>
   )
 }

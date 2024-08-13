@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, FormFeedback, Label, Input } from "reactstrap";
+import { Form, FormFeedback, Label, Input, Alert } from "reactstrap";
 import { Link } from "react-router-dom";
 
 /**
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
  * button for registering the dealer and a link to login.
  */
 const DealerRegistrationForm = ({ validation }) => {
+  
   return (
     <>
       <Form className="mt-4" onSubmit={(e) => {
@@ -43,22 +44,22 @@ const DealerRegistrationForm = ({ validation }) => {
         </div>
 
         <div className="mb-3">
-          <Label className="form-label" htmlFor="dealerlName">User Full Name</Label>
+          <Label className="form-label" htmlFor="dealerName">Dealer Name</Label>
           <Input
-            name="dealerlName"
+            name="dealerName"
             className="form-control"
             placeholder="Enter User Full Name"
             type="text"
-            id="dealerlName"
+            id="dealerName"
             onChange={validation.handleChange}
             onBlur={validation.handleBlur}
-            value={validation.values.dealerlName || ""}
+            value={validation.values.dealerName || ""}
             invalid={
-              validation.touched.dealerlName && validation.errors.dealerlName ? true : false
+              validation.touched.dealerName && validation.errors.dealerName ? true : false
             }
           />
-          {validation.touched.dealerlName && validation.errors.dealerlName ? (
-            <FormFeedback type="invalid">{validation.errors.dealerlName}</FormFeedback>
+          {validation.touched.dealerName && validation.errors.dealerName ? (
+            <FormFeedback type="invalid">{validation.errors.dealerName}</FormFeedback>
           ) : null}
         </div>
 
@@ -143,26 +144,26 @@ const DealerRegistrationForm = ({ validation }) => {
         </div>
 
         <div className="mb-3">
-          <Label className="form-label" htmlFor="dealerManager">Manager</Label>
+          <Label className="form-label" htmlFor="dealerReceiver">Receiver</Label>
           <Input
-            name="manager"
-            value={validation.values.manager || ""}
+            name="dealerReceiver"
+            value={validation.values.dealerReceiver || ""}
             type="text"
-            id="dealerManager"
+            id="dealerReceiver"
             className="form-control"
-            placeholder="Enter Manager"
+            placeholder="Enter Receiver"
             onChange={validation.handleChange}
             onBlur={validation.handleBlur}
             invalid={
-              validation.touched.manager && validation.errors.manager ? true : false
+              validation.touched.dealerReceiver && validation.errors.dealerReceiver ? true : false
             }
           />
-          {validation.touched.manager && validation.errors.manager ? (
-            <FormFeedback type="invalid">{validation.errors.manager}</FormFeedback>
+          {validation.touched.dealerReceiver && validation.errors.dealerReceiver ? (
+            <FormFeedback type="invalid">{validation.errors.dealerReceiver}</FormFeedback>
           ) : null}
         </div>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <Label className="form-label" htmlFor="dealerManagerPhone">Manager Phone</Label>
           <Input
             name="managerPhone"
@@ -180,7 +181,7 @@ const DealerRegistrationForm = ({ validation }) => {
           {validation.touched.managerPhone && validation.errors.managerPhone ? (
             <FormFeedback type="invalid">{validation.errors.managerPhone}</FormFeedback>
           ) : null}
-        </div>
+        </div> */}
 
         <div className="mb-3 row">
           <div className="col-12 text-end">

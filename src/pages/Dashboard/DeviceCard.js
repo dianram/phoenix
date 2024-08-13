@@ -32,10 +32,8 @@ import CustomAlert from 'components/CustomAlert';
  */
 const DeviceCard = ({
   moduleID,
-  modulePIN,
   moduleInstallDate,
   batchNumber,
-  isOn,
   carModulePict,
   modules,
   setModules,
@@ -54,12 +52,12 @@ const DeviceCard = ({
   const toggleModal = () => setModal(!modal);
 
   useEffect(() => {
-    setIsOnToggle(isOn)
+    setIsOnToggle(false)
     setCurrentModule(module)
     if (user.userType === userTypes.MASTER) {
       setIsMaster(true)
     }
-  }, [isOn])
+  }, [])
   
   const onChangeHandle = () => {
     setIsOnToggle(prev => !prev);
@@ -84,10 +82,10 @@ const DeviceCard = ({
               onClick={!isMaster ? toggleModal : () => {}}
             />
             {!isMaster && <p style={{ fontSize: '0.6rem', width: '100%', textAlign: 'center', marginTop: '10px' }}>Click to Upload Image</p>}
-            <b>MODULE ID: </b>
+            <b>SERIAL: </b>
             <CardText style={{ fontSize: '0.7rem' }}>{moduleID}</CardText>
           </CardHeader>
-          <CardText className="border-bottom">PIN: {modulePIN}</CardText>
+          {/* <CardText className="border-bottom">PIN: {modulePIN}</CardText> */}
           <CardText className="border-bottom">Install Date: {moduleInstallDate}</CardText>
           <CardText className="border-bottom">batchNumber: {batchNumber}</CardText>
           <CardTitle>Active Device</CardTitle>

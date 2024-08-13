@@ -131,12 +131,17 @@ class FirebaseAuthBackend {
       address: user.address,
       phone: user.phone,
       state: user.location,
-      userType: user.userType,
-      modules: [],
-      createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
-      lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
+      role: user.role,
+      devices: [],
+      device_groups: []
     }
     collection.doc(firebase.auth().currentUser.uid).set(details)
+      .then(() => {
+        console.log('Document successfully written!');
+      })
+      .catch((error) => {
+        console.error('Error writing document: ', error);
+      });
     return { user, details }
   }
 
@@ -146,22 +151,23 @@ class FirebaseAuthBackend {
    * @returns An object that contains user object and details object
    */
   addNewDealerToFirestore = (user) => {
-    const collection = firebase.firestore().collection("dealerships")
+    const collection = firebase.firestore().collection("users")
     const details = {
-      manager: user.manager,
-      managerPhone: user.dealerPhone,
+      receiver_name: user.dealerReceiver,
       email: user.dealerEmail,
-      name: user.dealerlName,
+      name: user.dealerName,
       address: user.dealerAddress,
       phone: user.dealerPhone,
       state: user.dealerLocation,
-      userType: user.userType,
-      modules: [],
-      groups: [],
-      createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
-      lastLoginTime: firebase.firestore.FieldValue.serverTimestamp()
+      role: user.role
     }
     collection.doc(firebase.auth().currentUser.uid).set(details)
+      .then(() => {
+        console.log('Document successfully written!');
+      })
+      .catch((error) => {
+        console.error('Error writing document: ', error);
+      });
     return { user, details }
   }
 
@@ -227,6 +233,47 @@ const getCollectionFromFirestore = async (collectionName) => {
   return res
 }
 
+
+const getDocumentWithSubcollections = async (docId) => {
+  const db = firebase.firestore()
+  try {
+    // Referencia al documento principal
+    const docRef = doc(db, "device_groups", docId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+
+      // Referencia a la subcolección 'devices'
+      const devicesRef = collection(docRef, "devices");
+      const devicesSnap = await getDocs(devicesRef);
+
+      // Mapeo de los documentos de la subcolección
+      const devices = devicesSnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      // Añadir la subcolección al documento principal
+      data.devices = devices;
+
+      return data;
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error("Error getting document with subcollection:", error);
+  }
+};
+
+const getFullGroupsInfo = async (groups, setGroups) => {
+  const fullGroupsInfo = await Promise.all(
+    groups.map(fullGroupInfo => getDocumentWithSubcollections(fullGroupInfo.uid))
+  )
+  setGroups(fullGroupsInfo)
+}
+
+
 /**
  * 
  * @returns Object with user info
@@ -241,15 +288,7 @@ const getUserInfo = async () => {
     const userInfo = docSnap.data()
     return {...userInfo, uid: user.uid}
   } else {
-    const docRefDealer = doc(db, "dealerships", user.uid);
-    const docSnapDealer = await getDoc(docRefDealer);
-    if (docSnapDealer.exists()) {
-      const userInfo = docSnapDealer.data()
-      return {...userInfo, uid: user.uid}
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
+    console.log("No such document!")
   }
 }
 
@@ -563,6 +602,7 @@ export {
   initFirebaseBackend,
   getFirebaseBackend,
   getCollectionFromFirestore,
+  getFullGroupsInfo,
   getUserInfo,
   addNewDeviceToFirestore,
   modulesShutDownOnFireStore,

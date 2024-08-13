@@ -66,7 +66,7 @@ const Register = props => {
       location: Yup.string().required("Please Enter Your State"),
     }),
     onSubmit: (values) => {
-      dispatch(registerUser({...values, userType}));
+      dispatch(registerUser({...values, role: userType }));
       setShowForm(false)
       setIsUserCreated(true)
     }
@@ -78,26 +78,24 @@ const Register = props => {
 
     initialValues: {
       dealerLocation: '',
-      manager: '',
-      managerPhone: '',
+      dealerReceiver: '',
       dealerPhone: '',
       dealerAddress: '',
       dealerPassword: '',
-      dealerlName: '',
+      dealerName: '',
       dealerEmail: ''
     },
     validationSchema: Yup.object({
       dealerEmail: Yup.string().required("Please Enter Your Email"),
-      dealerlName: Yup.string().required("Please Enter Your Dealer Name"),
+      dealerName: Yup.string().required("Please Enter Your Dealer Name"),
       dealerLocation: Yup.string().required("Please Enter Your State"),
-      manager: Yup.string().required("Please Enter Manager Name"),
-      managerPhone: Yup.string().required("Please Enter Manager Phone"),
+      dealerReceiver: Yup.string().required("Please Enter Receiver Name"),
       dealerPhone: Yup.string().required("Please Enter Phone"),
       dealerAddress: Yup.string().required("Please Enter Address"),
       dealerPassword: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      dispatch(registerUser({...values, userType}));
+      dispatch(registerUser({...values, role: userType}));
       setShowForm(false)
       setIsUserCreated(true)
     }

@@ -16,8 +16,8 @@ const Welcome = ({user}) => {
       <Container>
         <Row>
           <Col md={{ size: 8, offset: 2 }}>
-            <h1>Welcome {user.name} to our Vehicle Control Platform</h1>
-            <p className='lead'>You are {userDefinition(user.userType)}</p>
+            <h1>Welcome {user.user_name} to our Vehicle Control Platform</h1>
+            <p className='lead'>You are {userDefinition(user.role)}</p>
             <p className="lead">
               We're thrilled to have you here. With our cutting-edge device, the Phoenix Immobilizer, we ensure security and complete control over your car's ignition. Explore the advanced features of our web app and embrace a new era in vehicle management. Thank you for trusting us to keep your vehicle safe!
             </p>

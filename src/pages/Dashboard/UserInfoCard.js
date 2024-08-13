@@ -20,11 +20,11 @@ import { userTypes } from 'constants/userTypes'
  * component includes a toggle functionality to show/hide additional user information when clicking on
  * the chevron icon. The user's name is displayed with different styles based on the user type.
  */
-const UserInfoCard = ({ user, showModules, currentUserType }) => {
+const UserInfoCard = ({ user, showModules, currentUserRole }) => {
   const [ showUserInfo, setShowUserInfo ] = useState(false)
 
   const infoKeys = Object.keys(user)
-  const keysToShow = infoKeys.filter(key => key !== "modules")
+  const keysToShow = infoKeys.filter(key => key !== "devices")
 
   const getDropStyle = userType => (
     userType === userTypes.MASTER
@@ -40,13 +40,13 @@ const UserInfoCard = ({ user, showModules, currentUserType }) => {
 
   return (
     <>
-      {(currentUserType !== userTypes.MASTER) && (
+      {(currentUserRole !== userTypes.MASTER) && (
         <Row className='text-end'>
           <p style={{ fontSize: '0.6rem', marginBottom: '-2rem'}}>Click here to {!showUserInfo === true ? 'check' : 'close'} your info</p>
         </Row>
       )}
-      <div className={getDropStyle(currentUserType)}>
-        {getNameElement(currentUserType)}
+      <div className={getDropStyle(currentUserRole)}>
+        {getNameElement(currentUserRole)}
         <i 
           className={showUserInfo ? "mdi mdi-chevron-up " : "mdi mdi-chevron-down"}
           onClick={e => {setShowUserInfo(prev => !prev)}}
@@ -60,8 +60,8 @@ const UserInfoCard = ({ user, showModules, currentUserType }) => {
             {keysToShow.map(infoKey => (
               infoKey !== 'groups' && <CardText className="border-bottom" key={infoKey}> <b>{formatKey(infoKey)}: </b> {formatInfoKey(user[infoKey]) } </CardText>
             ))}
-            {(user.modules && showModules)
-              ? < UserDevices userModules={user.modules} />
+            {(user.devices && showModules)
+              ? < UserDevices userModules={user.devices} />
               : ""
             }
           </CardBody>

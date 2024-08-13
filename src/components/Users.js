@@ -15,7 +15,7 @@ import SearchBar from './SearchBar'
  * for filtering users, a toggle button to show/hide the users list, and fetches user data from
  * Firestore using the getCollectionFromFirestore function.
  */
-const Users = ({ currentUserType }) => {
+const Users = ({ currentUserRole }) => {
   const [ users, setUsers ] = useState([])
   const [ showUsers, setShowUsers ] = useState(false)
   const [ filterResult, setFilterResult ] = useState([])
@@ -23,13 +23,14 @@ const Users = ({ currentUserType }) => {
   useEffect(() => {
     getCollectionFromFirestore("users")
       .then(res => {
-        setUsers(res)
-        setFilterResult(res)
+        const endUsers = res.filter(endUser => endUser.role === 'end_user')
+        setUsers(endUsers)
+        setFilterResult(endUsers)
       }).catch(error => {
         console.log("failed fetch: ", error)
       })
   }, [])
-
+  
   return (
       <Row>
         <div className='d-flex justify-content-between border-bottom my-2'>
@@ -45,7 +46,7 @@ const Users = ({ currentUserType }) => {
             user={user}
             key={user.uid}
             showModules
-            currentUserType={currentUserType}
+            currentUserType={currentUserRole}
           />
         ))}
       </Row>

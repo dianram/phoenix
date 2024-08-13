@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DeviceCard from 'pages/Dashboard/DeviceCard'
 import { getCollectionFromFirestore } from 'helpers/firebase_helper'
-import { Row } from 'reactstrap'
+import { Container, Row } from 'reactstrap'
 
 import nonCarImg from '../assets/images/nonCarImg.png'
 import SearchDevice from './SearchDevice'
@@ -50,7 +50,14 @@ const userDevicesDetail = ({ userModules, setUserModules, user }) => {
                 user={user}
               />
           ))
-          : "No Devices")
+          : <Container style={{ marginTop: '30px' }}>
+              <p>
+                You don't have any devices assigned yet, please request your Dealer or the MegaUser from Phoenix to assign your devices.
+                You can now log in to your mobile app, view your devices, and control them.
+                On this platform, you will only see basic information.
+              </p>
+            </Container>
+          )
         }
       </Row>
     </>

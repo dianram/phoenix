@@ -66,18 +66,18 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
           ? groupItems.map(groupItem => (
           <GroupItem
             key={groupItem}
-            item={groupItem}
+            item={groupItem.serial_number}
             groupName={groupName}
-            user={user}
-            setGroups={setGroups}
-            groups={groups}
-            groupItems={groupItems}
+            // user={user}
+            // setGroups={setGroups}
+            // groups={groups}
+            // groupItems={groupItems}
           />
           ))
           : <CardText className="border-bottom">No members or items in this group</CardText>
         }
         <CardFooter>
-          <div className='d-inline-flex justify-content-center'>
+          {/* <div className='d-inline-flex justify-content-center'>
             <Form 
               className='my-2 d-flex justify-content-center'
               onSubmit={(e) => e.preventDefault()}
@@ -130,9 +130,9 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
                 </Button>
               </ModalFooter>
             </Modal>
-          </div>
+          </div> */}
         </CardFooter>       
-        <MassiveShutdown allModules={modules} modulesToUpdate={getFullModules(groupItems, modules)} setModules={setModules} areAllModules={false}/>
+        {/* <MassiveShutdown allModules={modules} modulesToUpdate={getFullModules(groupItems, modules)} setModules={setModules} areAllModules={false}/> */}
       </CardBody>      
     </Card>
   </Col>

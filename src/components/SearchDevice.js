@@ -20,7 +20,7 @@ const SearchDevice = ({ allDevices, setFilterResult, setShow, setCurrentPage }) 
     event.preventDefault();
     let filtered = allDevices
     if (searchTerm) {
-      filtered = allDevices.filter(device => device.modulePIN.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = allDevices.filter(device => device.serial_number.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
   
@@ -37,7 +37,7 @@ const SearchDevice = ({ allDevices, setFilterResult, setShow, setCurrentPage }) 
       <InputGroup>
         <Input
           type="text"
-          placeholder="Enter PIN number"
+          placeholder="Enter SERIAL number"
           value={searchTerm}
           onChange={handleChange}
         />

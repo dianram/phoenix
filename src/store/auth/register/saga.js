@@ -21,8 +21,7 @@ const fireBaseBackend = getFirebaseBackend()
 function* registerUser({ payload: { user } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      if (user.userType === userTypes.DEALER) {
-        console.log(user.dealerEmail, user.dealerPassword)
+      if (user.role === userTypes.DEALER) {
         const response = yield call(
           fireBaseBackend.registerUser,
           user.dealerEmail,
@@ -30,7 +29,7 @@ function* registerUser({ payload: { user } }) {
         )
         yield call(fireBaseBackend.addNewDealerToFirestore, user)
         yield put(registerUserSuccessful(response))
-      } else if (user.userType === userTypes.COSTUMER) {
+      } else if (user.role === userTypes.COSTUMER) {
         const response = yield call(
           fireBaseBackend.registerUser,
           user.email,

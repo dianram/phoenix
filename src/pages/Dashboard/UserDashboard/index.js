@@ -23,10 +23,11 @@ const UserDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
   const [userModules, setUserModules] = useState([])
   useEffect(() => {
-    getCollectionFromFirestore("modules")
+    getCollectionFromFirestore("devices")
     .then(res => {
       setModules(res)
-      const userDevices = getFullModules(user.modules, res)
+      console.log(res, user.devices)
+      const userDevices = getFullModules(user.devices, res)
       setUserModules(userDevices)
     }).catch(error => {
       console.log("failed fetch: ", error)
@@ -39,23 +40,21 @@ const UserDashboard = ({ user }) => {
       <Welcome user={user}/>
       <UserInfoCard user={user} showModules={false} />
       <UserDevicesDetail userModules={userModules} setUserModules={setUserModules} user={user} />
-      {user.userType === userTypes.DEALER && <MassiveShutdown
+      {user.role === userTypes.DEALER && <MassiveShutdown
         allModules={modules}
         modulesToUpdate={userModules}
         setModules={setModules}
         setUserModules={setUserModules}
         areAllModules={false}
       />}
-      <Voltage />
-      {(user.userType === userTypes.DEALER) && <Actions
+      {(user.role === userTypes.DEALER) && <Actions
         modules={modules}
         user={user}
         userModules={userModules}
         setUserModules={setUserModules}
         />
       }
-      {/* // TODO {user.userType === userTypes.COSTUMER && <AddUser />} */}
-      {user.userType === userTypes.DEALER && < Groups user={user} modules={modules} setModules={setModules}/>}
+      {user.role === userTypes.DEALER && < Groups user={user} modules={modules} setModules={setModules}/>}
     </>
   )
 }

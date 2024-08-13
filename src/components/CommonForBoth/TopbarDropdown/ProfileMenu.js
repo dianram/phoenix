@@ -43,7 +43,7 @@ const ProfileMenu = props => {
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
         const obj = JSON.parse(localStorage.getItem("authUser"));
-        setUserName(obj.username);
+        setUserName(obj.user_name);
       }
     }
   }, [props.success]);
@@ -62,7 +62,7 @@ const ProfileMenu = props => {
         >
           <img
             className="rounded-circle header-profile-user"
-            src={user.picture ? user.picture : nonImgAvatar}
+            src={user?.picture ? user.picture : nonImgAvatar}
             alt="Header Avatar"
           />
         </DropdownToggle>

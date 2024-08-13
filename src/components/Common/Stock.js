@@ -27,9 +27,6 @@ const Stock = ({ modules }) => {
             <thead>
               <tr>
                 <th>
-                  Module PIN
-                </th>
-                <th>
                   Module ID
                 </th>
                 <th>
@@ -38,22 +35,25 @@ const Stock = ({ modules }) => {
                 <th>
                   Module Sale's Date
                 </th>
+                <th>
+                  Voltage
+                </th>
               </tr>
             </thead>
             <tbody>
               {filterResult.map(item => (
                 <tr key={item.uid}>
                   <td>
-                    {item.modulePIN}
-                  </td>
-                  <td>
                     {item.uid}
                   </td>
                   <td>
-                    {item.batchNumber}
+                    {item.batch_number}
                   </td>
                   <td>
-                    {item.moduleInstallDate}
+                    {item.moduleInstallDate ? item.moduleInstallDate : 'not installed'}
+                  </td>
+                  <td>
+                    here goes voltage
                   </td>
                 </tr>
               ))}

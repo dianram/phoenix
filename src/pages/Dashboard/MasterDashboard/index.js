@@ -21,7 +21,7 @@ const MasterDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
 
   useEffect(() => {
-    getCollectionFromFirestore("modules")
+    getCollectionFromFirestore("devices")
     .then(res => {
       setModules(res)
     }).catch(error => {
@@ -34,11 +34,10 @@ const MasterDashboard = ({ user }) => {
       <Devices user={user} modules={modules} setModules={setModules}/>
       <h4 className='mb-4'>Actions</h4>
       <div className='d-flex border-bottom justify-content-around align-items-center'>
-        <AddDevice />
-        <QRCodeReader />
+        {/* <QRCodeReader /> */}
       </div>
-      <Users currentUserType={user.userType}/>
-      <Dealerships currentUserType={user.userType}/>
+      <Users currentUserRole={user.role}/>
+      <Dealerships currentUserType={user.role}/>
       <Groups user={user} modules={modules} setModules={setModules}/>
     </>
   )

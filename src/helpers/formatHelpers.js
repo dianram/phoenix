@@ -1,7 +1,7 @@
 import { userTypes } from "constants/userTypes";
 
-const userDefinition = (userType) => {
-  switch (userType) {
+const userDefinition = (role) => {
+  switch (role) {
     case userTypes.MASTER:
       return "Megauser"
       break;

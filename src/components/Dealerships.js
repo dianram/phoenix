@@ -15,16 +15,17 @@ import SearchBar from './SearchBar'
  * state array. The component also allows toggling the visibility of the dealerships list with a
  * chevron icon.
  */
-const Dealerships = ({ currentUserType }) => {
+const Dealerships = ({ currentUserRole }) => {
   const [dealers, setDealers] = useState([])
   const [showDealers, setShowDealers] = useState(false)
   const [ filterResult, setFilterResult ] = useState([])
 
   useEffect(() => {
-    getCollectionFromFirestore("dealerships")
+    getCollectionFromFirestore("users")
       .then(res => {
-        setDealers(res)
-        setFilterResult(res)
+        const dealers = res.filter(endUser => endUser.role === 'dealership')
+        setDealers(dealers)
+        setFilterResult(dealers)
       }).catch(error => {
         console.log("failed fetch: ", error)
       })
@@ -45,7 +46,7 @@ const Dealerships = ({ currentUserType }) => {
             key={dealer.uid}
             user={dealer}
             showModules
-            currentUserType={currentUserType}
+            currentUserType={currentUserRole}
           />
         ))}
       </Row>
