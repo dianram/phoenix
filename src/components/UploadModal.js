@@ -24,7 +24,7 @@ const UploadModal = ({ modal, toggleModal, saveUploadImgOnDB, setEditFeedBack })
     if (selectedFile) {
       const ImageURL = await handleImageUpload(selectedFile)
       setImgURL(ImageURL)
-      saveUploadImgOnDB({picture: ImageURL})
+      saveUploadImgOnDB({photo: ImageURL})
       setSelectedFile(null)
       toggleModal()
       setEditFeedBack({ message: 'Image upload successfuly', typeOfAlert: 'success' })

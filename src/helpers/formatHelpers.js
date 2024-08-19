@@ -34,11 +34,20 @@ const formatInfoKey = (value) => {
   }
 }
 
+// const formatKey = key => {
+//   const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+//   const formattedKey = capitalizedKey.replace(/([A-Z])/g, ' $1').trim();
+//   return formattedKey
+// }
+
 const formatKey = key => {
-  const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-  const formattedKey = capitalizedKey.replace(/([A-Z])/g, ' $1').trim();
-  return formattedKey
-}
+  const formattedKey = key
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join('');
+  return formattedKey.replace(/([A-Z])/g, ' $1').trim();
+};
+
 
 export {
   userDefinition,

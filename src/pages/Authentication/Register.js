@@ -26,14 +26,24 @@ const Register = props => {
 
   const dispatch = useDispatch();
 
-  // const { user } = useSelector(state => ({
-  //   user: state.Account.user,
-  // }));
   const [ isUserCreated, setIsUserCreated ] = useState(false)
 
   const [userType, setUserType] = useState('')
   const [ showForm, setShowForm ] = useState(false)
+  const [registerError, setRegisterError] = useState('')
+
+
   useEffect(() => {
+    if (props.registrationError ) {
+      setRegisterError(props.registrationError || 'Registration failed. Please try again.')
+    } else {
+      setRegisterError('')
+    }
+  }, [props.registrationError])
+  useEffect(() => {
+    if (props.user) {
+      setIsUserCreated(true)
+    }
     if (isUserCreated) {
       setTimeout(() => history("/login"), 3000);
     }
@@ -42,7 +52,7 @@ const Register = props => {
     //     dispatch(resetRegisterFlag());
     // }, 3000);
 
-  }, [dispatch, isUserCreated, history]);
+  }, [dispatch, props.user, history, isUserCreated]);
 
 
   const userValidation = useFormik({
@@ -68,7 +78,6 @@ const Register = props => {
     onSubmit: (values) => {
       dispatch(registerUser({...values, role: userType }));
       setShowForm(false)
-      setIsUserCreated(true)
     }
   });
 
@@ -97,7 +106,6 @@ const Register = props => {
     onSubmit: (values) => {
       dispatch(registerUser({...values, role: userType}));
       setShowForm(false)
-      setIsUserCreated(true)
     }
   });
   
@@ -120,6 +128,7 @@ const Register = props => {
     }
     return ""
   }
+
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -150,6 +159,11 @@ const Register = props => {
                     ) : null}
                       < CustomDropdown direction="down" setUserType={setUserType} setShowFrom={setShowForm}/>
                       {showForm &&  userFormSelection()}
+                    {registerError && (
+                      <Alert color="danger" style={{ marginTop: "13px" }} className="mt-5">
+                        {registerError}
+                      </Alert>
+                    )}
                   </div>
                 </CardBody>
               </Card>
@@ -180,12 +194,12 @@ Register.propTypes = {
   user: PropTypes.any,
 };
 
-const mapStatetoProps = state => {
+const mapStateToProps = state => {
   const { user, registrationError, loading } = state.Account;
   return { user, registrationError, loading };
 };
 
-export default connect(mapStatetoProps, {
+export default connect(mapStateToProps, {
   registerUser,
   apiError,
   registerUserFailed,

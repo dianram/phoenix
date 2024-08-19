@@ -3,7 +3,7 @@ import {
   Row,
 } from 'reactstrap'
 
-import { getCollectionFromFirestore } from '../helpers/firebase_helper'
+import { getCollectionFromFirestore, getFullUsersInfo } from '../helpers/firebase_helper'
 import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 import SearchBar from './SearchBar'
 
@@ -21,11 +21,10 @@ const Users = ({ currentUserRole }) => {
   const [ filterResult, setFilterResult ] = useState([])
 
   useEffect(() => {
-    getCollectionFromFirestore("users")
+    getFullUsersInfo()
       .then(res => {
-        const endUsers = res.filter(endUser => endUser.role === 'end_user')
-        setUsers(endUsers)
-        setFilterResult(endUsers)
+        setFilterResult(res)
+        setUsers(res)
       }).catch(error => {
         console.log("failed fetch: ", error)
       })

@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
 import "firebase/compat/storage"
-import { collection, getDocs, doc, getDoc, FieldValue } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc, FieldValue, setDoc } from "firebase/firestore"
 import useTypes, { userTypes } from "../constants/userTypes"
 
 class FirebaseAuthBackend {
@@ -39,6 +39,9 @@ class FirebaseAuthBackend {
             console.log(error)
           }
         )
+        .catch(error => {
+          console.log(error)
+        })
     })
   }
 
@@ -132,8 +135,7 @@ class FirebaseAuthBackend {
       phone: user.phone,
       state: user.location,
       role: user.role,
-      devices: [],
-      device_groups: []
+      receiver_name: ''
     }
     collection.doc(firebase.auth().currentUser.uid).set(details)
       .then(() => {
@@ -234,7 +236,7 @@ const getCollectionFromFirestore = async (collectionName) => {
 }
 
 
-const getDocumentWithSubcollections = async (docId) => {
+const getDocumentWithSubCollections = async (docId) => {
   const db = firebase.firestore()
   try {
     // Referencia al documento principal
@@ -245,7 +247,7 @@ const getDocumentWithSubcollections = async (docId) => {
       const data = docSnap.data();
 
       // Referencia a la subcolección 'devices'
-      const devicesRef = collection(docRef, "devices");
+      const devicesRef = collection(docRef, 'devices');
       const devicesSnap = await getDocs(devicesRef);
 
       // Mapeo de los documentos de la subcolección
@@ -268,9 +270,52 @@ const getDocumentWithSubcollections = async (docId) => {
 
 const getFullGroupsInfo = async (groups, setGroups) => {
   const fullGroupsInfo = await Promise.all(
-    groups.map(fullGroupInfo => getDocumentWithSubcollections(fullGroupInfo.uid))
+    groups.map(fullGroupInfo => getDocumentWithSubCollections(fullGroupInfo.uid, 'devices', "device_groups"))
   )
   setGroups(fullGroupsInfo)
+}
+
+
+const getAllUsersWithDevices = async () => {
+  const db = await firebase.firestore()
+  try {
+    const usersRef = collection(db, "users");
+    const usersSnapshot = await getDocs(usersRef);
+
+    const usersData = await Promise.all(
+      usersSnapshot.docs.map(async (userDoc) => {
+        const userData = userDoc.data();
+        const userId = userDoc.id;
+        
+        // Obtener subcolección 'devices_end_user'
+        const devicesRef = collection(db, "users", userId, "devices_end_user");
+        const devicesSnapshot = await getDocs(devicesRef);
+
+        const devices = devicesSnapshot.docs.map((deviceDoc) => ({
+          id: deviceDoc.id,
+          ...deviceDoc.data(),
+        }));
+
+        // Incluir los dispositivos en los datos del usuario
+        return {
+          uid: userId,
+          ...userData,
+          devices_end_user: devices,
+        };
+      })
+    );
+
+    return usersData
+  } catch (error) {
+    console.error("Error fetching users and devices: ", error);
+  }
+};
+
+
+const getFullUsersInfo = async () => {
+  const fullUsersInfo = await getAllUsersWithDevices()
+  const endUsers = fullUsersInfo.filter(endUser => endUser.role === 'end_user')
+  return endUsers
 }
 
 
@@ -487,9 +532,10 @@ const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setU
  * @param {Object} currentModule 
  */
 const updateDevice = ( dataToUpdate, uid, setEditFeedBack, setCurrentModule, currentModule ) => {
+  console.log(uid)
   const db = firebase.firestore()
 
-  db.collection('modules').doc(uid).update({
+  db.collection('devices').doc(uid).update({
     ...currentModule, ...dataToUpdate
   }).then(() => {
     setEditFeedBack({
@@ -598,12 +644,63 @@ const removeModuleFromUserOnFirestore = async (user, module) => {
 }
 
 
+
+const getAllDeviceEndUsers = async (deviceID) => {
+  const db = firebase.firestore();
+  const subCollectionRef = collection(db, 'devices', deviceID, "end_users_device");
+  let deviceUsers = []
+  try {
+    const querySnapshot = await getDocs(subCollectionRef);
+    querySnapshot.forEach((doc) => {
+      deviceUsers.push(doc.data());
+    });
+  } catch (error) {
+    console.error("Error getting documents: ", error);
+  }
+  return deviceUsers
+}
+
+
+const addEndUserToDevice = async (deviceID, endUserID) => {
+  const db = firebase.firestore();
+
+  try {
+    const endUserDocRef = doc(db, 'devices', deviceID, 'end_users_device', endUserID);
+    const data = {
+      id_end_user: endUserID,
+    };
+    await setDoc(endUserDocRef, data);
+    console.log("Documento agregado con éxito");
+  } catch (error) {
+    console.error("Error al agregar el documento: ", error);
+  }
+};
+
+const addDeviceToEndUser = async (deviceID, endUserID) => {
+  const db = firebase.firestore();
+
+  try {
+    const endUserDocRef = doc(db, 'users', endUserID, 'devices_end_user', deviceID);
+    const data = {
+      id_devices: deviceID,
+    };
+    await setDoc(endUserDocRef, data);
+    console.log("Documento agregado con éxito");
+  } catch (error) {
+    console.error("Error al agregar el documento: ", error);
+  }
+};
+
+
+
+
 export { 
   initFirebaseBackend,
   getFirebaseBackend,
   getCollectionFromFirestore,
   getFullGroupsInfo,
   getUserInfo,
+  getFullUsersInfo,
   addNewDeviceToFirestore,
   modulesShutDownOnFireStore,
   singleModuleShutDownOnFireStore,
@@ -614,5 +711,8 @@ export {
   removeModuleFromUserOnFirestore,
   updateUserProfile,
   handleImageUpload,
-  updateDevice
+  updateDevice,
+  getAllDeviceEndUsers,
+  addEndUserToDevice,
+  addDeviceToEndUser
 }

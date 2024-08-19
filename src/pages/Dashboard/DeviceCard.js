@@ -76,7 +76,7 @@ const DeviceCard = ({
         <CardBody>
           <CardHeader className='mb-4 border-bottom'>
             <img
-              src={currentModule.picture ? currentModule.picture : nonCarImg}
+              src={currentModule.photo ? currentModule.photo : nonCarImg}
               alt='car'
               style={{ width: '100%', cursor: 'pointer' }}
               onClick={!isMaster ? toggleModal : () => {}}
@@ -88,8 +88,8 @@ const DeviceCard = ({
           {/* <CardText className="border-bottom">PIN: {modulePIN}</CardText> */}
           <CardText className="border-bottom">Install Date: {moduleInstallDate}</CardText>
           <CardText className="border-bottom">batchNumber: {batchNumber}</CardText>
-          <CardTitle>Active Device</CardTitle>
-          <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
+          {(user.role !== userTypes.MASTER) && <CardTitle>Active Device</CardTitle>}
+          {(user.role !== userTypes.MASTER) && <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
             <div className='d-inline-flex justify-content-center'>
               <p style={{marginRight : "12px"}}>No</p>
               <FormGroup switch>
@@ -102,8 +102,8 @@ const DeviceCard = ({
               </FormGroup>
               <p className='ml-2'>Yes</p>
             </div>
-            {user.userType === userTypes.COSTUMER && <LostDeviceControl  user={user} module={module} setUserModules={setModules} userModules={modules}/>}
-          </CardFooter>       
+            {user.role === userTypes.COSTUMER && <LostDeviceControl  user={user} module={module} setUserModules={setModules} userModules={modules}/>}
+          </CardFooter>}       
         </CardBody>
         
       </Card>
