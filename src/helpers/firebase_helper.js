@@ -240,14 +240,15 @@ const getDocumentWithSubCollections = async (docId) => {
   const db = firebase.firestore()
   try {
     // Referencia al documento principal
-    const docRef = doc(db, "device_groups", docId);
+    const docRef = doc(db, "devices_groups", docId);
+
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
 
       // Referencia a la subcolección 'devices'
-      const devicesRef = collection(docRef, 'devices');
+      const devicesRef = collection(docRef, 'group_devices');
       const devicesSnap = await getDocs(devicesRef);
 
       // Mapeo de los documentos de la subcolección
@@ -257,7 +258,7 @@ const getDocumentWithSubCollections = async (docId) => {
       }));
 
       // Añadir la subcolección al documento principal
-      data.devices = devices;
+      data.group_devices = devices;
 
       return data;
     } else {
@@ -270,16 +271,16 @@ const getDocumentWithSubCollections = async (docId) => {
 
 const getFullGroupsInfo = async (groups, setGroups) => {
   const fullGroupsInfo = await Promise.all(
-    groups.map(fullGroupInfo => getDocumentWithSubCollections(fullGroupInfo.uid, 'devices', "device_groups"))
+    groups.map(fullGroupInfo => getDocumentWithSubCollections(fullGroupInfo.uid))
   )
   setGroups(fullGroupsInfo)
 }
 
 
-const getAllUsersWithDevices = async () => {
+const getAllUsersWithDevices = async (subCollectionName) => {
   const db = await firebase.firestore()
   try {
-    const usersRef = collection(db, "users");
+    const usersRef = collection(db, 'users');
     const usersSnapshot = await getDocs(usersRef);
 
     const usersData = await Promise.all(
@@ -288,7 +289,7 @@ const getAllUsersWithDevices = async () => {
         const userId = userDoc.id;
         
         // Obtener subcolección 'devices_end_user'
-        const devicesRef = collection(db, "users", userId, "devices_end_user");
+        const devicesRef = collection(db, "users", userId, subCollectionName);
         const devicesSnapshot = await getDocs(devicesRef);
 
         const devices = devicesSnapshot.docs.map((deviceDoc) => ({
@@ -296,11 +297,12 @@ const getAllUsersWithDevices = async () => {
           ...deviceDoc.data(),
         }));
 
+
         // Incluir los dispositivos en los datos del usuario
         return {
           uid: userId,
           ...userData,
-          devices_end_user: devices,
+          [subCollectionName]: devices,
         };
       })
     );
@@ -312,11 +314,58 @@ const getAllUsersWithDevices = async () => {
 };
 
 
-const getFullUsersInfo = async () => {
-  const fullUsersInfo = await getAllUsersWithDevices()
-  const endUsers = fullUsersInfo.filter(endUser => endUser.role === 'end_user')
-  return endUsers
+
+const getSubCollectionsData = async (collectionName, docId) => {
+  const db = await firebase.firestore();
+
+  // Referencia al documento específico
+  const docRef = doc(db, collectionName, docId);
+
+  // Obtener todas las subcolecciones del documento
+  const subCollectionsData = {};
+
+  // Suponiendo que tienes nombres de subcolecciones conocidas, las puedes iterar
+  // Si no, tendrías que usar otro método para obtener nombres de subcolecciones dinámicamente
+  const subCollectionNames = ["end_user_devices", "user_devices_groups", "dealer_devices", "dealer_end_users"]; // Ejemplo de subcolecciones conocidas
+
+  for (const subCollectionName of subCollectionNames) {
+    const subCollectionRef = collection(docRef, subCollectionName);
+    const subCollectionData = await getDocs(subCollectionRef);
+
+    subCollectionsData[subCollectionName] = subCollectionData.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  }
+
+  return subCollectionsData;
 }
+const getAllDocumentsWithSubCollections = async (collectionName) => {
+  const db = await firebase.firestore();
+  const mainCollection = collection(db, collectionName);
+  const mainSnapshot = await getDocs(mainCollection);
+  
+  const results = [];
+  
+  for (const docSnap of mainSnapshot.docs) {
+    const data = docSnap.data();
+    const subCollections = await getSubCollectionsData(collectionName, docSnap.id);
+    results.push({
+      id: docSnap.id,
+      ...data,
+      subCollections
+    });
+  }
+
+  return results;
+}
+
+const getFullUsersInfo = async (collectionName, userRole) => {
+  const fullUsersInfo = await getAllDocumentsWithSubCollections(collectionName)
+  const users = fullUsersInfo.filter(user => user.role === userRole)
+  return users
+}
+
 
 
 /**
@@ -691,6 +740,26 @@ const addDeviceToEndUser = async (deviceID, endUserID) => {
   }
 };
 
+const getUserInfoWithRef = async (userRef) => {
+  const db = firebase.firestore();
+  try {
+    // id_dealership es una referencia al documento en Firestore
+    const dealershipDocRef = doc(db, userRef.path);
+    const dealershipDoc = await getDoc(dealershipDocRef);
+
+    if (dealershipDoc.exists()) {
+      const dealershipData = dealershipDoc.data();
+      return dealershipData // Asumiendo que el campo "name" contiene el nombre del dealership
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching dealership:", error);
+    return null;
+  }
+};
+
 
 
 
@@ -698,6 +767,7 @@ export {
   initFirebaseBackend,
   getFirebaseBackend,
   getCollectionFromFirestore,
+  getAllDocumentsWithSubCollections,
   getFullGroupsInfo,
   getUserInfo,
   getFullUsersInfo,
@@ -714,5 +784,6 @@ export {
   updateDevice,
   getAllDeviceEndUsers,
   addEndUserToDevice,
-  addDeviceToEndUser
+  addDeviceToEndUser,
+  getUserInfoWithRef
 }

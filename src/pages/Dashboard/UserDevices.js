@@ -16,6 +16,7 @@ import {
  * devices".
  */
 const UserDevices = ({ userModules }) => {
+  console.log({userModules})
   return (
     <div className="border-bottom">
       <p><b>User Devices: </b></p>

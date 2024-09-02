@@ -1,6 +1,6 @@
 import LostDeviceControl from 'components/LostDeviceControl';
 import { userTypes } from 'constants/userTypes';
-import { singleModuleShutDownOnFireStore, updateDevice } from 'helpers/firebase_helper';
+import { getUserInfoWithRef, singleModuleShutDownOnFireStore, updateDevice } from 'helpers/firebase_helper';
 import { updateModules } from 'helpers/modulesHelper';
 // import { mqttAction } from 'helpers/mqtt_helpers';
 import React, { useEffect } from 'react'
@@ -48,6 +48,7 @@ const DeviceCard = ({
   const [modal, setModal] = useState(false);
   const [ isMaster, setIsMaster ] = useState(false)
   const [ currentModule, setCurrentModule ] = useState('')
+  const [ dealerInfo, setDealerInfo ] = useState('')
 
   const toggleModal = () => setModal(!modal);
 
@@ -58,6 +59,15 @@ const DeviceCard = ({
       setIsMaster(true)
     }
   }, [])
+
+  useEffect(() => {
+    if (module.dealership_id) {
+      getUserInfoWithRef(module.dealership_id)
+      .then(data => {
+        setDealerInfo(data)
+      })
+    }
+  }, [module])
   
   const onChangeHandle = () => {
     setIsOnToggle(prev => !prev);
@@ -88,6 +98,7 @@ const DeviceCard = ({
           {/* <CardText className="border-bottom">PIN: {modulePIN}</CardText> */}
           <CardText className="border-bottom">Install Date: {moduleInstallDate}</CardText>
           <CardText className="border-bottom">batchNumber: {batchNumber}</CardText>
+          {dealerInfo && <CardText className="border-bottom">DealerShip: {dealerInfo.name}</CardText>}
           {(user.role !== userTypes.MASTER) && <CardTitle>Active Device</CardTitle>}
           {(user.role !== userTypes.MASTER) && <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
             <div className='d-inline-flex justify-content-center'>

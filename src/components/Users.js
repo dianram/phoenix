@@ -6,6 +6,7 @@ import {
 import { getCollectionFromFirestore, getFullUsersInfo } from '../helpers/firebase_helper'
 import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 import SearchBar from './SearchBar'
+import { userTypes } from 'constants/userTypes'
 
 /**
  * The Users component in JavaScript fetches user data from Firestore, allows filtering and displaying
@@ -21,7 +22,7 @@ const Users = ({ currentUserRole }) => {
   const [ filterResult, setFilterResult ] = useState([])
 
   useEffect(() => {
-    getFullUsersInfo()
+    getFullUsersInfo("users", userTypes.COSTUMER)
       .then(res => {
         setFilterResult(res)
         setUsers(res)

@@ -1,10 +1,11 @@
-import { getCollectionFromFirestore } from 'helpers/firebase_helper'
+import { getCollectionFromFirestore, getFullUsersInfo } from 'helpers/firebase_helper'
 import UserInfoCard from 'pages/Dashboard/UserInfoCard'
 import React, { useEffect, useState } from 'react'
 import {
   Row,
 } from 'reactstrap'
 import SearchBar from './SearchBar'
+import { userTypes } from 'constants/userTypes'
 
 /**
  * The Dealerships component in JavaScript fetches and displays a list of dealerships with search
@@ -21,11 +22,10 @@ const Dealerships = ({ currentUserRole }) => {
   const [ filterResult, setFilterResult ] = useState([])
 
   useEffect(() => {
-    getCollectionFromFirestore("users")
+    getFullUsersInfo("users", userTypes.DEALER)
       .then(res => {
-        const dealers = res.filter(endUser => endUser.role === 'dealership')
-        setDealers(dealers)
-        setFilterResult(dealers)
+        setFilterResult(res)
+        setDealers(res)
       }).catch(error => {
         console.log("failed fetch: ", error)
       })

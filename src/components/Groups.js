@@ -20,7 +20,7 @@ const Groups = ({ user, modules, setModules }) => {
   //   setGroups(user.groups)
   // }, [user])
   useEffect(() => {
-    getCollectionFromFirestore("device_groups")
+    getCollectionFromFirestore("devices_groups")
       .then(res => {
         getFullGroupsInfo(res, setGroups)
       }).catch(error => {
@@ -42,7 +42,7 @@ const Groups = ({ user, modules, setModules }) => {
             <GroupCard
               key={group.group_name}
               groupName = {group.group_name}
-              groupItems={group.devices}
+              groupItems={group.group_devices}
               // user={user}
               // setGroups={setGroups}
               // groups={groups}

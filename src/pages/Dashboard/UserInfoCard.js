@@ -24,7 +24,7 @@ const UserInfoCard = ({ user, showModules, currentUserRole }) => {
   const [ showUserInfo, setShowUserInfo ] = useState(false)
 
   const infoKeys = Object.keys(user)
-  const keysToShow = infoKeys.filter(key => key !== "devices_end_user")
+  const keysToShow = infoKeys.filter(key => key !== "subCollections")
 
   const getDropStyle = userType => (
     userType === userTypes.MASTER
@@ -60,8 +60,12 @@ const UserInfoCard = ({ user, showModules, currentUserRole }) => {
             {keysToShow.map(infoKey => (
               infoKey !== 'groups' && <CardText className="border-bottom" key={infoKey}> <b>{formatKey(infoKey)}: </b> {formatInfoKey(user[infoKey]) } </CardText>
             ))}
-            {(user.devices_end_user && showModules)
-              ? < UserDevices userModules={user.devices_end_user} />
+            {(user.subCollections.end_user_devices.length > 0 && showModules)
+              ? < UserDevices userModules={user.subCollections.end_user_devices} />
+              : ""
+            }
+            {(user.subCollections.dealer_devices.length > 0 && showModules)
+              ? < UserDevices userModules={user.subCollections.dealer_devices} />
               : ""
             }
           </CardBody>

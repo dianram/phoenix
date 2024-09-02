@@ -54,6 +54,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
     }
   });
 
+
   return (
     <Col xl={4} md={6}>
     <Card className='mt-4 shadow' color="light">
@@ -66,7 +67,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
           ? groupItems.map(groupItem => (
           <GroupItem
             key={groupItem}
-            item={groupItem.serial_number}
+            item={groupItem.id}
             groupName={groupName}
             // user={user}
             // setGroups={setGroups}

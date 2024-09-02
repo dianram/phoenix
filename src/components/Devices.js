@@ -41,7 +41,7 @@ const Devices = ({ user, modules, setModules, userModules=undefined, setUserModu
         </div>
         {showDevices && ((modules.length > 0)
           ? <PaginatedResults
-              itemsPerPage={2}
+              itemsPerPage={4}
               modules={filterResult}
               setModules={setModules}
               userModules={userModules}
