@@ -66,6 +66,7 @@ const Register = props => {
       address: '',
       phone: '',
       location: '',
+      city: ''
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
@@ -74,9 +75,10 @@ const Register = props => {
       address: Yup.string().required("Please Enter Your Address"),
       phone: Yup.string().required("Please Enter Your Phone"),
       location: Yup.string().required("Please Enter Your State"),
+      city: Yup.string().required("Please Enter Your City"),
     }),
     onSubmit: (values) => {
-      dispatch(registerUser({...values, role: userType }));
+      dispatch(registerUser({ ...values, role: userType }));
       setShowForm(false)
     }
   });
@@ -92,12 +94,14 @@ const Register = props => {
       dealerAddress: '',
       dealerPassword: '',
       dealerName: '',
-      dealerEmail: ''
+      dealerEmail: '',
+      dealerCity: ''
     },
     validationSchema: Yup.object({
       dealerEmail: Yup.string().required("Please Enter Your Email"),
       dealerName: Yup.string().required("Please Enter Your Dealer Name"),
       dealerLocation: Yup.string().required("Please Enter Your State"),
+      dealerCity: Yup.string().required("Please Enter Your City"),
       dealerReceiver: Yup.string().required("Please Enter Receiver Name"),
       dealerPhone: Yup.string().required("Please Enter Phone"),
       dealerAddress: Yup.string().required("Please Enter Address"),

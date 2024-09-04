@@ -21,6 +21,7 @@ import AddDeviceToEndUser from 'components/AddDeviceToEndUser'
  */
 const MasterDashboard = ({ user }) => {
   const [modules, setModules] = useState([])
+  const [ actionsFlag, setActionsFlag ] = useState('')
 
   useEffect(() => {
     getCollectionFromFirestore("devices")
@@ -29,17 +30,20 @@ const MasterDashboard = ({ user }) => {
     }).catch(error => {
       console.log("failed fetch: ", error)
     })
+    setActionsFlag(false)
   }, [])
+
   return (
     <>
       <Welcome user={user}/>
       <Devices user={user} modules={modules} setModules={setModules}/>
       <h4 className='mb-4'>Actions</h4>
       <div className='d-flex border-bottom justify-content-around align-items-center'>
-        <AddDeviceToEndUser />
+        <AddDeviceToEndUser setActionsFlag={setActionsFlag}/>
+        <AddDeviceToDealer setActionsFlag={setActionsFlag}/>
       </div>
-      <Users currentUserRole={user.role}/>
-      <Dealerships currentUserType={user.role}/>
+      <Users currentUserRole={user.role} actionsFlag={actionsFlag}/>
+      <Dealerships currentUserType={user.role} actionsFlag={actionsFlag}/>
       <Groups user={user} modules={modules} setModules={setModules}/>
     </>
   )

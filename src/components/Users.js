@@ -16,7 +16,7 @@ import { userTypes } from 'constants/userTypes'
  * for filtering users, a toggle button to show/hide the users list, and fetches user data from
  * Firestore using the getCollectionFromFirestore function.
  */
-const Users = ({ currentUserRole }) => {
+const Users = ({ currentUserRole, actionsFlag }) => {
   const [ users, setUsers ] = useState([])
   const [ showUsers, setShowUsers ] = useState(false)
   const [ filterResult, setFilterResult ] = useState([])
@@ -29,7 +29,7 @@ const Users = ({ currentUserRole }) => {
       }).catch(error => {
         console.log("failed fetch: ", error)
       })
-  }, [])
+  }, [actionsFlag])
   
   return (
       <Row>

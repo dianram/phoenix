@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
 import "firebase/compat/storage"
-import { collection, getDocs, doc, getDoc, FieldValue, setDoc } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc, FieldValue, setDoc, updateDoc } from "firebase/firestore"
 import useTypes, { userTypes } from "../constants/userTypes"
 
 class FirebaseAuthBackend {
@@ -134,6 +134,7 @@ class FirebaseAuthBackend {
       address: user.address,
       phone: user.phone,
       state: user.location,
+      city: user.city,
       role: user.role,
       receiver_name: ''
     }
@@ -161,7 +162,8 @@ class FirebaseAuthBackend {
       address: user.dealerAddress,
       phone: user.dealerPhone,
       state: user.dealerLocation,
-      role: user.role
+      city: user.dealerCity,
+      role: user.role,
     }
     collection.doc(firebase.auth().currentUser.uid).set(details)
       .then(() => {
@@ -696,7 +698,7 @@ const removeModuleFromUserOnFirestore = async (user, module) => {
 
 const getAllDeviceEndUsers = async (deviceID) => {
   const db = firebase.firestore();
-  const subCollectionRef = collection(db, 'devices', deviceID, "end_users_device");
+  const subCollectionRef = collection(db, 'devices', deviceID, "device_end_users");
   let deviceUsers = []
   try {
     const querySnapshot = await getDocs(subCollectionRef);
@@ -714,11 +716,12 @@ const addEndUserToDevice = async (deviceID, endUserID) => {
   const db = firebase.firestore();
 
   try {
-    const endUserDocRef = doc(db, 'devices', deviceID, 'end_users_device', endUserID);
+    const endUserDocRef = doc(db, 'users', endUserID)
+    const deviceDocRef = doc(db, 'devices', deviceID, 'device_end_users', endUserID);
     const data = {
-      id_end_user: endUserID,
+      end_user_id: endUserDocRef,
     };
-    await setDoc(endUserDocRef, data);
+    await setDoc(deviceDocRef, data);
     console.log("Documento agregado con éxito");
   } catch (error) {
     console.error("Error al agregar el documento: ", error);
@@ -729,11 +732,28 @@ const addDeviceToEndUser = async (deviceID, endUserID) => {
   const db = firebase.firestore();
 
   try {
-    const endUserDocRef = doc(db, 'users', endUserID, 'devices_end_user', deviceID);
+    const deviceRef = doc(db, 'devices', deviceID)
+    const endUserDocRef = doc(db, 'users', endUserID, 'end_user_devices', deviceID);
     const data = {
-      id_devices: deviceID,
+      device_id: deviceRef,
     };
     await setDoc(endUserDocRef, data);
+    console.log("Documento agregado con éxito");
+  } catch (error) {
+    console.error("Error al agregar el documento: ", error);
+  }
+};
+
+const addDeviceToDealer = async (deviceID, dealerID) => {
+  const db = firebase.firestore();
+
+  try {
+    const deviceRef = doc(db, 'devices', deviceID)
+    const dealerDocRef = doc(db, 'users', dealerID, 'dealer_devices', deviceID);
+    const data = {
+      device_id: deviceRef,
+    };
+    await setDoc(dealerDocRef, data);
     console.log("Documento agregado con éxito");
   } catch (error) {
     console.error("Error al agregar el documento: ", error);
@@ -760,6 +780,58 @@ const getUserInfoWithRef = async (userRef) => {
   }
 };
 
+const isDeviceAssignedToDealer = async (deviceID) => {
+  
+  const db = firebase.firestore();
+
+  try {
+    // Referencia al documento del dispositivo
+    const deviceDocRef = doc(db, 'devices', deviceID);
+
+    // Obtener el documento
+    const deviceDoc = await getDoc(deviceDocRef);
+
+    // Verificar si el documento existe
+    if (deviceDoc.exists()) {
+      // Obtener los datos del documento
+      const deviceData = deviceDoc.data();
+
+      // Comprobar si 'dealership_id' tiene un valor
+      if (deviceData.dealership_id) {
+        console.log(`El dispositivo con ID ${deviceID} tiene un valor en 'dealership_id': ${deviceData.dealership_id}`);
+        return true;  // Retorna true si 'dealership_id' tiene un valor
+      } else {
+        console.log(`El dispositivo con ID ${deviceID} no tiene un valor en 'dealership_id'.`);
+        return false;  // Retorna false si 'dealership_id' no tiene un valor
+      }
+    } else {
+      console.log(`El documento con ID ${deviceID} no existe.`);
+      return false;  // Retorna false si el documento no existe
+    }
+  } catch (error) {
+    console.error("Error al consultar el documento: ", error);
+    return false;  // Retorna false en caso de error
+  }
+}
+
+const addDealerIdToDevice = async (deviceID, dealerID) => {
+  const db = firebase.firestore();
+
+  try {
+    const deviceDocRef = doc(db, 'devices', deviceID);
+    const dealerRef = doc(db, 'users', dealerID); // Suponiendo que los dealers están en una colección 'dealers'
+    
+    await updateDoc(deviceDocRef, {
+      dealership_id: dealerRef,
+    });
+    
+    console.log("Referencia de dealership_id agregada con éxito");
+  } catch (error) {
+    console.error("Error al agregar la referencia del dealer: ", error);
+  }
+};
+
+
 
 
 
@@ -785,5 +857,8 @@ export {
   getAllDeviceEndUsers,
   addEndUserToDevice,
   addDeviceToEndUser,
-  getUserInfoWithRef
+  getUserInfoWithRef,
+  isDeviceAssignedToDealer,
+  addDealerIdToDevice,
+  addDeviceToDealer
 }

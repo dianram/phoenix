@@ -16,7 +16,7 @@ import { userTypes } from 'constants/userTypes'
  * state array. The component also allows toggling the visibility of the dealerships list with a
  * chevron icon.
  */
-const Dealerships = ({ currentUserRole }) => {
+const Dealerships = ({ currentUserRole, actionsFlag }) => {
   const [dealers, setDealers] = useState([])
   const [showDealers, setShowDealers] = useState(false)
   const [ filterResult, setFilterResult ] = useState([])
@@ -29,7 +29,7 @@ const Dealerships = ({ currentUserRole }) => {
       }).catch(error => {
         console.log("failed fetch: ", error)
       })
-  }, [])
+  }, [actionsFlag])
 
   return (
       <Row>
