@@ -144,6 +144,26 @@ const DealerRegistrationForm = ({ validation }) => {
         </div>
 
         <div className="mb-3">
+          <Label className="form-label" htmlFor="dealerCity">City</Label>
+          <Input
+            name="dealerCity"
+            value={validation.values.dealerCity || ""}
+            type="text"
+            id="dealerCity"
+            className="form-control"
+            placeholder="Enter City"
+            onChange={validation.handleChange}
+            onBlur={validation.handleBlur}
+            invalid={
+              validation.touched.dealerCity && validation.errors.dealerCity ? true : false
+            }
+          />
+          {validation.touched.dealerCity && validation.errors.dealerCity ? (
+            <FormFeedback type="invalid">{validation.errors.dealerCity}</FormFeedback>
+          ) : null}
+        </div>
+
+        <div className="mb-3">
           <Label className="form-label" htmlFor="dealerReceiver">Receiver</Label>
           <Input
             name="dealerReceiver"

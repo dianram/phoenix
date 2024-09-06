@@ -140,6 +140,26 @@ const UserRegistrationForm = ({ validation }) => {
           ) : null}
         </div>
 
+        <div className="mb-3">
+          <Label className="form-label" htmlFor="city">City</Label>
+          <Input
+            name="city"
+            value={validation.values.city || ""}
+            type="text"
+            id="city"
+            className="form-control"
+            placeholder="Enter City"
+            onChange={validation.handleChange}
+            onBlur={validation.handleBlur}
+            invalid={
+              validation.touched.city && validation.errors.city ? true : false
+            }
+          />
+          {validation.touched.city && validation.errors.city ? (
+            <FormFeedback type="invalid">{validation.errors.city}</FormFeedback>
+          ) : null}
+        </div>
+
         <div className="mb-3 row">
           <div className="col-12 text-end">
             <button className="btn w-md waves-effect waves-light"  style={{backgroundColor: '#9AC1D8', color: 'white'}} type="submit">Register</button>
