@@ -5,7 +5,7 @@ import { Form, Label, Input, FormFeedback, Alert } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from 'react-router-dom';
-import { addModuleToUserState, isValidIDToSubscribe } from 'helpers/modulesHelper';
+import { addModuleToUserState, isValidIDToSubscribe, moduleIsInBD } from 'helpers/modulesHelper';
 import { addDeviceToEndUser, addEndUserToDevice, addModuleToUserOnFireBase, getAllDeviceEndUsers, isDeviceAssignedToThisDealer } from 'helpers/firebase_helper';
 import CustomAlert from 'components/CustomAlert';
 import { userTypes } from 'constants/userTypes';
@@ -34,10 +34,18 @@ const AddDeviceToEndUserForm = ({ allDevices, endUserId, deviceId, toggle, isDea
       deviceId: Yup.string().required("Please Enter Device Serial Number"),
     }),
     onSubmit: (values) => {
-      if (isDealer) {
+      const deviceExist = moduleIsInBD(values.deviceId, allDevices)
+      if (!deviceExist) {
+        setEditFeedBack({
+          message:'The device does not exist',
+          typeOfAlert: 'danger'
+        })
+        setEditFeedBackVisible(true)
+      } else if (isDealer) {
         try {
           isDeviceAssignedToThisDealer(values.deviceId, dealerID)
           .then(isDealerOwner => {
+            console.log({isDealerOwner})
             if (isDealerOwner) {
               getAllDeviceEndUsers(values.deviceId)
               .then(deviceUsers => {

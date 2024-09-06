@@ -892,6 +892,7 @@ const isDeviceAssignedToDealer = async (deviceID) => {
 }
 
 const isDeviceAssignedToThisDealer = async (deviceID, dealerID) => {
+  console.log(deviceID, dealerID)
   const db = firebase.firestore();
   
   try {

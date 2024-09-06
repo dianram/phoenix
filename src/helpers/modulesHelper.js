@@ -63,5 +63,6 @@ export {
   fewModulesStateUpdate,
   addModuleToUserState,
   isValidIDToSubscribe,
-  removeModuleFromUserState
+  removeModuleFromUserState,
+  moduleIsInBD
 }

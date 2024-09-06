@@ -12,7 +12,7 @@ import { userTypes } from 'constants/userTypes';
  * subscribe a device. When the button is clicked, a modal opens up with a form to subscribe a device.
  * The modal includes a header, body with the subscription form, and a footer with a cancel button.
  */
-const AddDeviceToEndUser = ({ setActionsFlag, isDealer=false, currentUserID=''}) => {
+const AddDeviceToEndUser = ({ setActionsFlag, isDealer=false, currentUserID='', allModules}) => {
   const [modal, setModal] = useState(false)
   const [ users, setUsers ] = useState([])
   useEffect(() => {
@@ -40,7 +40,7 @@ const AddDeviceToEndUser = ({ setActionsFlag, isDealer=false, currentUserID=''})
       >
         <ModalHeader toggle={mainToggle}>Select the user</ModalHeader>
         <ModalBody  style={{maxHeight: '500px', overflowY: 'auto'}}>
-          {users.map(user => <UserSmallCard name={user.name} uid={user.uid} key={user.uid} userRole={user.role} setActionsFlag={setActionsFlag} mainToggle={mainToggle} isDealer currentUserID={currentUserID}/> )}
+          {users.map(user => <UserSmallCard name={user.name} uid={user.uid} key={user.uid} userRole={user.role} setActionsFlag={setActionsFlag} mainToggle={mainToggle} isDealer currentUserID={currentUserID} allModules={allModules}/> )}
           {/* <SubscribeDeviceForm toggle={toggle} user={user}  userModules={userModules} setUserModules={setUserModules} allModules={allModules}/> */}
         </ModalBody>
         <ModalFooter>

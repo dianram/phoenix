@@ -5,7 +5,7 @@ import { Form, Label, Input, FormFeedback, Alert } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from 'react-router-dom';
-import { addModuleToUserState, isValidIDToSubscribe } from 'helpers/modulesHelper';
+import { addModuleToUserState, isValidIDToSubscribe, moduleIsInBD } from 'helpers/modulesHelper';
 import { addDealerIdToDevice, addDeviceToDealer, addDeviceToEndUser, addEndUserToDevice, addModuleToUserOnFireBase, getAllDeviceEndUsers, isDeviceAssignedToDealer } from 'helpers/firebase_helper';
 import CustomAlert from 'components/CustomAlert';
 
@@ -33,35 +33,45 @@ const AddDeviceToDealerForm = ({allDevices, dealerId, toggle }) => {
       deviceId: Yup.string().required("Please Enter Device Serial Number"),
     }),
     onSubmit: async (values) => {
-      try {
-        const isAssigned = await isDeviceAssignedToDealer(values.deviceId);
+      console.log({allDevices})
+      const deviceExist = moduleIsInBD(values.deviceId, allDevices)
+      if (!deviceExist) {
+        setEditFeedBack({
+          message:'The device does not exist',
+          typeOfAlert: 'danger'
+        })
+        setEditFeedBackVisible(true)
+      } else {
+        try {
+          const isAssigned = await isDeviceAssignedToDealer(values.deviceId);
+          
+          if (isAssigned) {
+            console.log('El dispositivo ya está asignado');
+            setEditFeedBack({
+              message: 'The device is assigned already',
+              typeOfAlert: 'danger'
+            });
+          } else {
+            console.log('Asignando el dispositivo');
+            await addDealerIdToDevice(values.deviceId, dealerId);
+            await addDeviceToDealer(values.deviceId, dealerId);
+            
+            setEditFeedBack({
+              message: 'The device has been assigned correctly',
+              typeOfAlert: 'success'
+            });
+          }
         
-        if (isAssigned) {
-          console.log('El dispositivo ya está asignado');
+          setEditFeedBackVisible(true);
+        } catch (error) {
+          console.log(error);
           setEditFeedBack({
-            message: 'The device is assigned already',
+            message: 'An error occurred while assigning the device',
             typeOfAlert: 'danger'
           });
-        } else {
-          console.log('Asignando el dispositivo');
-          await addDealerIdToDevice(values.deviceId, dealerId);
-          await addDeviceToDealer(values.deviceId, dealerId);
-          
-          setEditFeedBack({
-            message: 'The device has been assigned correctly',
-            typeOfAlert: 'success'
-          });
-        }
-      
-        setEditFeedBackVisible(true);
-      } catch (error) {
-        console.log(error);
-        setEditFeedBack({
-          message: 'An error occurred while assigning the device',
-          typeOfAlert: 'danger'
-        });
-        setEditFeedBackVisible(true);
-      }      
+          setEditFeedBackVisible(true);
+        }      
+      }
     }
   });
 
