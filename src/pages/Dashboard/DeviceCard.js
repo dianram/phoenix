@@ -113,7 +113,7 @@ const DeviceCard = ({
               </FormGroup>
               <p className='ml-2'>Yes</p>
             </div>
-            {user.role === userTypes.COSTUMER && <LostDeviceControl  user={user} module={module} setUserModules={setModules} userModules={modules}/>}
+            {/* {user.role === userTypes.COSTUMER && <LostDeviceControl  user={user} module={module} setUserModules={setModules} userModules={modules}/>} */}
           </CardFooter>}       
         </CardBody>
         

@@ -368,6 +368,59 @@ const getFullUsersInfo = async (collectionName, userRole) => {
   return users
 }
 
+// Función para obtener todas las subcolecciones y sus datos de un usuario específico
+const getUserSubCollectionsData = async (userId) => {
+  const db = firebase.firestore();
+
+  // Referencia al documento del usuario
+  const userDocRef = doc(db, 'users', userId);
+
+  // Subcolecciones conocidas
+  const subCollectionNames = ["end_user_devices", "user_devices_groups", "dealer_devices", "dealer_end_users"];
+
+  const subCollectionsData = {};
+
+  // Iterar a través de las subcolecciones conocidas
+  for (const subCollectionName of subCollectionNames) {
+    const subCollectionRef = collection(userDocRef, subCollectionName);
+    const subCollectionData = await getDocs(subCollectionRef);
+
+    // Agregar los datos de la subcolección al objeto de resultados
+    subCollectionsData[subCollectionName] = subCollectionData.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  }
+
+  return subCollectionsData;
+};
+
+// Función para obtener los datos del usuario y sus subcolecciones por ID
+const getUserWithSubCollections = async (userId) => {
+  const db = firebase.firestore();
+
+  // Obtener el documento del usuario
+  const userDocRef = doc(db, 'users', userId);
+  const userSnap = await getDoc(userDocRef);
+
+  if (!userSnap.exists()) {
+    throw new Error(`User with ID ${userId} not found.`);
+  }
+
+  // Obtener los datos principales del usuario
+  const userData = userSnap.data();
+
+  // Obtener los datos de las subcolecciones
+  const subCollections = await getUserSubCollectionsData(userId);
+
+  // Retornar el documento del usuario con los datos de las subcolecciones
+  return {
+    id: userSnap.id,
+    ...userData,
+    subCollections
+  };
+};
+
 
 
 /**
@@ -375,18 +428,12 @@ const getFullUsersInfo = async (collectionName, userRole) => {
  * @returns Object with user info
  */
 const getUserInfo = async () => {
-  const db = await firebase.firestore()
   const user = JSON.parse(localStorage.getItem("authUser"))
-  const docRef = doc(db, "users", user.uid);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    const userInfo = docSnap.data()
-    return {...userInfo, uid: user.uid}
-  } else {
-    console.log("No such document!")
-  }
+  const fullUser = await getUserWithSubCollections(user.uid)
+  return fullUser
 }
+
+
 
 /**
  * 
@@ -780,6 +827,36 @@ const getUserInfoWithRef = async (userRef) => {
   }
 };
 
+const getDevicesInfoFromRefs = async (devices) => {
+  const db = firebase.firestore();
+  const deviceRefs = devices.map(device => device.device_id)
+  
+  try {
+    // Utilizamos Promise.all para esperar que todas las promesas se resuelvan
+    const devicesData = await Promise.all(
+      deviceRefs.map(async (deviceRef) => {
+        const deviceSnap = await getDoc(deviceRef); // Obtener el documento de la referencia
+        if (deviceSnap.exists()) {
+          return {
+            id: deviceSnap.id,
+            ...deviceSnap.data() // Devolver los datos del dispositivo
+          };
+        } else {
+          console.warn(`Device with reference ${deviceRef.path} not found.`);
+          return null; // En caso de que no exista
+        }
+      })
+    );
+
+    // Filtrar cualquier valor null que pueda haber resultado de dispositivos no encontrados
+    return devicesData.filter(device => device !== null);
+  } catch (error) {
+    console.error("Error retrieving device information: ", error);
+    throw new Error("Error fetching devices data.");
+  }
+};
+
+
 const isDeviceAssignedToDealer = async (deviceID) => {
   
   const db = firebase.firestore();
@@ -813,6 +890,39 @@ const isDeviceAssignedToDealer = async (deviceID) => {
     return false;  // Retorna false en caso de error
   }
 }
+
+const isDeviceAssignedToThisDealer = async (deviceID, dealerID) => {
+  const db = firebase.firestore();
+  
+  try {
+    // Obtener el documento del dispositivo
+    const deviceRef = doc(db, 'devices', deviceID);
+    const deviceSnap = await getDoc(deviceRef);
+
+    if (deviceSnap.exists()) {
+      const deviceData = deviceSnap.data();
+      
+      
+      if (!deviceData.dealership_id) {
+        console.warn(`Device with ID ${deviceID} has no valid dealership_id field.`);
+        return false;
+      } else {
+        const dealershipFieldSnap = await getDoc(deviceData.dealership_id);
+        
+        // Comparar el campo dealership_id con el dealerID proporcionado
+        return dealershipFieldSnap.id === dealerID
+      }
+      
+    } else {
+      console.warn(`Device with ID ${deviceID} not found.`);
+      return false;
+    }
+  } catch (error) {
+    console.error("Error comparing dealership_id: ", error);
+    throw new Error("Error retrieving device data.");
+  }
+};
+
 
 const addDealerIdToDevice = async (deviceID, dealerID) => {
   const db = firebase.firestore();
@@ -858,7 +968,9 @@ export {
   addEndUserToDevice,
   addDeviceToEndUser,
   getUserInfoWithRef,
+  getDevicesInfoFromRefs,
   isDeviceAssignedToDealer,
+  isDeviceAssignedToThisDealer,
   addDealerIdToDevice,
   addDeviceToDealer
 }

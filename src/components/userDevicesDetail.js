@@ -37,16 +37,16 @@ const userDevicesDetail = ({ userModules, setUserModules, user }) => {
         {showUserDevices && (userModules.length > 0
           ? filterResult.map(item => (
               <DeviceCard
-                key={item.uid}
-                moduleID = {item.uid}
-                modulePIN={item.modulePIN}
-                moduleInstallDate={item.moduleInstallDate}
-                batchNumber={item.batchNumber}
-                isOn={item.isOn}
-                carModulePict={item.carModulePict ? item.carModulePict : nonCarImg}
-                modules={userModules}
-                setModules={setUserModules}
+                key={item.id || item.uid}
                 module={item}
+                moduleID = {item.id || item.uid}
+                moduleInstallDate={item.moduleInstallDate ? item.moduleInstallDate : 'not installed'}
+                batchNumber={item.batch_number}
+                carModulePict={item.carModulePict ? item.carModulePict : nonCarImg}
+                modules={''}
+                setModules={''}
+                userModules={userModules}
+                setUserModules={setUserModules}
                 user={user}
               />
           ))
