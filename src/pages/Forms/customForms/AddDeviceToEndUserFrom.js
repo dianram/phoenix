@@ -6,9 +6,12 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from 'react-router-dom';
 import { addModuleToUserState, isValidIDToSubscribe, moduleIsInBD } from 'helpers/modulesHelper';
-import { addDeviceToEndUser, addEndUserToDevice, addModuleToUserOnFireBase, getAllDeviceEndUsers, isDeviceAssignedToThisDealer } from 'helpers/firebase_helper';
+import { addDeviceToEndUser, addEndUserToDevice, addModuleToUserOnFireBase, getAllDeviceEndUsers, isDeviceAssignedToThisDealer, dataRTDB, upDateControlOnDeviceRTDB } from 'helpers/firebase_helper';
 import CustomAlert from 'components/CustomAlert';
 import { userTypes } from 'constants/userTypes';
+import { ref, onValue, set } from 'firebase/database';
+import { getDatabase } from 'firebase/database';
+import firebaseConfig from 'firebaseConfig';
 
 /**
  * The SubscribeDeviceForm component in JavaScript handles subscription validation and form submission
@@ -18,9 +21,28 @@ import { userTypes } from 'constants/userTypes';
  * validation messages for the input field, and a submit button. The form also displays a message if
  * the module ID is not valid for subscription.
  */
-const AddDeviceToEndUserForm = ({ allDevices, endUserId, deviceId, toggle, isDealer, dealerID }) => {
+const AddDeviceToEndUserForm = ({ allDevices, endUserId, deviceId, toggle, isDealer, dealerID, currentUser}) => {
   const [ editFeedBack, setEditFeedBack ] = useState("")
   const [editFeedBackVisible, setEditFeedBackVisible] = useState(true)
+  const [ data, setData ] = useState(null)
+
+  const path = `/${currentUser.state}/${currentUser.city}/${currentUser.name}/`
+
+
+  useEffect(() => {
+    const database = dataRTDB(firebaseConfig)
+    const dataRef = ref(database, path);
+
+    const unsubscribe = onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+      setData(data);
+    }, (error) => {
+      console.error('Error al leer datos:', error);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
 
   // const [isValidID, setIsValidID] = useState("")
   const subscribeValidation = useFormik({
@@ -45,7 +67,6 @@ const AddDeviceToEndUserForm = ({ allDevices, endUserId, deviceId, toggle, isDea
         try {
           isDeviceAssignedToThisDealer(values.deviceId, dealerID)
           .then(isDealerOwner => {
-            console.log({isDealerOwner})
             if (isDealerOwner) {
               getAllDeviceEndUsers(values.deviceId)
               .then(deviceUsers => {
@@ -58,6 +79,7 @@ const AddDeviceToEndUserForm = ({ allDevices, endUserId, deviceId, toggle, isDea
                 } else {
                   addEndUserToDevice(values.deviceId, endUserId)
                   addDeviceToEndUser(values.deviceId, endUserId)
+                  upDateControlOnDeviceRTDB(path, values.deviceId)
                   setEditFeedBack({
                     message:'The device has been assigned correctly',
                     typeOfAlert: 'success'

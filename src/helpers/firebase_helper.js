@@ -6,6 +6,8 @@ import "firebase/compat/firestore"
 import "firebase/compat/storage"
 import { collection, getDocs, doc, getDoc, FieldValue, setDoc, updateDoc } from "firebase/firestore"
 import useTypes, { userTypes } from "../constants/userTypes"
+import { getDatabase, ref, update } from "firebase/database"
+import firebaseConfig from "firebaseConfig"
 
 class FirebaseAuthBackend {
   constructor(firebaseConfig) {
@@ -158,11 +160,11 @@ class FirebaseAuthBackend {
     const details = {
       receiver_name: user.dealerReceiver,
       email: user.dealerEmail,
-      name: user.dealerName,
+      name: user.dealerName.replace(/\s+/g, ''),
       address: user.dealerAddress,
       phone: user.dealerPhone,
-      state: user.dealerLocation,
-      city: user.dealerCity,
+      state: user.dealerLocation.replace(/\s+/g, ''),
+      city: user.dealerCity.replace(/\s+/g, ''),
       role: user.role,
     }
     collection.doc(firebase.auth().currentUser.uid).set(details)
@@ -216,6 +218,12 @@ const initFirebaseBackend = config => {
  */
 const getFirebaseBackend = () => {
   return _fireBaseBackend
+}
+
+const dataRTDB = (firebaseConfig) => {
+  const app = firebase.initializeApp(firebaseConfig)
+  const database = getDatabase(app)
+  return database
 }
 
 /**
@@ -775,6 +783,19 @@ const addEndUserToDevice = async (deviceID, endUserID) => {
   }
 };
 
+const upDateControlOnDeviceRTDB = (path, deviceID) => {
+  const database = dataRTDB(firebaseConfig)
+  const dataRef = ref(database, `${path}/${deviceID}`)
+  update(dataRef, {
+    mode: 3,
+  })
+    .then(() => {
+      console.log('Datos actualizados exitosamente.');
+    })
+    .catch((error) => {
+      console.error('Error al actualizar los datos:', error);
+    });
+}
 const addDeviceToEndUser = async (deviceID, endUserID) => {
   const db = firebase.firestore();
 
@@ -785,11 +806,14 @@ const addDeviceToEndUser = async (deviceID, endUserID) => {
       device_id: deviceRef,
     };
     await setDoc(endUserDocRef, data);
+    await updateDoc(deviceRef, {status: 'assigned'})
     console.log("Documento agregado con éxito");
   } catch (error) {
     console.error("Error al agregar el documento: ", error);
   }
 };
+
+
 
 const addDeviceToDealer = async (deviceID, dealerID) => {
   const db = firebase.firestore();
@@ -801,6 +825,7 @@ const addDeviceToDealer = async (deviceID, dealerID) => {
       device_id: deviceRef,
     };
     await setDoc(dealerDocRef, data);
+    await updateDoc(deviceRef, {status: 'toSell'})
     console.log("Documento agregado con éxito");
   } catch (error) {
     console.error("Error al agregar el documento: ", error);
@@ -934,6 +959,7 @@ const addDealerIdToDevice = async (deviceID, dealerID) => {
     
     await updateDoc(deviceDocRef, {
       dealership_id: dealerRef,
+      status: 'sell'
     });
     
     console.log("Referencia de dealership_id agregada con éxito");
@@ -948,6 +974,7 @@ const addDealerIdToDevice = async (deviceID, dealerID) => {
 
 export { 
   initFirebaseBackend,
+  dataRTDB,
   getFirebaseBackend,
   getCollectionFromFirestore,
   getAllDocumentsWithSubCollections,
@@ -967,6 +994,7 @@ export {
   updateDevice,
   getAllDeviceEndUsers,
   addEndUserToDevice,
+  upDateControlOnDeviceRTDB,
   addDeviceToEndUser,
   getUserInfoWithRef,
   getDevicesInfoFromRefs,

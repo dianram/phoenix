@@ -96,11 +96,11 @@ const DeviceCard = ({
             <CardText style={{ fontSize: '0.7rem' }}>{moduleID}</CardText>
           </CardHeader>
           {/* <CardText className="border-bottom">PIN: {modulePIN}</CardText> */}
-          <CardText className="border-bottom">Install Date: {moduleInstallDate}</CardText>
+          <CardText className="border-bottom">Sale Date: {moduleInstallDate}</CardText>
           <CardText className="border-bottom">batchNumber: {batchNumber}</CardText>
           {dealerInfo && <CardText className="border-bottom">DealerShip: {dealerInfo.name}</CardText>}
-          {(user.role !== userTypes.MASTER) && <CardTitle>Active Device</CardTitle>}
-          {(user.role !== userTypes.MASTER) && <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
+          {(user.role === userTypes.DEALER) && !module.sale_date && <CardTitle>Active Device</CardTitle>}
+          {(user.role === userTypes.DEALER) && !module.sale_date && <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
             <div className='d-inline-flex justify-content-center'>
               <p style={{marginRight : "12px"}}>No</p>
               <FormGroup switch>

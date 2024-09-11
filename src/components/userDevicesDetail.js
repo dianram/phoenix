@@ -40,7 +40,7 @@ const userDevicesDetail = ({ userModules, setUserModules, user }) => {
                 key={item.id || item.uid}
                 module={item}
                 moduleID = {item.id || item.uid}
-                moduleInstallDate={item.moduleInstallDate ? item.moduleInstallDate : 'not installed'}
+                moduleInstallDate={item.sale_date ? item.sale_date.toDate().toLocaleDateString('en-US') : 'not installed'}
                 batchNumber={item.batch_number}
                 carModulePict={item.carModulePict ? item.carModulePict : nonCarImg}
                 modules={''}

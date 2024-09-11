@@ -4,8 +4,9 @@ import AddDeviceToEndUserForm from 'pages/Forms/customForms/AddDeviceToEndUserFr
 import React, { useState } from 'react'
 import { Button, Card, CardBody, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 
-const UserSmallCard = ({ name, uid, userRole, setActionsFlag, mainToggle, isDealer, currentUserID, allModules }) => {
+const UserSmallCard = ({ name, uid, userRole, setActionsFlag, mainToggle, isDealer, currentUserID, allModules, currentUser }) => {
   const [modal, setModal] = useState(false)
+
 
   const toggle = () => setModal(!modal)
   const handleClick = () => {
@@ -30,7 +31,7 @@ const UserSmallCard = ({ name, uid, userRole, setActionsFlag, mainToggle, isDeal
       >
         <ModalHeader toggle={toggle}>Select the user</ModalHeader>
         <ModalBody>
-          {userRole === userTypes.COSTUMER && < AddDeviceToEndUserForm allDevices={allModules} endUserId={uid} toggle isDealer dealerID={currentUserID}/>}
+          {userRole === userTypes.COSTUMER && < AddDeviceToEndUserForm allDevices={allModules} endUserId={uid} toggle isDealer dealerID={currentUserID} currentUser={currentUser}/>}
           {userRole === userTypes.DEALER && < AddDeviceToDealerForm allDevices={allModules} dealerId={uid} toggle />}
         </ModalBody>
         <ModalFooter>

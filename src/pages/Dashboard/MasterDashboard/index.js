@@ -40,7 +40,7 @@ const MasterDashboard = ({ user }) => {
       <Devices user={user} modules={modules} setModules={setModules}/>
       <h4 className='mb-4'>Actions</h4>
       <div className='d-flex border-bottom justify-content-around align-items-center'>
-        <AddDeviceToEndUser setActionsFlag={setActionsFlag} allModules={modules}/>
+        <AddDeviceToEndUser setActionsFlag={setActionsFlag} allModules={modules} user={user}/>
         <AddDeviceToDealer setActionsFlag={setActionsFlag} allModules={modules}/>
       </div>
       <Users currentUserRole={user.role} actionsFlag={actionsFlag}/>

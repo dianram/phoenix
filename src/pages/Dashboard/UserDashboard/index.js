@@ -64,7 +64,7 @@ const UserDashboard = ({ user }) => {
       } */}
       <h4 className='mb-4'>Actions</h4>
       <div className='d-flex border-bottom justify-content-around align-items-center'>
-        <AddDeviceToEndUser setActionsFlag={setActionsFlag} isDealer={user.role === userTypes.DEALER} currentUserID={user.id} allModules={modules}/>
+        <AddDeviceToEndUser setActionsFlag={setActionsFlag} isDealer={user.role === userTypes.DEALER} currentUserID={user.id} allModules={modules} currentUser={user}/>
       </div>
       {user.role === userTypes.DEALER && < Groups user={user} modules={modules} setModules={setModules}/>}
     </>
