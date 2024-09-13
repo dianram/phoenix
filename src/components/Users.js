@@ -44,7 +44,7 @@ const Users = ({ currentUserRole, actionsFlag }) => {
         {showUsers && filterResult.map(user => (
           <UserInfoCard
             user={user}
-            key={user.uid}
+            key={user.uid || user.id}
             showModules
             currentUserType={currentUserRole}
           />

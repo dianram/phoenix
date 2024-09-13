@@ -53,13 +53,13 @@ const Devices = ({ user, modules, setModules, userModules=undefined, setUserModu
           : "No devices")
         }
       </Row>
-      {showDevices && (<MassiveShutdown
+      {/* {showDevices && (<MassiveShutdown
         allModules={modules}
         modulesToUpdate={modules}
         setModules={setModules}
         areAllModules
         />)
-      }
+      } */}
       <Stock modules={modules}/>
     </div>
   )

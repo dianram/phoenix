@@ -34,13 +34,19 @@ const UserDashboard = ({ user }) => {
 
   }, [user])
   useEffect(() => {
-    getDevicesInfoFromRefs(user.subCollections.dealer_devices)
-    .then(dealerDevices => {
-      setUserModules(dealerDevices)
-    })
+    if (user.role === userTypes.DEALER) {
+      getDevicesInfoFromRefs(user.subCollections.dealer_devices)
+      .then(dealerDevices => {
+        setUserModules(dealerDevices)
+      })
+    } else {
+      getDevicesInfoFromRefs(user.subCollections.end_user_devices)
+      .then(userDevices => {
+        setUserModules(userDevices)
+      })
+    }
     setActionsFlag(false)
   }, [user])
-  
 
   return (
     <>
@@ -62,10 +68,10 @@ const UserDashboard = ({ user }) => {
         setUserModules={setUserModules}
         />
       } */}
-      <h4 className='mb-4'>Actions</h4>
-      <div className='d-flex border-bottom justify-content-around align-items-center'>
+      {user.role === userTypes.DEALER && <h4 className='mb-4'>Actions</h4>}
+      {user.role === userTypes.DEALER && <div className='d-flex border-bottom justify-content-around align-items-center'>
         <AddDeviceToEndUser setActionsFlag={setActionsFlag} isDealer={user.role === userTypes.DEALER} currentUserID={user.id} allModules={modules} currentUser={user}/>
-      </div>
+      </div>}
       {user.role === userTypes.DEALER && < Groups user={user} modules={modules} setModules={setModules}/>}
     </>
   )

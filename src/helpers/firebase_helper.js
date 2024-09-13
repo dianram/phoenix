@@ -783,7 +783,7 @@ const addEndUserToDevice = async (deviceID, endUserID) => {
   }
 };
 
-const upDateControlOnDeviceRTDB = (path, deviceID) => {
+const upDateModeOnDeviceRTDB = (path, deviceID) => {
   const database = dataRTDB(firebaseConfig)
   const dataRef = ref(database, `${path}/${deviceID}`)
   update(dataRef, {
@@ -795,6 +795,20 @@ const upDateControlOnDeviceRTDB = (path, deviceID) => {
     .catch((error) => {
       console.error('Error al actualizar los datos:', error);
     });
+}
+const upDateControlOnDeviceRTDB = (path,isOnToggle) => {
+  const database = dataRTDB(firebaseConfig)
+  const dataRef = ref(database, `${path}/`)
+  console.log(path, isOnToggle)
+  // update(dataRef, {
+  //   control: !isOn,
+  // })
+  //   .then(() => {
+  //     console.log('Datos actualizados exitosamente.');
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error al actualizar los datos:', error);
+  //   });
 }
 const addDeviceToEndUser = async (deviceID, endUserID) => {
   const db = firebase.firestore();
@@ -994,6 +1008,7 @@ export {
   updateDevice,
   getAllDeviceEndUsers,
   addEndUserToDevice,
+  upDateModeOnDeviceRTDB,
   upDateControlOnDeviceRTDB,
   addDeviceToEndUser,
   getUserInfoWithRef,

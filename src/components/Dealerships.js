@@ -43,7 +43,7 @@ const Dealerships = ({ currentUserRole, actionsFlag }) => {
         </div>
         {showDealers && filterResult.map(dealer => (
           <UserInfoCard
-            key={dealer.uid}
+            key={dealer.uid || dealer.id}
             user={dealer}
             showModules
             currentUserType={currentUserRole}

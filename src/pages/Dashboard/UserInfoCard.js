@@ -24,7 +24,7 @@ const UserInfoCard = ({ user, showModules, currentUserRole }) => {
   const [ showUserInfo, setShowUserInfo ] = useState(false)
 
   const infoKeys = Object.keys(user)
-  const keysToShow = infoKeys.filter(key => key !== "subCollections")
+  const keysToShow = infoKeys.filter(key => key !== "subCollections" && key !== "receiver_name")
 
   const getDropStyle = userType => (
     userType === userTypes.MASTER

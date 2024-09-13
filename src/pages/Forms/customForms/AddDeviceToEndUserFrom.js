@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from 'react-router-dom';
 import { addModuleToUserState, isValidIDToSubscribe, moduleIsInBD } from 'helpers/modulesHelper';
-import { addDeviceToEndUser, addEndUserToDevice, addModuleToUserOnFireBase, getAllDeviceEndUsers, isDeviceAssignedToThisDealer, dataRTDB, upDateControlOnDeviceRTDB } from 'helpers/firebase_helper';
+import { addDeviceToEndUser, addEndUserToDevice, addModuleToUserOnFireBase, getAllDeviceEndUsers, isDeviceAssignedToThisDealer, dataRTDB, upDateModeOnDeviceRTDB } from 'helpers/firebase_helper';
 import CustomAlert from 'components/CustomAlert';
 import { userTypes } from 'constants/userTypes';
 import { ref, onValue, set } from 'firebase/database';
@@ -79,7 +79,7 @@ const AddDeviceToEndUserForm = ({ allDevices, endUserId, deviceId, toggle, isDea
                 } else {
                   addEndUserToDevice(values.deviceId, endUserId)
                   addDeviceToEndUser(values.deviceId, endUserId)
-                  upDateControlOnDeviceRTDB(path, values.deviceId)
+                  upDateModeOnDeviceRTDB(path, values.deviceId)
                   setEditFeedBack({
                     message:'The device has been assigned correctly',
                     typeOfAlert: 'success'

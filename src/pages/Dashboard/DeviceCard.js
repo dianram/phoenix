@@ -1,6 +1,6 @@
 import LostDeviceControl from 'components/LostDeviceControl';
 import { userTypes } from 'constants/userTypes';
-import { getUserInfoWithRef, singleModuleShutDownOnFireStore, updateDevice } from 'helpers/firebase_helper';
+import { dataRTDB, getUserInfoWithRef, singleModuleShutDownOnFireStore, upDateControlOnDeviceRTDB, updateDevice } from 'helpers/firebase_helper';
 import { updateModules } from 'helpers/modulesHelper';
 // import { mqttAction } from 'helpers/mqtt_helpers';
 import React, { useEffect } from 'react'
@@ -21,6 +21,8 @@ import {
 import nonCarImg from '../../assets/images/nonCarImg.png'
 import UploadModal from 'components/UploadModal';
 import CustomAlert from 'components/CustomAlert';
+import { ref, onValue, set } from 'firebase/database';
+import firebaseConfig from 'firebaseConfig';
 
 /**
  * The DeviceCard component in JavaScript manages the display and functionality of a device card with
@@ -49,8 +51,11 @@ const DeviceCard = ({
   const [ isMaster, setIsMaster ] = useState(false)
   const [ currentModule, setCurrentModule ] = useState('')
   const [ dealerInfo, setDealerInfo ] = useState('')
+  const [ deviceRTDBData, setDeviceRTDBData ] = useState('')
 
   const toggleModal = () => setModal(!modal);
+
+  const path = `/${user.state}/${user.city}/${user.name}/${moduleID}`
 
   useEffect(() => {
     setIsOnToggle(false)
@@ -68,11 +73,27 @@ const DeviceCard = ({
       })
     }
   }, [module])
+
+  useEffect(() => {
+    const database = dataRTDB(firebaseConfig)
+    const dataRef = ref(database, path);
+
+    const unsubscribe = onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+      setDeviceRTDBData(data);
+    }, (error) => {
+      console.error('Error al leer datos:', error);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   
   const onChangeHandle = () => {
     setIsOnToggle(prev => !prev);
-    singleModuleShutDownOnFireStore(moduleID, !isOnToggle)
-    updateModules(module, moduleID, !isOnToggle, modules, setModules)
+    upDateControlOnDeviceRTDB(path, deviceRTDBData?.control || false)
+    // singleModuleShutDownOnFireStore(moduleID, !isOnToggle)
+    // updateModules(module, moduleID, !isOnToggle, modules, setModules)
   }
 
   const saveUploadImgOnDB = (pictureObj) => {
@@ -107,7 +128,7 @@ const DeviceCard = ({
                 <Input
                     className='h-50'
                     type="switch"
-                    checked={isOnToggle}
+                    checked={deviceRTDBData?.control || false}
                     onChange={onChangeHandle}
                   />
               </FormGroup>
