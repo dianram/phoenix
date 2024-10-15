@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
 import "firebase/compat/storage"
-import { collection, getDocs, doc, getDoc, FieldValue, setDoc, updateDoc } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc, FieldValue, setDoc, updateDoc, collectionGroup } from "firebase/firestore"
 import useTypes, { userTypes } from "../constants/userTypes"
 import { getDatabase, ref, update } from "firebase/database"
 import firebaseConfig from "firebaseConfig"
@@ -482,7 +482,6 @@ const addNewDeviceToFirestore = async (device) => {
  * @param {Array} modules 
  */
 const modulesShutDownOnFireStore = ( modules ) => {
-  console.log({modules})
   const db = firebase.firestore()
   modules.map(module => {
     db.collection("modules").doc(module.uid).update({
@@ -638,7 +637,6 @@ const updateUserProfile = ( dataToUpdate, collection, uid, setEditFeedBack, setU
  * @param {Object} currentModule 
  */
 const updateDevice = ( dataToUpdate, uid, setEditFeedBack, setCurrentModule, currentModule ) => {
-  console.log(uid)
   const db = firebase.firestore()
 
   db.collection('devices').doc(uid).update({
@@ -799,16 +797,28 @@ const upDateModeOnDeviceRTDB = (path, deviceID) => {
 const upDateControlOnDeviceRTDB = (path,isOnToggle) => {
   const database = dataRTDB(firebaseConfig)
   const dataRef = ref(database, `${path}/`)
-  console.log(path, isOnToggle)
-  // update(dataRef, {
-  //   control: !isOn,
-  // })
-  //   .then(() => {
-  //     console.log('Datos actualizados exitosamente.');
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error al actualizar los datos:', error);
-  //   });
+  update(dataRef, {
+    control: !isOnToggle,
+  })
+    .then(() => {
+      console.log('Datos actualizados exitosamente.');
+    })
+    .catch((error) => {
+      console.error('Error al actualizar los datos:', error);
+    });
+}
+const getRTDBVoltages = (path) => {
+  const database = dataRTDB(firebaseConfig)
+  const dataRef = ref(database, `${path}/`)
+  update(dataRef, {
+    getVoltage: true,
+  })
+    .then(() => {
+      console.log('Voltages updated');
+    })
+    .catch((error) => {
+      console.error('Error al actualizar los datos:', error);
+    });
 }
 const addDeviceToEndUser = async (deviceID, endUserID) => {
   const db = firebase.firestore();
@@ -931,7 +941,6 @@ const isDeviceAssignedToDealer = async (deviceID) => {
 }
 
 const isDeviceAssignedToThisDealer = async (deviceID, dealerID) => {
-  console.log(deviceID, dealerID)
   const db = firebase.firestore();
   
   try {
@@ -982,6 +991,157 @@ const addDealerIdToDevice = async (deviceID, dealerID) => {
   }
 };
 
+const createDeviceGroup = async (groupName, userId, devices, setGroups, groups)  => {
+  const db = firebase.firestore();
+
+  try {
+    // Crea un nuevo documento en la colección 'devices_groups'
+    const groupRef = await db.collection('devices_groups').add({
+      group_name: groupName,
+      user_id: userId,
+    });
+
+    // Itera sobre el array de 'devices' para agregar cada uno a la subcolección 'group_devices'
+    const batch = db.batch();  // Usamos un batch para hacer la operación en conjunto
+
+    devices.forEach((deviceId) => {
+      const deviceRef = db.collection('devices').doc(deviceId);
+      const groupDeviceRef = groupRef.collection('group_devices').doc(deviceId);
+
+      // Añadir cada dispositivo con su referencia a 'group_devices'
+      batch.set(groupDeviceRef, {
+        device_id: deviceRef  // Referencia al documento en la colección 'devices'
+      });
+    });
+
+    // Ejecutar el batch
+    await batch.commit();
+
+    // Añadir un documento a la subcolección 'user_devices_groups' dentro del documento del usuario
+    const userRef = db.collection('users').doc(userId);
+    const userDeviceGroupRef = userRef.collection('user_devices_groups').doc(groupRef.id); 
+
+    // Setea el documento con la referencia al grupo de dispositivos
+    await userDeviceGroupRef.set({
+      devices_group_id: groupRef, // Almacenamos la referencia del documento en 'devices_groups'
+    }, { merge: true });  // merge:true asegura que se actualicen los campos existentes o se creen si no existen
+
+    console.log("Device group and user_devices_groups entry created/updated successfully!");
+
+    setGroups(prevGroups => [
+      ...prevGroups,
+      {
+        devices_group_id: groupRef,  // Referencia del documento
+        id: groupRef.id  // ID del grupo creado en 'devices_groups'
+      }
+    ])
+    // Retornar la referencia del documento creado en 'devices_groups'
+    // return {
+    //   devices_group_id: groupRef,  // Referencia del documento
+    //   id: groupRef.id  // ID del grupo creado en 'devices_groups'
+    // }
+  } catch (error) {
+    console.error("Error creating device group: ", error);
+    throw error; // Lanza el error para que el llamador pueda manejarlo
+  }
+}
+
+
+const getSubCollectionData = async (collectionName, docId, subcollectionName) => {
+  const db = firebase.firestore();
+  
+  try {
+    // Accedemos a la subcolección dentro del documento de la colección principal
+    const subcollectionRef = db.collection(collectionName).doc(docId).collection(subcollectionName);
+
+    // Obtener los documentos dentro de la subcolección
+    const subcollectionSnapshot = await subcollectionRef.get();
+    
+    // Crear un array para almacenar los datos de los documentos
+    const data = [];
+    
+    // Iterar sobre los documentos y extraer sus datos
+    subcollectionSnapshot.forEach(doc => {
+      data.push({
+        id: doc.id,  // Incluir el ID del documento
+        ...doc.data()  // Incluir los campos del documento
+      });
+    });
+
+    // Retornar los datos de la subcolección
+    return data;
+  } catch (error) {
+    console.error("Error getting subcollection data: ", error);
+    throw error;  // Lanzamos el error para que el llamador lo maneje
+  }
+}
+
+
+/**
+ * Función que obtiene un documento desde una referencia y también incluye la subcolección 'group_devices'.
+ * @param {DocumentReference} docRef - La referencia del documento en Firestore.
+ * @returns {Object} - El documento y su subcolección.
+ */
+const getReferenceInfoWithSubcollections = async (docRef) => {
+  try {
+    // Obtener el documento principal
+    const docSnapshot = await getDoc(docRef);
+    
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data();
+
+      // Obtener la subcolección 'group_devices'
+      const subcollectionRef = collection(docRef, 'group_devices');
+      const subcollectionSnapshot = await getDocs(subcollectionRef);
+
+      const subcollectionData = subcollectionSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      return {
+        id: docSnapshot.id,
+        ...data,
+        group_devices: subcollectionData
+      };
+    } else {
+      console.error("Document does not exist.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document with subcollection:", error);
+    throw error;
+  }
+};
+
+const changeControlOnRTDBDevices = (user, devices, controlValue) => {
+  const updates = {};
+  const database = dataRTDB(firebaseConfig)
+
+  // Recorremos cada dispositivo para crear las actualizaciones en la RTDB
+  devices.forEach(device => {
+    const path = `/${user.state}/${user.city}/${user.name}/${device.id}/control`;  // Construimos el path
+    updates[path] = controlValue;  // Actualizamos el campo `control` a 'on'
+  });
+
+  // Ejecutamos las actualizaciones en la base de datos
+  update(ref(database), updates)
+    .then(() => {
+      console.log('All devices updated to ${controlValue} successfully.');
+    })
+    .catch((error) => {
+      console.error('Error updating devices:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1010,11 +1170,16 @@ export {
   addEndUserToDevice,
   upDateModeOnDeviceRTDB,
   upDateControlOnDeviceRTDB,
+  getRTDBVoltages,
   addDeviceToEndUser,
   getUserInfoWithRef,
   getDevicesInfoFromRefs,
   isDeviceAssignedToDealer,
   isDeviceAssignedToThisDealer,
   addDealerIdToDevice,
-  addDeviceToDealer
+  addDeviceToDealer,
+  createDeviceGroup,
+  getSubCollectionData,
+  getReferenceInfoWithSubcollections,
+  changeControlOnRTDBDevices,
 }

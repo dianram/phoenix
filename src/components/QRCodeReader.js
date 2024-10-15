@@ -27,7 +27,6 @@ const QRCodeReader = () => {
 
   const handleScan = (result) => {
     if (result && isCameraActive) {
-      console.log({ result });
       setData(result?.text);
       setIsCameraActive(false); // Desactiva la cámara después de haber leído un código QR
     }

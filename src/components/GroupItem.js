@@ -36,9 +36,9 @@ const GroupItem = ({ item, groupName, user, setGroups, groups, groupItems }) => 
           e.preventDefault()
         }}
       >
-        <Button color="secondary" onClick={toggle}>
+        {/* <Button color="secondary" onClick={toggle}>
         -
-        </Button>
+        </Button> */}
       </Form>
       <Modal
         isOpen={modal}

@@ -10,6 +10,8 @@ const Stock = ({ modules }) => {
     setFilterResult(modules)
   }, [modules])
 
+  console.log({modules})
+
   return (
     <>
       <div className='d-flex justify-content-between border-bottom my-2'>
@@ -33,10 +35,10 @@ const Stock = ({ modules }) => {
                   Module Batch Number
                 </th>
                 <th>
-                  Module Sale's Date
+                  MAC BLE
                 </th>
                 <th>
-                  Voltage
+                  Module Sale's Date
                 </th>
               </tr>
             </thead>
@@ -50,10 +52,10 @@ const Stock = ({ modules }) => {
                     {item.batch_number}
                   </td>
                   <td>
-                    {item.moduleInstallDate ? item.moduleInstallDate : 'not installed'}
+                    {item.mac_ble ? item.mac_ble: ''}
                   </td>
                   <td>
-                    here goes voltage
+                    {item.sale_date ? item.sale_date.toDate().toLocaleDateString('en-US') : 'not installed'}
                   </td>
                 </tr>
               ))}

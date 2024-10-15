@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Modal,
@@ -21,9 +21,10 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import GroupItem from 'components/GroupItem';
-import { addItemToGroup } from 'helpers/firebase_helper';
+import getReferenceInfo, { addItemToGroup, getReferenceInfoWithSubcollections } from 'helpers/firebase_helper';
 import MassiveShutdown from 'components/MassiveShutdown';
 import { getFullModules, getModules } from "../../helpers/modulesHelper"
+import GroupsControl from 'components/GroupsControl';
 
 /**
  * The GroupCard component renders a card displaying group information and allows users to add new
@@ -33,42 +34,48 @@ import { getFullModules, getModules } from "../../helpers/modulesHelper"
  * includes a Modal component that allows users to input an ID for the new item to be added to the
  * group. The Modal has input validation for the ID field. Additionally, MassiveShutdown component.
  */
-const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, setModules }) => {
+const GroupCard = ({ group, user }) => {
   const [modal, setModal] = useState(false);
+  const [groupInfo, setGroupInfo] = useState('')
 
-  const toggle = () => setModal(!modal);
+  // const toggle = () => setModal(!modal);
 
-  const idValidation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  useEffect(() => {
+    getReferenceInfoWithSubcollections(group.devices_group_id)
+    .then(groupData => {
+      setGroupInfo(groupData)
+    })
+  }, [])
+  // const idValidation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
   
-    initialValues: {
-      id: '',
-    },
-    validationSchema: Yup.object().shape({
-      id: Yup.string().required("Please Enter ID"),
-    }),
-    onSubmit: (values) => {
-    addItemToGroup(groupName, values.id, user, groups, setGroups, groupItems)
-    toggle()
-    }
-  });
-
+  //   initialValues: {
+  //     id: '',
+  //   },
+  //   validationSchema: Yup.object().shape({
+  //     id: Yup.string().required("Please Enter ID"),
+  //   }),
+  //   onSubmit: (values) => {
+  //   addItemToGroup(groupName, values.id, user, groups, setGroups, groupItems)
+  //   toggle()
+  //   }
+  // });
 
   return (
     <Col xl={4} md={6}>
     <Card className='mt-4 shadow' color="light">
       <CardBody>
         <CardHeader className='mb-4 border-bottom'>
-          <b>{groupName.toUpperCase()}</b>
+          <b>{groupInfo.group_name}</b>
         </CardHeader>
         <p>GROUP ITEMS:</p>
-        {groupItems 
-          ? groupItems.map(groupItem => (
+        {groupInfo.group_devices 
+          ? groupInfo.group_devices.map(groupItem => (
           <GroupItem
-            key={groupItem}
+            key={groupItem.id}
             item={groupItem.id}
-            groupName={groupName}
+            groupName={groupInfo.group_name}
             // user={user}
             // setGroups={setGroups}
             // groups={groups}
@@ -78,6 +85,7 @@ const GroupCard = ({ groupName, groupItems, user, setGroups, groups, modules, se
           : <CardText className="border-bottom">No members or items in this group</CardText>
         }
         <CardFooter>
+          <GroupsControl user={user} devices={groupInfo.group_devices }/>
           {/* <div className='d-inline-flex justify-content-center'>
             <Form 
               className='my-2 d-flex justify-content-center'

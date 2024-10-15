@@ -1,4 +1,4 @@
-import { getCollectionFromFirestore, getFullGroupsInfo, getUserInfo } from 'helpers/firebase_helper'
+import { getCollectionFromFirestore, getFullGroupsInfo, getSubCollectionData, getUserInfo } from 'helpers/firebase_helper'
 import GroupCard from 'pages/Dashboard/GroupCard'
 import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'reactstrap'
@@ -20,13 +20,16 @@ const Groups = ({ user, modules, setModules }) => {
   //   setGroups(user.groups)
   // }, [user])
   useEffect(() => {
-    getCollectionFromFirestore("devices_groups")
-      .then(res => {
-        getFullGroupsInfo(res, setGroups)
-      }).catch(error => {
-        console.log("failed fetch: ", error)
-      })
+    getSubCollectionData('users', user.id, 'user_devices_groups')
+    .then(groupsData => {
+      setGroups(groupsData)
+      console.log("Subcollection data:", groupsData);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
   }, [])
+
 
   return (
       <Row>
@@ -40,26 +43,21 @@ const Groups = ({ user, modules, setModules }) => {
         {showGroups && ((user && groups && (groups.length > 0)) 
           ? groups.map(group => (
             <GroupCard
-              key={group.group_name}
-              groupName = {group.group_name}
-              groupItems={group.group_devices}
-              // user={user}
-              // setGroups={setGroups}
-              // groups={groups}
-              // modules={modules}
-              // setModules={setModules}
+              key={group.id}
+              group = {group}
+              user={user}
+            //   // groupItems={group.group_devices}
+            //   // setGroups={setGroups}
+            //   // groups={groups}
+            //   // modules={modules}
+            //   // setModules={setModules}
             />
           ))
           : (<Col xl={12} md={12}>
               <h4>There are not any group</h4>
             </Col>))
         }
-        {/* {showGroups && ((user && groups && (groups.length === 3))
-          ? (<Col xl={12} md={12}>
-            <h4>You cannot create more groups</h4>
-            </Col>)
-          : (<CreateGroup user={user} groups={groups} setGroups={setGroups}/>))
-        } */}
+        <CreateGroup user={user} groups={groups} setGroups={setGroups}/>
       </Row>
   )
 }

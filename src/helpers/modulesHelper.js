@@ -32,7 +32,6 @@ const removeObjects = (objectsToRemove, originalArray) => {
 };
 
 const fewModulesStateUpdate = (allModules, modulesToUpdate, setModules, setUserModules) => {
-  console.log({allModules, modulesToUpdate})
   const removedModules = removeObjects(modulesToUpdate, allModules)
   const updatedModules = modulesToUpdate.map(module => ({...module, isOn: false}))
   if (setUserModules) {

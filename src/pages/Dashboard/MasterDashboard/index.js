@@ -45,7 +45,7 @@ const MasterDashboard = ({ user }) => {
       </div>
       <Users currentUserRole={user.role} actionsFlag={actionsFlag}/>
       <Dealerships currentUserType={user.role} actionsFlag={actionsFlag}/>
-      <Groups user={user} modules={modules} setModules={setModules}/>
+      {/* <Groups user={user} modules={modules} setModules={setModules}/> */}
     </>
   )
 }

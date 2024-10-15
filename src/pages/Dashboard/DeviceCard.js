@@ -1,6 +1,6 @@
 import LostDeviceControl from 'components/LostDeviceControl';
 import { userTypes } from 'constants/userTypes';
-import { dataRTDB, getUserInfoWithRef, singleModuleShutDownOnFireStore, upDateControlOnDeviceRTDB, updateDevice } from 'helpers/firebase_helper';
+import { dataRTDB, getRTDBVoltages, getUserInfoWithRef, singleModuleShutDownOnFireStore, upDateControlOnDeviceRTDB, updateDevice } from 'helpers/firebase_helper';
 import { updateModules } from 'helpers/modulesHelper';
 // import { mqttAction } from 'helpers/mqtt_helpers';
 import React, { useEffect } from 'react'
@@ -81,6 +81,7 @@ const DeviceCard = ({
     const unsubscribe = onValue(dataRef, (snapshot) => {
       const data = snapshot.val();
       setDeviceRTDBData(data);
+      getRTDBVoltages(path)
     }, (error) => {
       console.error('Error al leer datos:', error);
     });
@@ -100,6 +101,7 @@ const DeviceCard = ({
     updateDevice(pictureObj, moduleID, setEditFeedBack, setCurrentModule, currentModule)
     setEditFeedBackVisible(true)
   }
+  // console.log(deviceRTDBData.voltages.batteryVoltage || 0)
 
   return (
     <Col xl={3} md={6}>
@@ -120,6 +122,7 @@ const DeviceCard = ({
           <CardText className="border-bottom">Sale Date: {moduleInstallDate}</CardText>
           <CardText className="border-bottom">batchNumber: {batchNumber}</CardText>
           {dealerInfo && <CardText className="border-bottom">DealerShip: {dealerInfo.name}</CardText>}
+          {(user.role === userTypes.DEALER) && <CardText className="border-bottom">BatteryVoltage: {deviceRTDBData?.voltages?.batteryVoltage || 0}</CardText>}
           {(user.role === userTypes.DEALER) && !module.sale_date && <CardTitle>Active Device</CardTitle>}
           {(user.role === userTypes.DEALER) && !module.sale_date && <CardFooter style={{ backgroundColor: '#9AC1D8' }}>
             <div className='d-inline-flex justify-content-center'>

@@ -33,7 +33,6 @@ const AddDeviceToDealerForm = ({allDevices, dealerId, toggle }) => {
       deviceId: Yup.string().required("Please Enter Device Serial Number"),
     }),
     onSubmit: async (values) => {
-      console.log({allDevices})
       const deviceExist = moduleIsInBD(values.deviceId, allDevices)
       if (!deviceExist) {
         setEditFeedBack({
