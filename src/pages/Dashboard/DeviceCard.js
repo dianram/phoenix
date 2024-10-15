@@ -142,7 +142,7 @@ const DeviceCard = ({
         </CardBody>
         
       </Card>
-      <UploadModal modal={modal} toggleModal={toggleModal} saveUploadImgOnDB={saveUploadImgOnDB} setEditFeedBack={setEditFeedBack}/>
+      <UploadModal userId={user.id} modal={modal} toggleModal={toggleModal} saveUploadImgOnDB={saveUploadImgOnDB} setEditFeedBack={setEditFeedBack}/>
       {editFeedBack && (
         <CustomAlert
           message={editFeedBack.message}

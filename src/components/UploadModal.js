@@ -10,7 +10,7 @@ import { Button, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from
  * database. The modal includes options to submit the upload, cancel the operation, and displays
  * feedback messages upon successful image upload.
  */
-const UploadModal = ({ modal, toggleModal, saveUploadImgOnDB, setEditFeedBack }) => {
+const UploadModal = ({ userId, modal, toggleModal, saveUploadImgOnDB, setEditFeedBack }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [ imgURL, setImgURL ] = useState('')
 
@@ -22,7 +22,7 @@ const UploadModal = ({ modal, toggleModal, saveUploadImgOnDB, setEditFeedBack })
 
   const handleUploadSubmit = async () => {
     if (selectedFile) {
-      const ImageURL = await handleImageUpload(selectedFile)
+      const ImageURL = await handleImageUpload(selectedFile, userId)
       setImgURL(ImageURL)
       saveUploadImgOnDB({photo: ImageURL})
       setSelectedFile(null)

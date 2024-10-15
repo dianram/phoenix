@@ -662,10 +662,10 @@ const updateDevice = ( dataToUpdate, uid, setEditFeedBack, setCurrentModule, cur
  * @param {Object} file 
  * @returns {String} image URL
  */
-const handleImageUpload = async (file) => {
+const handleImageUpload = async (file, userId) => {
   const storage = firebase.storage()
   const storageRef = storage.ref();
-  const fileRef = storageRef.child(file.name);
+  const fileRef = storageRef.child(`users/${userId}/${file.name}`);
   const snapshot = await fileRef.put(file);
   // Obtener la URL pública de la imagen recién subida
   const imageUrl = await snapshot.ref.getDownloadURL();
