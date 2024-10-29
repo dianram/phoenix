@@ -1,4 +1,4 @@
-![Phoenix Immobilizer Logo](public/logo-dark.png)
+<img src="public/logo-dark.png" alt="Phoenix Immobilizer Logo" width="300"/>
 
 # Phoenix Inmobilizer
 
