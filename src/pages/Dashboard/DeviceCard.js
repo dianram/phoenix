@@ -81,12 +81,16 @@ const DeviceCard = ({
     const unsubscribe = onValue(dataRef, (snapshot) => {
       const data = snapshot.val();
       setDeviceRTDBData(data);
-      getRTDBVoltages(path)
     }, (error) => {
       console.error('Error al leer datos:', error);
     });
+    getRTDBVoltages(path)
+    let intervalRTDB = setInterval(getRTDBVoltages, 300000, path)
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe()
+      clearInterval(intervalRTDB)
+    };
   }, []);
 
   
