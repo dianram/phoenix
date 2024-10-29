@@ -70,16 +70,16 @@ Phoenix Inmobilizer is a solution for managing vehicle startup control devices. 
 3. **Environment Variables**:
     Those are already located on .env file
 
-    REACT_APP_DEFAULTAUTH
-    REACT_APP_APIKEY
-    REACT_APP_AUTHDOMAIN
-    REACT_APP_DATABASEURL
-    REACT_APP_PROJECTID
-    REACT_APP_STORAGEBUCKET
-    REACT_APP_MESSAGINGSENDERID
-    REACT_APP_APPID
-    REACT_APP_MEASUREMENTID
-    SENDGRID_APIKEY
+    - REACT_APP_DEFAULTAUTH
+    - REACT_APP_APIKEY
+    - REACT_APP_AUTHDOMAIN
+    - REACT_APP_DATABASEURL
+    - REACT_APP_PROJECTID
+    - REACT_APP_STORAGEBUCKET
+    - REACT_APP_MESSAGINGSENDERID
+    - REACT_APP_APPID
+    - REACT_APP_MEASUREMENTID
+    - SENDGRID_APIKEY
 4. **Start the Application on local**:
       ```bash
       yarn start  
