@@ -1,3 +1,5 @@
+![Phoenix Immobilizer Logo](public/logo-dark.png)
+
 # Phoenix Inmobilizer
 
 **Phoenix Inmobilizer** is a web application for managing and controlling vehicle immobilizer devices. This platform allows three types of users (MegaUser, DealerShip, and EndUser) to view information and control devices, enabling vehicle startup control and obtaining real-time data based on user roles.
